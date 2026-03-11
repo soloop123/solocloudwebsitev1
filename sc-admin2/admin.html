@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — SoloCloud</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#030712;--bg2:#080f1f;--primary:#02afff;--acc:#00e5ff;--green:#23d18b;--red:#ef4444;--yellow:#f59e0b;--border:rgba(255,255,255,.07);--bp:rgba(2,175,255,.2);--text:#f1f5f9;--muted:#64748b;--muted2:#94a3b8;--tr:all .22s ease;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;}
+#s-login{display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--bg);position:relative;overflow:hidden;}
+#s-login::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 65% 55% at 50% 25%,rgba(2,175,255,.07),transparent);pointer-events:none;}
+#s-login::after{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(2,175,255,.09) 1px,transparent 1px);background-size:38px 38px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent);pointer-events:none;}
+
+/* ── LOGIN ── */
+.lcard{width:100%;max-width:430px;position:relative;z-index:1;}
+.lbrand{text-align:center;margin-bottom:1.8rem;}
+.lbrand h1{font-size:1.9rem;font-weight:900;}.lbrand h1 em{color:var(--primary);font-style:normal;}
+.lbrand p{color:var(--muted);font-size:.82rem;margin-top:.3rem;}
+.lbox{background:rgba(255,255,255,.022);border:1px solid var(--border);border-radius:22px;padding:2.2rem;backdrop-filter:blur(16px);}
+.lbox h2{font-size:1.2rem;font-weight:800;margin-bottom:.2rem;}
+.lbox>p{color:var(--muted2);font-size:.82rem;margin-bottom:1.8rem;}
+.err{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);color:#f87171;border-radius:10px;padding:10px 14px;font-size:.8rem;margin-bottom:1rem;display:none;align-items:center;gap:8px;line-height:1.4;}
+.err.show{display:flex;}
+.fld{margin-bottom:1rem;}
+.lbl{display:flex;align-items:center;gap:6px;font-size:.64rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+.lbl i{color:var(--primary);font-size:.68rem;}
+.inp{width:100%;padding:11px 14px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--border);color:var(--text);outline:none;font-size:.9rem;font-family:'Poppins',sans-serif;transition:var(--tr);}
+.inp:focus{border-color:rgba(2,175,255,.4);background:rgba(0,0,0,.38);}
+.inp-wrap{position:relative;}
+.inp-wrap .inp{padding-right:44px;}
+.eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:.82rem;transition:var(--tr);}
+.eye:hover{color:var(--text);}
+.pbtn{width:100%;padding:12px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;font-size:.92rem;border:none;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:.2rem;}
+.pbtn:hover{opacity:.88;}
+.pbtn:disabled{opacity:.44;cursor:not-allowed;}
+.hint{color:rgba(255,255,255,.1);font-size:.67rem;text-align:center;margin-top:1.2rem;}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;height:62px;background:rgba(3,7,18,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+.tb-brand{font-size:1.05rem;font-weight:900;}.tb-brand em{color:var(--primary);font-style:normal;}
+.tb-right{display:flex;align-items:center;gap:1rem;}
+.tb-link{color:var(--muted2);font-size:.8rem;text-decoration:none;transition:var(--tr);}
+.tb-link:hover{color:var(--primary);}
+.ob{padding:7px 15px;border-radius:8px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.17);color:#f87171;font-weight:600;font-size:.77rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--tr);}
+.ob:hover{background:rgba(239,68,68,.14);}
+
+/* ── LAYOUT ── */
+.layout{display:flex;max-width:1380px;margin:0 auto;}
+
+/* ── SIDEBAR ── */
+.sb{width:212px;flex-shrink:0;padding:1.3rem .9rem;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto;border-right:1px solid var(--border);}
+.sb::-webkit-scrollbar{width:3px;}.sb::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07);border-radius:2px;}
+.sb-sec{font-size:.59rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);padding:.4rem .8rem;margin-top:.9rem;margin-bottom:.2rem;}
+.sb-sec:first-child{margin-top:0;}
+.sbb{display:flex;align-items:center;gap:8px;width:100%;padding:8px 11px;border-radius:9px;font-size:.81rem;font-weight:500;color:var(--muted2);cursor:pointer;border:none;background:transparent;font-family:'Poppins',sans-serif;text-align:left;transition:var(--tr);margin-bottom:1px;border-left:2px solid transparent;}
+.sbb i{width:14px;text-align:center;flex-shrink:0;font-size:.78rem;}
+.sbb:hover{color:#fff;background:rgba(255,255,255,.04);}
+.sbb.on{color:var(--primary);background:rgba(2,175,255,.07);border-left-color:var(--primary);}
+
+/* ── MAIN ── */
+.main{flex:1;padding:1.8rem;min-width:0;}
+.tab{display:none;}.tab.on{display:block;}
+.ph{margin-bottom:1.5rem;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
+.ph-left h1{font-size:1.4rem;font-weight:900;margin-bottom:.2rem;display:flex;align-items:center;gap:.5rem;}
+.ph-left h1 i{color:var(--primary);font-size:1.1rem;}
+.ph-left p{color:var(--muted2);font-size:.83rem;}
+.info{background:rgba(2,175,255,.05);border:1px solid rgba(2,175,255,.13);border-radius:11px;padding:.85rem 1rem;margin-bottom:1.2rem;font-size:.8rem;color:var(--muted2);line-height:1.6;}
+.info i{color:var(--primary);margin-right:5px;}
+
+/* ── CARD ── */
+.card{background:rgba(255,255,255,.017);border:1px solid var(--border);border-radius:15px;margin-bottom:.9rem;overflow:hidden;}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.3rem;cursor:pointer;user-select:none;transition:var(--tr);}
+.ch:hover{background:rgba(255,255,255,.012);}
+.card.open>.ch{border-bottom:1px solid var(--border);}
+.cht{display:flex;align-items:center;gap:8px;font-weight:800;font-size:.88rem;}
+.cht i{color:var(--primary);font-size:.82rem;}
+.chv{color:var(--muted);font-size:.7rem;transition:var(--tr);}
+.card.open>.ch .chv{transform:rotate(180deg);}
+.cb{display:none;padding:1.3rem;}
+.card.open>.cb{display:block;}
+
+/* ── FORM ── */
+.fl{display:block;font-size:.62rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-bottom:.33rem;}
+.fi,.fta,.fsel{width:100%;padding:9px 13px;border-radius:9px;background:rgba(0,0,0,.28);border:1px solid var(--border);color:var(--text);outline:none;font-size:.86rem;font-family:'Poppins',sans-serif;transition:var(--tr);}
+.fi:focus,.fta:focus,.fsel:focus{border-color:rgba(2,175,255,.38);}
+.fta{resize:vertical;min-height:80px;line-height:1.5;}
+.fsel option{background:var(--bg2);}
+.fr{margin-bottom:.85rem;}
+.fg{display:grid;gap:.75rem;margin-bottom:.85rem;}
+.fg2{grid-template-columns:1fr 1fr;}
+.fg3{grid-template-columns:1fr 1fr 1fr;}
+
+/* ── PLAN / BLOCK ── */
+.pblock{background:rgba(0,0,0,.17);border:1px solid var(--border);border-radius:12px;padding:1.1rem;margin-bottom:.75rem;}
+.pbhead{font-size:.78rem;font-weight:800;color:var(--primary);font-family:'JetBrains Mono',monospace;margin-bottom:.85rem;display:flex;align-items:center;gap:6px;}
+
+/* ── BUTTONS ── */
+.sv{padding:9px 20px;border-radius:9px;background:var(--primary);color:#fff;font-weight:700;font-size:.84rem;border:none;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--tr);display:inline-flex;align-items:center;gap:7px;}
+.sv:hover{opacity:.87;}
+.sv:disabled{opacity:.4;cursor:not-allowed;}
+.sv.green{background:var(--green);}
+
+/* ── BADGE ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:50px;font-size:.67rem;font-weight:700;letter-spacing:.5px;}
+.badge-blue{background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.2);color:var(--primary);}
+.badge-green{background:rgba(35,209,139,.1);border:1px solid rgba(35,209,139,.2);color:var(--green);}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(10px);padding:11px 20px;border-radius:12px;font-weight:700;font-size:.84rem;z-index:9999;opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.ok{background:rgba(35,209,139,.13);border:1px solid rgba(35,209,139,.26);color:var(--green);}
+.toast.err{background:rgba(239,68,68,.13);border:1px solid rgba(239,68,68,.26);color:#f87171;}
+
+/* ── SPIN ── */
+.spin{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .6s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+
+@media(max-width:800px){.sb{display:none;}.main{padding:1.1rem;}.fg2,.fg3{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="s-login" class="screen" style="display:flex;">
+  <div class="lcard">
+    <div class="lbrand">
+      <h1><em>SoloCloud</em> Admin</h1>
+      <p>Content Management Dashboard</p>
+    </div>
+    <div class="lbox">
+      <h2>Sign In</h2>
+      <p>Enter your admin credentials to continue.</p>
+      <div class="err" id="lerr"><i class="fa fa-triangle-exclamation"></i><span id="lerr-txt"></span></div>
+      <div class="fld">
+        <label class="lbl"><i class="fa fa-envelope"></i> Email Address</label>
+        <input class="inp" id="lemail" type="email" placeholder="admin@solocloud.host" autocomplete="email" onkeydown="if(event.key==='Enter')document.getElementById('lpw').focus()">
+      </div>
+      <div class="fld">
+        <label class="lbl"><i class="fa fa-lock"></i> Password</label>
+        <div class="inp-wrap">
+          <input class="inp" id="lpw" type="password" placeholder="••••••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="eye" onclick="togglePw()" type="button"><i class="fa fa-eye" id="eyeico"></i></button>
+        </div>
+      </div>
+      <button class="pbtn" id="lbtn" onclick="doLogin()"><i class="fa fa-right-to-bracket"></i> Sign In</button>
+      <p class="hint">5 wrong attempts = 30 minute lockout</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="s-dash" class="screen">
+  <header class="topbar">
+    <div class="tb-brand"><em>SoloCloud</em> Admin</div>
+    <div class="tb-right">
+      <a href="index.html" target="_blank" class="tb-link"><i class="fa fa-arrow-up-right-from-square"></i> View Site</a>
+      <button class="ob" onclick="doLogout()"><i class="fa fa-right-from-bracket"></i> Sign Out</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sb">
+      <div class="sb-sec">General</div>
+      <button class="sbb on" onclick="go('global',this)"><i class="fa fa-link"></i> Global Links</button>
+      <button class="sbb" onclick="go('homepage',this)"><i class="fa fa-house"></i> Home Page</button>
+      <button class="sbb" onclick="go('stats',this)"><i class="fa fa-chart-bar"></i> Home Stats</button>
+      <button class="sbb" onclick="go('reviews',this)"><i class="fa fa-star"></i> Reviews</button>
+      <div class="sb-sec">Games</div>
+      <button class="sbb" onclick="go('minecraft',this)"><i class="fa fa-cube"></i> Minecraft</button>
+      <button class="sbb" onclick="go('hytale',this)"><i class="fa fa-wand-magic-sparkles"></i> Hytale</button>
+      <button class="sbb" onclick="go('palworld',this)"><i class="fa fa-paw"></i> Palworld</button>
+      <div class="sb-sec">Services</div>
+      <button class="sbb" onclick="go('bothosting',this)"><i class="fab fa-discord"></i> Bot Hosting</button>
+      <button class="sbb" onclick="go('vps',this)"><i class="fa fa-server"></i> VPS</button>
+      <button class="sbb" onclick="go('domains',this)"><i class="fa fa-globe"></i> Domains</button>
+      <div class="sb-sec">Company</div>
+      <button class="sbb" onclick="go('about',this)"><i class="fa fa-users"></i> About & Team</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- ── GLOBAL ── -->
+      <div class="tab on" id="tab-global">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-link"></i> Global Links</h1><p>These update every HTML file at once.</p></div></div>
+        <div class="info"><i class="fa fa-circle-info"></i> Saving here will update the social links, billing URLs, and copyright line across <strong>all pages</strong> simultaneously.</div>
+        <div class="card open">
+          <div class="ch" onclick="tc(this)"><div class="cht"><i class="fa fa-share-nodes"></i> Social Media</div><i class="fa fa-chevron-down chv"></i></div>
+          <div class="cb">
+            <div class="fg fg3">
+              <div class="fr"><label class="fl">Discord URL</label><input class="fi" id="g_discord"></div>
+              <div class="fr"><label class="fl">YouTube URL</label><input class="fi" id="g_youtube"></div>
+              <div class="fr"><label class="fl">Instagram URL</label><input class="fi" id="g_instagram"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card open">
+          <div class="ch" onclick="tc(this)"><div class="cht"><i class="fa fa-credit-card"></i> Billing Links</div><i class="fa fa-chevron-down chv"></i></div>
+          <div class="cb">
+            <div class="fg fg2">
+              <div class="fr"><label class="fl">Login URL</label><input class="fi" id="g_billing_login"></div>
+              <div class="fr"><label class="fl">Register / Sign Up URL</label><input class="fi" id="g_billing_signup"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card open">
+          <div class="ch" onclick="tc(this)"><div class="cht"><i class="fa fa-copyright"></i> Footer Copyright</div><i class="fa fa-chevron-down chv"></i></div>
+          <div class="cb">
+            <div class="fr"><label class="fl">Copyright Text</label><input class="fi" id="g_copyright" placeholder="© 2026 SoloCloud. All Rights Reserved."></div>
+          </div>
+        </div>
+        <button class="sv" onclick="save('global')"><i class="fa fa-floppy-disk"></i> Save to All Files</button>
+      </div>
+
+      <!-- ── HOME PAGE ── -->
+      <div class="tab" id="tab-homepage">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-house"></i> Home Page</h1><p>Edit hero headline and subtext on index.html.</p></div></div>
+        <div class="card open">
+          <div class="ch" onclick="tc(this)"><div class="cht"><i class="fa fa-heading"></i> Hero Section</div><i class="fa fa-chevron-down chv"></i></div>
+          <div class="cb">
+            <div class="fr"><label class="fl">Headline (H1)</label><input class="fi" id="hp_h1" placeholder="Experience Next Level Game Hosting with SoloCloud"></div>
+            <div class="fr"><label class="fl">Subtext / Description</label><textarea class="fta" id="hp_sub"></textarea></div>
+          </div>
+        </div>
+        <button class="sv" onclick="save('homepage')"><i class="fa fa-floppy-disk"></i> Save to index.html</button>
+      </div>
+
+      <!-- ── STATS ── -->
+      <div class="tab" id="tab-stats">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-chart-bar"></i> Home Stats</h1><p>The 4 counter numbers on the home page.</p></div></div>
+        <div class="info"><i class="fa fa-circle-info"></i> These are the animated counters on index.html. Change the numbers and labels here.</div>
+        <div id="stats-blocks"></div>
+        <button class="sv" onclick="save('stats')"><i class="fa fa-floppy-disk"></i> Save to index.html</button>
+      </div>
+
+      <!-- ── REVIEWS ── -->
+      <div class="tab" id="tab-reviews">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-star"></i> Customer Reviews</h1><p>Edit the 3 testimonials on index.html.</p></div></div>
+        <div id="review-blocks"></div>
+        <button class="sv" onclick="save('reviews')"><i class="fa fa-floppy-disk"></i> Save to index.html</button>
+      </div>
+
+      <!-- ── MINECRAFT ── -->
+      <div class="tab" id="tab-minecraft">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-cube"></i> Minecraft</h1><p>Location prices and buy links on minecraft.html.</p></div></div>
+        <div class="info"><i class="fa fa-circle-info"></i> Prices show on the interactive map (e.g. <code>₹199/mo</code>). Buy links open when a location is selected.</div>
+        <div id="mc-blocks"></div>
+        <button class="sv" onclick="save('minecraft')"><i class="fa fa-floppy-disk"></i> Save to minecraft.html</button>
+      </div>
+
+      <!-- ── HYTALE ── -->
+      <div class="tab" id="tab-hytale">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-wand-magic-sparkles"></i> Hytale</h1><p>Location prices and buy links on hytale.html.</p></div></div>
+        <div id="hy-blocks"></div>
+        <button class="sv" onclick="save('hytale')"><i class="fa fa-floppy-disk"></i> Save to hytale.html</button>
+      </div>
+
+      <!-- ── PALWORLD ── -->
+      <div class="tab" id="tab-palworld">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-paw"></i> Palworld</h1><p>Location prices and buy links on palworld.html.</p></div></div>
+        <div id="pw-blocks"></div>
+        <button class="sv" onclick="save('palworld')"><i class="fa fa-floppy-disk"></i> Save to palworld.html</button>
+      </div>
+
+      <!-- ── BOT HOSTING ── -->
+      <div class="tab" id="tab-bothosting">
+        <div class="ph"><div class="ph-left"><h1><i class="fab fa-discord"></i> Bot Hosting</h1><p>Plans on bothosting.html.</p></div></div>
+        <div id="bh-blocks"></div>
+        <button class="sv" onclick="save('bothosting')"><i class="fa fa-floppy-disk"></i> Save to bothosting.html</button>
+      </div>
+
+      <!-- ── VPS ── -->
+      <div class="tab" id="tab-vps">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-server"></i> VPS Hosting</h1><p>Plans on vpshosting.html.</p></div></div>
+        <div id="vps-blocks"></div>
+        <button class="sv" onclick="save('vps')"><i class="fa fa-floppy-disk"></i> Save to vpshosting.html</button>
+      </div>
+
+      <!-- ── DOMAINS ── -->
+      <div class="tab" id="tab-domains">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-globe"></i> Domain Prices</h1><p>Extension prices on domain.html.</p></div></div>
+        <div id="dm-blocks"></div>
+        <button class="sv" onclick="save('domains')"><i class="fa fa-floppy-disk"></i> Save to domain.html</button>
+      </div>
+
+      <!-- ── ABOUT ── -->
+      <div class="tab" id="tab-about">
+        <div class="ph"><div class="ph-left"><h1><i class="fa fa-users"></i> About & Team</h1><p>Team names, roles, and bios on aboutus.html.</p></div></div>
+        <div id="ab-blocks"></div>
+        <button class="sv" onclick="save('about')"><i class="fa fa-floppy-disk"></i> Save to aboutus.html</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+const loaded  = new Set();
+let curPage   = 'global';
+let pageData  = {};
+
+// ══════════════════════════════════════
+//  BOOT
+// ══════════════════════════════════════
+(async () => {
+  try {
+    const r = await req('GET','/api/me');
+    if (r.ok) { showDash(); loadPage('global'); }
+  } catch { /* stay on login */ }
+})();
+
+// ══════════════════════════════════════
+//  AUTH
+// ══════════════════════════════════════
+function togglePw() {
+  const i = document.getElementById('lpw');
+  const e = document.getElementById('eyeico');
+  i.type = i.type==='password' ? 'text' : 'password';
+  e.className = i.type==='password' ? 'fa fa-eye' : 'fa fa-eye-slash';
+}
+
+async function doLogin() {
+  const email = document.getElementById('lemail').value.trim();
+  const pw    = document.getElementById('lpw').value;
+  if (!email||!pw) { showErr('Fill in both fields.'); return; }
+  setBtnL(true);
+  hideErr();
+  try {
+    const r = await req('POST','/api/login',{email,password:pw});
+    if (r.ok) { showDash(); loadPage('global'); }
+    else showErr(r.error||'Wrong email or password.');
+  } catch { showErr('Cannot connect. Start the server: node server.js'); }
+  setBtnL(false);
+}
+
+async function doLogout() {
+  await req('POST','/api/logout');
+  document.getElementById('s-dash').style.display='none';
+  document.getElementById('s-login').style.display='flex';
+  document.getElementById('lpw').value='';
+  loaded.clear(); pageData={};
+}
+
+function showDash() {
+  document.getElementById('s-login').style.display='none';
+  document.getElementById('s-dash').style.display='block';
+}
+
+// ══════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════
+function go(page, btn) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.sbb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+page).classList.add('on');
+  btn.classList.add('on');
+  curPage = page;
+  if (!loaded.has(page)) loadPage(page);
+}
+
+async function loadPage(page) {
+  try {
+    const r = await req('POST','/api/read',{page});
+    if (r.ok) { pageData[page]=r.data; renderPage(page,r.data); loaded.add(page); }
+    else toast('Could not read '+page,'err');
+  } catch { toast('Server offline — run: node server.js','err'); }
+}
+
+// ══════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════
+function renderPage(page, d) {
+  if (page==='global')    renderGlobal(d);
+  if (page==='homepage')  renderHomepage(d);
+  if (page==='stats')     renderStats(d);
+  if (page==='reviews')   renderReviews(d);
+  if (page==='minecraft') renderLocations('mc-blocks', d, ['india','sg','de'], ['India','Singapore','Germany']);
+  if (page==='hytale')    renderLocations('hy-blocks', d, ['india','sg','de'], ['India','Singapore','Germany']);
+  if (page==='palworld')  renderLocations('pw-blocks', d, ['india','sg','de'], ['India','Singapore','Germany']);
+  if (page==='bothosting') renderPlansArr('bh-blocks', d);
+  if (page==='vps')       renderPlansArr('vps-blocks', d);
+  if (page==='domains')   renderDomains('dm-blocks', d);
+  if (page==='about')     renderAbout('ab-blocks', d);
+}
+
+function renderGlobal(d) {
+  sv('g_discord',        d.discord||'');
+  sv('g_youtube',        d.youtube||'');
+  sv('g_instagram',      d.instagram||'');
+  sv('g_billing_login',  d.billing_login||'');
+  sv('g_billing_signup', d.billing_signup||'');
+  sv('g_copyright',      d.copyright||'');
+}
+
+function renderHomepage(d) {
+  sv('hp_h1',  d.h1||'');
+  sv('hp_sub', d.sub||'');
+}
+
+function renderStats(d) {
+  const el = document.getElementById('stats-blocks');
+  el.innerHTML = '';
+  const vals   = d.vals||[];
+  const labels = d.labels||[];
+  const count  = Math.max(vals.length, labels.length, 4);
+  const card   = makeCard('Home Stats', 'fa fa-chart-bar');
+  const grid   = document.createElement('div');
+  grid.className = 'fg fg2';
+  for (let i=0; i<count; i++) {
+    const wrap = document.createElement('div');
+    wrap.className = 'pblock';
+    wrap.innerHTML = `<div class="pbhead"><i class="fa fa-hashtag"></i> Stat ${i+1}</div>
+      <div class="fr"><label class="fl">Number / Value</label><input class="fi" id="stat_val_${i}" value="${esc(vals[i]||'')}"></div>
+      <div class="fr"><label class="fl">Label</label><input class="fi" id="stat_lbl_${i}" value="${esc(labels[i]||'')}"></div>`;
+    grid.appendChild(wrap);
+  }
+  card.querySelector('.cb').appendChild(grid);
+  el.appendChild(card);
+}
+
+function renderReviews(d) {
+  const el = document.getElementById('review-blocks');
+  el.innerHTML = '';
+  const texts = d.texts||[];
+  const names = d.names||[];
+  const count = Math.max(texts.length, names.length, 3);
+  for (let i=0; i<count; i++) {
+    const card = makeCard(`Review ${i+1}`, 'fa fa-quote-left');
+    card.querySelector('.cb').innerHTML = `
+      <div class="fr"><label class="fl">Review Text</label><textarea class="fta" id="rev_text_${i}">${esc(texts[i]||'')}</textarea></div>
+      <div class="fr"><label class="fl">Customer Name</label><input class="fi" id="rev_name_${i}" value="${esc(names[i]||'')}"></div>`;
+    el.appendChild(card);
+  }
+}
+
+function renderLocations(containerId, d, keys, labels) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  keys.forEach((k,i) => {
+    const card = makeCard(labels[i], 'fa fa-location-dot');
+    card.querySelector('.cb').innerHTML = `
+      <div class="fg fg2">
+        <div class="fr"><label class="fl">Price (e.g. ₹199/mo)</label><input class="fi" id="${containerId}_${k}_price" value="${esc(d[k+'_price']||'')}"></div>
+        <div class="fr"><label class="fl">Buy / Order URL</label><input class="fi" id="${containerId}_${k}_url" value="${esc(d[k+'_url']||'')}"></div>
+      </div>`;
+    el.appendChild(card);
+  });
+}
+
+function renderPlansArr(containerId, d) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  const names  = d.names||[];
+  const prices = d.prices||[];
+  const descs  = d.descs||[];
+  const count  = Math.max(names.length, prices.length, 1);
+  for (let i=0; i<count; i++) {
+    const card = makeCard(names[i]||`Plan ${i+1}`, 'fa fa-tag');
+    card.querySelector('.cb').innerHTML = `
+      <div class="fg fg3">
+        <div class="fr"><label class="fl">Plan Name</label><input class="fi" id="${containerId}_name_${i}" value="${esc(names[i]||'')}"></div>
+        <div class="fr"><label class="fl">Price (₹, numbers only)</label><input class="fi" id="${containerId}_price_${i}" value="${esc(prices[i]||'')}"></div>
+        <div class="fr"><label class="fl">Description</label><input class="fi" id="${containerId}_desc_${i}" value="${esc(descs[i]||'')}"></div>
+      </div>`;
+    el.appendChild(card);
+  }
+}
+
+function renderDomains(containerId, d) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  const exts   = d.exts||[];
+  const prices = d.prices||[];
+  const card   = makeCard('Extension Prices', 'fa fa-globe');
+  const grid   = document.createElement('div');
+  grid.className = 'fg fg3';
+  grid.style.marginTop = '.2rem';
+  exts.forEach((ext, i) => {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `
+      <div style="font-family:'JetBrains Mono',monospace;color:var(--primary);font-size:.84rem;font-weight:700;margin-bottom:.35rem;">${esc(ext)}</div>
+      <label class="fl">Price ₹/year</label>
+      <input class="fi" id="${containerId}_price_${i}" value="${esc(prices[i]||'')}">`;
+    grid.appendChild(wrap);
+  });
+  card.querySelector('.cb').appendChild(grid);
+  el.appendChild(card);
+}
+
+function renderAbout(containerId, d) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  const names = d.names||[];
+  const roles = d.roles||[];
+  const bios  = d.bios||[];
+  const count = Math.max(names.length, roles.length, 1);
+  for (let i=0; i<count; i++) {
+    const card = makeCard(names[i]||`Team Member ${i+1}`, 'fa fa-user');
+    card.querySelector('.cb').innerHTML = `
+      <div class="fg fg2">
+        <div class="fr"><label class="fl">Name</label><input class="fi" id="${containerId}_name_${i}" value="${esc(names[i]||'')}"></div>
+        <div class="fr"><label class="fl">Role / Title</label><input class="fi" id="${containerId}_role_${i}" value="${esc(roles[i]||'')}"></div>
+      </div>
+      <div class="fr"><label class="fl">Bio</label><textarea class="fta" id="${containerId}_bio_${i}">${esc(bios[i]||'')}</textarea></div>`;
+    el.appendChild(card);
+  }
+}
+
+// ══════════════════════════════════════
+//  COLLECT + SAVE
+// ══════════════════════════════════════
+async function save(page) {
+  const btn = document.querySelector(`#tab-${page} .sv`);
+  if (btn) { btn.disabled=true; btn.innerHTML='<span class="spin"></span> Saving...'; }
+
+  let data = {};
+  if (page==='global')   data = { discord:gv('g_discord'), youtube:gv('g_youtube'), instagram:gv('g_instagram'), billing_login:gv('g_billing_login'), billing_signup:gv('g_billing_signup'), copyright:gv('g_copyright') };
+  if (page==='homepage') data = { h1:gv('hp_h1'), sub:gv('hp_sub') };
+  if (page==='stats') {
+    data.vals=[]; data.labels=[];
+    for (let i=0;i<4;i++) { data.vals.push(gv(`stat_val_${i}`)); data.labels.push(gv(`stat_lbl_${i}`)); }
+  }
+  if (page==='reviews') {
+    data.texts=[]; data.names=[];
+    for (let i=0;i<3;i++) { data.texts.push(gv(`rev_text_${i}`)); data.names.push(gv(`rev_name_${i}`)); }
+  }
+  if (['minecraft','hytale','palworld'].includes(page)) {
+    const pfx = {minecraft:'mc-blocks',hytale:'hy-blocks',palworld:'pw-blocks'}[page];
+    ['india','sg','de'].forEach(k => { data[k+'_price']=gv(`${pfx}_${k}_price`); data[k+'_url']=gv(`${pfx}_${k}_url`); });
+  }
+  if (['bothosting','vps'].includes(page)) {
+    const pfx = page==='bothosting'?'bh-blocks':'vps-blocks';
+    const d   = pageData[page]||{};
+    const cnt = (d.names||[]).length;
+    data.names=[]; data.prices=[]; data.descs=[];
+    for (let i=0;i<cnt;i++) { data.names.push(gv(`${pfx}_name_${i}`)); data.prices.push(gv(`${pfx}_price_${i}`)); data.descs.push(gv(`${pfx}_desc_${i}`)); }
+  }
+  if (page==='domains') {
+    const d = pageData[page]||{};
+    data.prices = (d.exts||[]).map((_,i)=>gv(`dm-blocks_price_${i}`));
+  }
+  if (page==='about') {
+    const d = pageData[page]||{};
+    const cnt = (d.names||[]).length;
+    data.names=[]; data.roles=[]; data.bios=[];
+    for (let i=0;i<cnt;i++) { data.names.push(gv(`ab-blocks_name_${i}`)); data.roles.push(gv(`ab-blocks_role_${i}`)); data.bios.push(gv(`ab-blocks_bio_${i}`)); }
+  }
+
+  try {
+    const r = await req('POST','/api/save',{page,data});
+    if (r.ok) toast('Saved successfully!');
+    else toast(r.error||'Save failed','err');
+  } catch { toast('Cannot connect to server','err'); }
+
+  if (btn) { btn.disabled=false; btn.innerHTML='<i class="fa fa-floppy-disk"></i> Save'; }
+}
+
+// ══════════════════════════════════════
+//  UI HELPERS
+// ══════════════════════════════════════
+function makeCard(title, icon) {
+  const c = document.createElement('div');
+  c.className = 'card open';
+  c.innerHTML = `<div class="ch" onclick="tc(this)"><div class="cht"><i class="${icon}"></i> ${esc(title)}</div><i class="fa fa-chevron-down chv"></i></div><div class="cb"></div>`;
+  return c;
+}
+function tc(ch) { ch.parentElement.classList.toggle('open'); }
+
+let tT;
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = (type==='ok'?'✓  ':'✗  ')+msg;
+  el.className = 'toast show '+type;
+  clearTimeout(tT);
+  tT = setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+function showErr(msg) { document.getElementById('lerr-txt').textContent=msg; document.getElementById('lerr').classList.add('show'); }
+function hideErr()    { document.getElementById('lerr').classList.remove('show'); }
+function setBtnL(d)   { const b=document.getElementById('lbtn'); b.disabled=d; b.innerHTML=d?'<span class="spin"></span> Signing in...':'<i class="fa fa-right-to-bracket"></i> Sign In'; }
+function sv(id,val)   { const e=document.getElementById(id); if(e) e.value=val; }
+function gv(id)       { const e=document.getElementById(id); return e?e.value:''; }
+function esc(s)       { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+async function req(method, endpoint, body) {
+  const opts={method,credentials:'include',headers:{}};
+  if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}
+  const r=await fetch(endpoint,opts);
+  return r.json();
+}
+</script>
+</body>
+</html>

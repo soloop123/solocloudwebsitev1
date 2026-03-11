@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods — SoloCloud Hosting</title>
+    <meta name="description" content="SoloCloud accepts INR, UPI, Crypto, PKR, NPR, BDT, and more. Pay instantly online or via support ticket.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:      #030712;
+            --bg2:     #080f1f;
+            --bg3:     #0d1526;
+            --primary: #02afff;
+            --acc:     #00e5ff;
+            --border:  rgba(255,255,255,0.07);
+            --border-p:rgba(2,175,255,0.20);
+            --text:    #f1f5f9;
+            --muted:   #64748b;
+            --muted2:  #94a3b8;
+            --green:   #23d18b;
+            --yellow:  #f59e0b;
+            --orange:  #f97316;
+            --purple:  #8b5cf6;
+            --tr:      all .3s cubic-bezier(.4,0,.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc{background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{flex-direction:row;justify-content:flex-start;padding:12px 15px;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ══════════════
+           HERO
+        ══════════════ */
+        .hero{position:relative;padding:160px 5% 70px;text-align:center;overflow:hidden;}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 50% 20%,rgba(2,175,255,.09) 0%,transparent 60%);z-index:0;}
+        .hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(2,175,255,.14) 1px,transparent 1px);background-size:38px 38px;z-index:0;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 20%,transparent 100%);}
+        .hero-content{position:relative;z-index:2;max-width:720px;margin:0 auto;}
+        .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.28);border-radius:50px;padding:6px 20px;font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.6rem;}
+        .hero h1{font-size:3.2rem;font-weight:900;line-height:1.15;margin-bottom:1rem;}
+        .hero h1 .hl{background:linear-gradient(135deg,var(--primary),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:.97rem;color:var(--muted2);line-height:1.75;max-width:560px;margin:0 auto 2rem;}
+
+        /* auto / manual legend */
+        .legend{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+        .legend-item{display:flex;align-items:center;gap:7px;font-size:.82rem;font-weight:600;}
+        .leg-dot{width:10px;height:10px;border-radius:50%;}
+        .leg-auto{background:var(--green);}
+        .leg-manual{background:var(--yellow);}
+
+        /* ══════════════
+           MAIN CONTENT
+        ══════════════ */
+        .payments-wrap{max-width:1200px;margin:0 auto;padding:4rem 5% 6rem;}
+
+        /* ── CATEGORY ── */
+        .pay-category{margin-bottom:4rem;}
+        .cat-header{
+            display:flex;align-items:center;gap:1.2rem;margin-bottom:1.8rem;
+            padding-bottom:1.2rem;border-bottom:1px solid var(--border);
+        }
+        .cat-icon{
+            width:52px;height:52px;border-radius:14px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.4rem;flex-shrink:0;
+        }
+        .cat-title{flex:1;}
+        .cat-title h2{font-size:1.3rem;font-weight:800;margin-bottom:.2rem;}
+        .cat-title p{font-size:.82rem;color:var(--muted2);}
+        .cat-badge{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:6px 14px;border-radius:50px;
+            font-size:.75rem;font-weight:700;
+            white-space:nowrap;
+        }
+        .badge-auto{background:rgba(35,209,139,.1);border:1px solid rgba(35,209,139,.25);color:var(--green);}
+        .badge-manual{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:var(--yellow);}
+
+        /* ── PAYMENT METHODS GRID ── */
+        .methods-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+
+        .method-card{
+            background:rgba(255,255,255,.02);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:1.4rem 1.2rem;
+            display:flex;flex-direction:column;align-items:center;
+            text-align:center;gap:.7rem;
+            transition:var(--tr);
+            position:relative;overflow:hidden;
+            cursor:default;
+        }
+        .method-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;opacity:0;transition:var(--tr);}
+        .method-card:hover{transform:translateY(-4px);box-shadow:0 16px 35px rgba(0,0,0,.25);}
+
+        /* auto cards */
+        .method-card.auto{border-color:rgba(35,209,139,.1);}
+        .method-card.auto::after{background:linear-gradient(90deg,transparent,var(--green),transparent);}
+        .method-card.auto:hover{border-color:rgba(35,209,139,.3);}
+        .method-card.auto:hover::after{opacity:1;}
+
+        /* manual cards */
+        .method-card.manual{border-color:rgba(245,158,11,.1);cursor:pointer;}
+        .method-card.manual::after{background:linear-gradient(90deg,transparent,var(--yellow),transparent);}
+        .method-card.manual:hover{border-color:rgba(245,158,11,.3);}
+        .method-card.manual:hover::after{opacity:1;}
+
+        .method-logo{
+            width:56px;height:56px;border-radius:14px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.5rem;flex-shrink:0;
+            background:rgba(255,255,255,.04);
+            border:1px solid rgba(255,255,255,.07);
+            transition:var(--tr);
+        }
+        .method-card:hover .method-logo{transform:scale(1.08);}
+        .method-name{font-size:.88rem;font-weight:700;line-height:1.3;}
+        .method-sub{font-size:.72rem;color:var(--muted2);}
+        .method-status{
+            display:inline-flex;align-items:center;gap:5px;
+            font-size:.68rem;font-weight:700;padding:3px 10px;
+            border-radius:50px;margin-top:.2rem;
+        }
+        .status-auto{background:rgba(35,209,139,.1);color:var(--green);}
+        .status-manual{background:rgba(245,158,11,.1);color:var(--yellow);}
+        .status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+        .sd-green{background:var(--green);box-shadow:0 0 5px var(--green);}
+        .sd-yellow{background:var(--yellow);}
+
+        /* ── HOW TO PAY strip ── */
+        .how-strip{
+            background:rgba(255,255,255,.02);border:1px solid var(--border);
+            border-radius:20px;padding:2.5rem;
+            margin-bottom:4rem;
+        }
+        .how-strip h3{font-size:1.2rem;font-weight:800;margin-bottom:1.5rem;text-align:center;}
+        .how-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+        .how-col{background:rgba(255,255,255,.02);border-radius:14px;padding:1.5rem;border:1px solid var(--border);}
+        .how-col-head{display:flex;align-items:center;gap:10px;margin-bottom:1rem;}
+        .how-col-head i{font-size:1.1rem;}
+        .how-col-head span{font-size:.92rem;font-weight:700;}
+        .how-col ol{padding-left:1.2rem;display:flex;flex-direction:column;gap:.6rem;}
+        .how-col ol li{font-size:.84rem;color:var(--muted2);line-height:1.5;}
+        .how-col ol li b{color:#fff;}
+
+        /* ── FAQ ── */
+        .faq-section{margin-bottom:4rem;}
+        .faq-section h3{font-size:1.2rem;font-weight:800;margin-bottom:1.2rem;text-align:center;}
+        .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+        .faq-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:1.4rem;}
+        .faq-card h4{font-size:.9rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
+        .faq-card h4 i{color:var(--primary);font-size:.85rem;}
+        .faq-card p{font-size:.82rem;color:var(--muted2);line-height:1.65;}
+
+        /* ══════════════
+           MODAL
+        ══════════════ */
+        .modal-overlay{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem;}
+        .modal-overlay.open{display:flex;}
+        .modal{background:var(--bg3);border:1px solid rgba(245,158,11,.25);border-radius:24px;max-width:480px;width:100%;padding:2.5rem;position:relative;box-shadow:0 0 80px rgba(245,158,11,.08),0 30px 60px rgba(0,0,0,.5);animation:modalIn .3s cubic-bezier(.25,.46,.45,.94);}
+        @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+        .modal::before{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--yellow),transparent);border-radius:24px 24px 0 0;}
+        .modal-close{position:absolute;top:1.2rem;right:1.2rem;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted2);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
+        .modal-close:hover{background:rgba(255,255,255,.12);color:#fff;}
+        .modal-icon{width:64px;height:64px;border-radius:18px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1.4rem;}
+        .modal h2{font-size:1.4rem;font-weight:800;margin-bottom:.5rem;}
+        .modal-method-name{font-size:.95rem;font-weight:700;color:var(--yellow);margin-bottom:.8rem;}
+        .modal p.modal-sub{font-size:.88rem;color:var(--muted2);line-height:1.65;margin-bottom:1.8rem;}
+        .modal-options{display:flex;flex-direction:column;gap:.9rem;}
+        .modal-option{display:flex;align-items:center;gap:1rem;padding:1.1rem;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.025);transition:var(--tr);cursor:pointer;text-decoration:none;color:inherit;}
+        .modal-option:hover{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.05);transform:translateX(4px);}
+        .modal-option-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+        .mo-discord .modal-option-icon{background:rgba(88,101,242,.12);color:#7289da;}
+        .mo-billing .modal-option-icon{background:rgba(2,175,255,.1);color:var(--primary);}
+        .modal-option-title{font-size:.9rem;font-weight:700;margin-bottom:2px;}
+        .modal-option-desc{font-size:.74rem;color:var(--muted2);}
+        .modal-option-arrow{margin-left:auto;color:var(--muted);font-size:.85rem;transition:var(--tr);}
+        .modal-option:hover .modal-option-arrow{color:var(--yellow);transform:translateX(3px);}
+        .modal-note{margin-top:1.2rem;font-size:.74rem;color:var(--muted);text-align:center;line-height:1.6;}
+        .modal-note i{color:var(--yellow);margin-right:4px;}
+
+        /* ══════════════
+           FOOTER
+        ══════════════ */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px){.methods-grid{grid-template-columns:repeat(3,1fr);}}
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .methods-grid{grid-template-columns:repeat(3,1fr);}
+            .faq-grid{grid-template-columns:1fr;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero{padding:120px 5% 50px;}
+            .hero h1{font-size:2.4rem;}
+            .methods-grid{grid-template-columns:repeat(2,1fr);}
+            .how-row{grid-template-columns:1fr;}
+            .cat-header{flex-wrap:wrap;gap:.8rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero h1{font-size:2rem;}
+            .methods-grid{grid-template-columns:repeat(2,1fr);gap:.7rem;}
+            .method-logo{width:46px;height:46px;font-size:1.2rem;}
+            .payments-wrap{padding:3rem 4% 5rem;}
+            .modal{padding:1.8rem 1.4rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+        }
+        @media(max-width:380px){
+            .methods-grid{grid-template-columns:1fr 1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-brands fa-discord"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html"><i class="fa-brands fa-discord"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html" style="color:var(--primary)"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-pill"><i class="fa-solid fa-credit-card"></i>&nbsp; Payment Methods</div>
+        <h1>Pay Your <span class="hl">Way.</span><br>We've Got You.</h1>
+        <p>From Indian UPI to crypto, and regional wallets across South Asia — SoloCloud accepts payments from almost everywhere. Choose what works for you.</p>
+        <div class="legend">
+            <div class="legend-item"><div class="leg-dot leg-auto"></div> Instant — auto processed on billing</div>
+            <div class="legend-item"><div class="leg-dot leg-manual"></div> Via ticket — processed by our team</div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ PAYMENT CONTENT ══════════ -->
+<div class="payments-wrap">
+
+    <!-- ════════════════════════════════
+         1. INR — India
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(255,153,0,.1);border:1px solid rgba(255,153,0,.2);font-size:1.6rem;">🇮🇳</div>
+            <div class="cat-title">
+                <h2>Indian Rupee (INR) — India</h2>
+                <p>All major Indian payment methods accepted automatically on billing. No ticket needed.</p>
+            </div>
+            <div class="cat-badge badge-auto"><i class="fa-solid fa-bolt-lightning"></i> Instant &amp; Automatic</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card auto">
+                <div class="method-logo">🏦</div>
+                <div class="method-name">UPI</div>
+                <div class="method-sub">Any UPI-enabled app or bank</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(255,255,255,.08);">
+                    <svg width="26" height="26" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1a73e8"/><text x="50%" y="64%" text-anchor="middle" font-size="13" font-weight="bold" fill="#fff" font-family="Arial">G</text></svg>
+                </div>
+                <div class="method-name">Google Pay</div>
+                <div class="method-sub">GPay UPI</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">📱</div>
+                <div class="method-name">PhonePe</div>
+                <div class="method-sub">UPI wallet</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">💳</div>
+                <div class="method-name">Paytm</div>
+                <div class="method-sub">Wallet &amp; UPI</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">🏧</div>
+                <div class="method-name">Net Banking</div>
+                <div class="method-sub">All major Indian banks</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">💳</div>
+                <div class="method-name">Debit / Credit Card</div>
+                <div class="method-sub">Visa, Mastercard, RuPay</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">🔵</div>
+                <div class="method-name">BHIM UPI</div>
+                <div class="method-sub">BHIM &amp; bank UPI apps</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo">🏪</div>
+                <div class="method-name">Amazon Pay</div>
+                <div class="method-sub">Amazon wallet &amp; UPI</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         2. CRYPTO
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(247,147,26,.1);border:1px solid rgba(247,147,26,.2);font-size:1.6rem;">₿</div>
+            <div class="cat-title">
+                <h2>Cryptocurrency — Global</h2>
+                <p>All crypto payments are processed automatically on the billing panel. Confirmations vary by network.</p>
+            </div>
+            <div class="cat-badge badge-auto"><i class="fa-solid fa-bolt-lightning"></i> Instant &amp; Automatic</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(247,147,26,.1);">₿</div>
+                <div class="method-name">Bitcoin</div>
+                <div class="method-sub">BTC · ~30 min confirm</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(98,126,234,.1);">Ξ</div>
+                <div class="method-name">Ethereum</div>
+                <div class="method-sub">ETH · fast confirm</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(38,161,123,.1);">₮</div>
+                <div class="method-name">USDT</div>
+                <div class="method-sub">Tether — TRC20 / ERC20</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(38,161,123,.1);">◎</div>
+                <div class="method-name">USDC</div>
+                <div class="method-sub">USD Coin — ERC20</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(190,144,94,.1);">Ł</div>
+                <div class="method-name">Litecoin</div>
+                <div class="method-sub">LTC · fast &amp; low fee</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(0,196,167,.1);">◈</div>
+                <div class="method-name">Solana</div>
+                <div class="method-sub">SOL · near-instant</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(100,221,23,.1);">Ð</div>
+                <div class="method-name">Dogecoin</div>
+                <div class="method-sub">DOGE · community coin</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+            <div class="method-card auto">
+                <div class="method-logo" style="background:rgba(255,70,85,.1);">T</div>
+                <div class="method-name">TRON</div>
+                <div class="method-sub">TRX · low fee network</div>
+                <div class="method-status status-auto"><div class="status-dot sd-green"></div> Auto</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         3. PKR — Pakistan
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(1,119,61,.1);border:1px solid rgba(1,119,61,.2);font-size:1.6rem;">🇵🇰</div>
+            <div class="cat-title">
+                <h2>Pakistani Rupee (PKR) — Pakistan</h2>
+                <p>PKR payments are handled manually via ticket. Open a Discord or billing ticket to pay.</p>
+            </div>
+            <div class="cat-badge badge-manual"><i class="fa-solid fa-ticket"></i> Via Ticket</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card manual" onclick="openModal('Easypaisa')">
+                <div class="method-logo" style="background:rgba(0,175,84,.1);">🟢</div>
+                <div class="method-name">Easypaisa</div>
+                <div class="method-sub">Mobile wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('JazzCash')">
+                <div class="method-logo" style="background:rgba(255,0,0,.07);">🔴</div>
+                <div class="method-name">JazzCash</div>
+                <div class="method-sub">Mobile account</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('SadaPay')">
+                <div class="method-logo" style="background:rgba(0,122,204,.1);">💙</div>
+                <div class="method-name">SadaPay</div>
+                <div class="method-sub">Digital bank</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('NayaPay')">
+                <div class="method-logo" style="background:rgba(106,13,173,.1);">🟣</div>
+                <div class="method-name">NayaPay</div>
+                <div class="method-sub">Digital wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('UBL / HBL Bank Transfer (PKR)')">
+                <div class="method-logo">🏦</div>
+                <div class="method-name">Bank Transfer</div>
+                <div class="method-sub">UBL, HBL, MCB, etc.</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Raast (PKR)')">
+                <div class="method-logo" style="background:rgba(0,160,233,.1);">🔷</div>
+                <div class="method-name">Raast</div>
+                <div class="method-sub">Instant payment system</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         4. NPR — Nepal
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(0,56,168,.1);border:1px solid rgba(0,56,168,.2);font-size:1.6rem;">🇳🇵</div>
+            <div class="cat-title">
+                <h2>Nepalese Rupee (NPR) — Nepal</h2>
+                <p>NPR payments are handled manually via ticket. Open a Discord or billing ticket to pay.</p>
+            </div>
+            <div class="cat-badge badge-manual"><i class="fa-solid fa-ticket"></i> Via Ticket</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card manual" onclick="openModal('eSewa (NPR)')">
+                <div class="method-logo" style="background:rgba(0,175,84,.1);">🟢</div>
+                <div class="method-name">eSewa</div>
+                <div class="method-sub">Nepal's #1 digital wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Khalti (NPR)')">
+                <div class="method-logo" style="background:rgba(106,13,173,.1);">🟣</div>
+                <div class="method-name">Khalti</div>
+                <div class="method-sub">Digital payment</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('IME Pay (NPR)')">
+                <div class="method-logo" style="background:rgba(255,153,0,.1);">🟠</div>
+                <div class="method-name">IME Pay</div>
+                <div class="method-sub">Mobile wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('ConnectIPS (NPR)')">
+                <div class="method-logo" style="background:rgba(0,122,204,.1);">🔵</div>
+                <div class="method-name">ConnectIPS</div>
+                <div class="method-sub">Bank interoperable payment</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('FonePay (NPR)')">
+                <div class="method-logo">📲</div>
+                <div class="method-name">FonePay</div>
+                <div class="method-sub">QR payment network</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Nepal Bank Transfer (NPR)')">
+                <div class="method-logo">🏦</div>
+                <div class="method-name">Bank Transfer</div>
+                <div class="method-sub">NIC Asia, Nabil, etc.</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         5. BDT — Bangladesh
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(0,106,78,.1);border:1px solid rgba(0,106,78,.2);font-size:1.6rem;">🇧🇩</div>
+            <div class="cat-title">
+                <h2>Bangladeshi Taka (BDT) — Bangladesh</h2>
+                <p>BDT payments are handled manually via ticket. Open a Discord or billing ticket to pay.</p>
+            </div>
+            <div class="cat-badge badge-manual"><i class="fa-solid fa-ticket"></i> Via Ticket</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card manual" onclick="openModal('bKash (BDT)')">
+                <div class="method-logo" style="background:rgba(231,0,112,.1);">🩷</div>
+                <div class="method-name">bKash</div>
+                <div class="method-sub">Bangladesh's top wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Nagad (BDT)')">
+                <div class="method-logo" style="background:rgba(255,153,0,.1);">🟠</div>
+                <div class="method-name">Nagad</div>
+                <div class="method-sub">Postal digital wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Rocket (DBBL) (BDT)')">
+                <div class="method-logo" style="background:rgba(106,13,173,.1);">🟣</div>
+                <div class="method-name">Rocket (DBBL)</div>
+                <div class="method-sub">Dutch Bangla mobile banking</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('SureCash (BDT)')">
+                <div class="method-logo" style="background:rgba(0,175,84,.1);">🟢</div>
+                <div class="method-name">SureCash</div>
+                <div class="method-sub">Mobile financial service</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Upay (BDT)')">
+                <div class="method-logo" style="background:rgba(0,122,204,.1);">🔵</div>
+                <div class="method-name">Upay</div>
+                <div class="method-sub">UCB mobile banking</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Bangladesh Bank Transfer (BDT)')">
+                <div class="method-logo">🏦</div>
+                <div class="method-name">Bank Transfer</div>
+                <div class="method-sub">NPSB, BEFTN transfer</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         6. PAYPAL
+    ════════════════════════════════ -->
+    <div class="pay-category">
+        <div class="cat-header">
+            <div class="cat-icon" style="background:rgba(0,48,135,.1);border:1px solid rgba(0,48,135,.2);font-size:1.5rem;">🌐</div>
+            <div class="cat-title">
+                <h2>PayPal &amp; International</h2>
+                <p>PayPal and other international methods are handled manually to prevent fraud and currency disputes.</p>
+            </div>
+            <div class="cat-badge badge-manual"><i class="fa-solid fa-ticket"></i> Via Ticket</div>
+        </div>
+        <div class="methods-grid">
+            <div class="method-card manual" onclick="openModal('PayPal')">
+                <div class="method-logo" style="background:rgba(0,48,135,.1);">
+                    <i class="fa-brands fa-paypal" style="color:#003087;font-size:1.6rem;"></i>
+                </div>
+                <div class="method-name">PayPal</div>
+                <div class="method-sub">International payments</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Wise (International)')">
+                <div class="method-logo" style="background:rgba(0,182,122,.1);">💚</div>
+                <div class="method-name">Wise</div>
+                <div class="method-sub">Multi-currency transfer</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Western Union / MoneyGram')">
+                <div class="method-logo" style="background:rgba(255,204,0,.1);">💛</div>
+                <div class="method-name">Western Union</div>
+                <div class="method-sub">Global money transfer</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+            <div class="method-card manual" onclick="openModal('Skrill (International)')">
+                <div class="method-logo" style="background:rgba(134,0,255,.1);">🟣</div>
+                <div class="method-name">Skrill</div>
+                <div class="method-sub">Digital wallet</div>
+                <div class="method-status status-manual"><div class="status-dot sd-yellow"></div> Via Ticket</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HOW TO PAY -->
+    <div class="how-strip">
+        <h3>How to Pay — Quick Guide</h3>
+        <div class="how-row">
+            <div class="how-col">
+                <div class="how-col-head" style="color:var(--green);">
+                    <i class="fa-solid fa-bolt-lightning" style="color:var(--green);"></i>
+                    <span>Automatic Methods (INR &amp; Crypto)</span>
+                </div>
+                <ol>
+                    <li><b>Register</b> or log in at <a href="https://billing.solocloud.host" style="color:var(--primary);">billing.solocloud.host</a></li>
+                    <li>Choose your plan and click <b>Order Now</b></li>
+                    <li>Select your preferred payment method at checkout</li>
+                    <li>Complete the payment — your service is <b>activated instantly</b></li>
+                </ol>
+            </div>
+            <div class="how-col">
+                <div class="how-col-head" style="color:var(--yellow);">
+                    <i class="fa-solid fa-ticket" style="color:var(--yellow);"></i>
+                    <span>Manual Methods (PKR / NPR / BDT / PayPal)</span>
+                </div>
+                <ol>
+                    <li>Click any <b>yellow "Via Ticket"</b> payment method above</li>
+                    <li>Open a ticket via <b>Discord</b> or the <b>billing portal</b></li>
+                    <li>Tell us which plan and payment method you want</li>
+                    <li>Our team sends you the payment details and activates your service after confirmation</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-section">
+        <h3>Payment FAQs</h3>
+        <div class="faq-grid">
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> Are refunds available?</h4>
+                <p>Due to the nature of digital hosting services, all sales are final. No refunds are issued after a service is activated. Please review our <a href="legal.html" style="color:var(--primary);">Terms of Service</a> for full details.</p>
+            </div>
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> How long do manual payments take?</h4>
+                <p>Manual ticket payments are typically processed within 1–6 hours during active support hours. Our team will confirm receipt and activate your service once payment is verified.</p>
+            </div>
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> Is my payment information secure?</h4>
+                <p>Yes. Automatic payments are processed through our secure billing platform. We never store raw card or wallet credentials. Manual payments are handled privately via encrypted ticket channels.</p>
+            </div>
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> Can I add balance to my account?</h4>
+                <p>Yes. You can top up your billing account balance using any supported payment method and use it to pay for any service — including manual methods via ticket.</p>
+            </div>
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> What currency are prices shown in?</h4>
+                <p>All prices on the website and billing panel are displayed in Indian Rupees (INR). For manual payments in other currencies, our team will provide the equivalent conversion rate at the time of the transaction.</p>
+            </div>
+            <div class="faq-card">
+                <h4><i class="fa-solid fa-circle-question"></i> My payment method isn't listed — can I still pay?</h4>
+                <p>If your preferred method isn't listed here, open a Discord or billing ticket and describe what you'd like to use. We try to accommodate new payment methods where possible.</p>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end payments-wrap -->
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Game, Bot & VPS Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul>
+            <li><a href="minecraft.html">Minecraft</a></li>
+            <li><a href="hytale.html">Hytale</a></li>
+            <li><a href="palworld.html">Palworld</a></li>
+            <li><a href="games.html">All Games</a></li>
+        </ul></div>
+        <div class="fc"><h4>Services</h4><ul>
+            <li><a href="bothosting.html">Bot Hosting</a></li>
+            <li><a href="domain.html">Domains</a></li>
+            <li><a href="vpshosting.html">VPS</a></li>
+        </ul></div>
+        <div class="fc"><h4>Company</h4><ul>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="legal.html">Legal</a></li>
+            <li><a href="payment.html">Payments</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="fc"><h4>Tools</h4><ul>
+            <li><a href="tools.html">Panel Demo</a></li>
+        </ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<!-- ══════════ MODAL ══════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-icon">🎫</div>
+        <h2>Pay via Ticket</h2>
+        <div class="modal-method-name" id="modalMethodName">Easypaisa</div>
+        <p class="modal-sub">This payment method is processed manually by our team. Open a ticket on Discord or via our billing panel — we'll send you the payment details and activate your service once confirmed.</p>
+        <div class="modal-options">
+            <!-- UPDATE: replace with your real Discord ticket link -->
+            <a href="https://discord.gg/REPLACE_WITH_TICKET_LINK" target="_blank" rel="noopener noreferrer" class="modal-option mo-discord">
+                <div class="modal-option-icon"><i class="fa-brands fa-discord"></i></div>
+                <div>
+                    <div class="modal-option-title">Open a Discord Ticket</div>
+                    <div class="modal-option-desc">Fastest response — join our server and create a payment ticket</div>
+                </div>
+                <i class="fa-solid fa-arrow-right modal-option-arrow"></i>
+            </a>
+            <!-- UPDATE: replace with your real billing ticket path -->
+            <a href="https://billing.solocloud.host/REPLACE_WITH_TICKET_PATH" target="_blank" rel="noopener noreferrer" class="modal-option mo-billing">
+                <div class="modal-option-icon"><i class="fa-solid fa-ticket"></i></div>
+                <div>
+                    <div class="modal-option-title">Open a Billing Ticket</div>
+                    <div class="modal-option-desc">Submit via our billing panel — tracked &amp; documented</div>
+                </div>
+                <i class="fa-solid fa-arrow-right modal-option-arrow"></i>
+            </a>
+        </div>
+        <p class="modal-note"><i class="fa-solid fa-circle-info"></i> Mention your chosen payment method and the plan you want in the ticket. Processing time: 1–6 hours.</p>
+    </div>
+</div>
+
+<script>
+    // Hamburger
+    const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+    hb.addEventListener('click', () => {
+        const o = mm.classList.toggle('open');
+        hb.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+    });
+    mm.addEventListener('click', e => {
+        if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+    });
+    function mSub(el){
+        const s = el.nextElementSibling;
+        s.classList.toggle('open');
+        el.classList.toggle('expanded', s.classList.contains('open'));
+    }
+
+    // Modal
+    function openModal(methodName){
+        document.getElementById('modalMethodName').textContent = methodName;
+        document.getElementById('modalOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+        document.getElementById('modalOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function closeModalOutside(e){
+        if(e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

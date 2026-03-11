@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Games — SoloCloud Hosting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #030712;
+            --bg2: #080f1f;
+            --primary: #02afff;
+            --muted: #64748b;
+            --text: #f1f5f9;
+            --glass: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.07);
+            --tr: all .3s cubic-bezier(.4,0,.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc {background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{display:flex;align-items:center;gap:12px;padding:12px 15px;flex-direction:row;justify-content:flex-start;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+        /* ── MOBILE MENU ── */
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ── HERO ── */
+        .hero{position:relative;min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:160px 5% 80px;overflow:hidden;}
+        .hero-bg{position:absolute;inset:0;z-index:0;}
+        .hero-bg::before{content:'';position:absolute;inset:0;background:
+            radial-gradient(ellipse 70% 60% at 20% 50%,rgba(2,175,255,.07),transparent),
+            radial-gradient(ellipse 60% 50% at 80% 50%,rgba(74,222,128,.05),transparent),
+            radial-gradient(ellipse 50% 50% at 50% 100%,rgba(245,158,11,.04),transparent);}
+        .hero-bg::after{content:'';position:absolute;inset:0;
+            background-image:linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+            background-size:60px 60px;}
+        .hero-content{position:relative;z-index:2;max-width:800px;}
+        .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.25);border-radius:50px;padding:6px 20px;font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:2px;text-transform:uppercase;margin-bottom:1.8rem;}
+        .hero h1{font-family:'Bebas Neue',sans-serif;font-size:6rem;line-height:.95;letter-spacing:2px;margin-bottom:1.2rem;}
+        .hero h1 .hl{background:linear-gradient(90deg,var(--primary),#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:1.1rem;color:var(--muted);max-width:540px;margin:0 auto 2.5rem;}
+        .filter-row{display:flex;align-items:center;justify-content:center;gap:.6rem;flex-wrap:wrap;}
+        .f-btn{padding:8px 20px;border-radius:50px;border:1px solid var(--border);background:rgba(255,255,255,.03);color:var(--muted);font-size:.82rem;font-weight:600;cursor:pointer;transition:var(--tr);font-family:'Poppins',sans-serif;}
+        .f-btn:hover{border-color:var(--primary);color:#fff;}
+        .f-btn.active{border-color:var(--primary);background:rgba(2,175,255,.12);color:var(--primary);}
+
+        /* ── GAMES SECTION ── */
+        .games-wrap{max-width:1400px;margin:0 auto;padding:4rem 5% 8rem;}
+
+        .section-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:14px;}
+        .section-eyebrow::after{content:'';flex:1;height:1px;background:var(--border);}
+
+        /* BIG CARDS GRID */
+        .big-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3.5rem;}
+
+        .gcard{
+            position:relative;border-radius:20px;overflow:hidden;
+            border:1px solid var(--border);cursor:pointer;
+            min-height:360px;display:flex;flex-direction:column;justify-content:flex-end;
+            transition:transform .4s cubic-bezier(.25,.46,.45,.94),box-shadow .4s ease,border-color .4s ease;
+        }
+        .gcard:hover{transform:translateY(-10px) scale(1.01);}
+
+        .gcard-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s ease;}
+        .gcard:hover .gcard-img{transform:scale(1.07);}
+
+        .gcard-grad{position:absolute;inset:0;transition:var(--tr);}
+        .gcard:hover .gcard-grad{opacity:1.1;}
+
+        .gcard-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s ease;pointer-events:none;}
+        .gcard:hover .gcard-glow{opacity:1;}
+
+        .gcard-body{position:relative;z-index:3;padding:1.8rem;}
+
+        .gbadge{display:inline-flex;align-items:center;gap:6px;padding:4px 13px;border-radius:50px;font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.9rem;border:1px solid;}
+        .gtags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:.9rem;}
+        .gtag{padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:600;border:1px solid;}
+        .gcard h3{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:1px;line-height:1;margin-bottom:.4rem;}
+        .gcard .gdesc{font-size:.84rem;color:rgba(255,255,255,.65);margin-bottom:1.2rem;line-height:1.5;}
+        .gcard-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+        .gprice span{font-size:.72rem;color:var(--muted);display:block;}
+        .gprice b{font-size:1.4rem;font-weight:800;}
+        .gcta{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:50px;font-size:.82rem;font-weight:700;border:none;cursor:pointer;transition:var(--tr);font-family:'Poppins',sans-serif;}
+        .gcta:hover{transform:translateX(4px);}
+
+        /* ── MINECRAFT ── */
+        .mc .gcard-img{background-image:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg");}
+        .mc .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .mc .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(74,222,128,.2) 0%,transparent 65%);}
+        .mc:hover{border-color:rgba(74,222,128,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(74,222,128,.1);}
+        .mc .gbadge{background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3);color:#4ade80;}
+        .mc .gtag{background:rgba(74,222,128,.07);border-color:rgba(74,222,128,.22);color:#4ade80;}
+        .mc .gprice b{color:#4ade80;}
+        .mc .gcta{background:linear-gradient(135deg,#4ade80,#16a34a);color:#0a1a0a;}
+
+        /* ── PALWORLD ── */
+        .pal .gcard-img{background-image:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg");}
+        .pal .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .pal .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(34,197,94,.18) 0%,transparent 65%);}
+        .pal:hover{border-color:rgba(34,197,94,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(34,197,94,.1);}
+        .pal .gbadge{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#22c55e;}
+        .pal .gtag{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.22);color:#22c55e;}
+        .pal .gprice b{color:#22c55e;}
+        .pal .gcta{background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;}
+
+        /* ── HYTALE ── */
+        .hyt .gcard-img{background-image:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg");}
+        .hyt .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .hyt .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(245,158,11,.2) 0%,transparent 65%);}
+        .hyt:hover{border-color:rgba(245,158,11,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(245,158,11,.1);}
+        .hyt .gbadge{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#f59e0b;}
+        .hyt .gtag{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.22);color:#f59e0b;}
+        .hyt .gprice b{color:#f59e0b;}
+        .hyt .gcta{background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;}
+
+        /* ── GTA V ── */
+        .gta .gcard-img{background-image:url("https://wallpapers.com/images/featured/gta-5-pictures-r7buqp4yllgi4lp9.jpg");background-position:top;}
+        .gta .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .gta .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(239,68,68,.2) 0%,transparent 65%);}
+        .gta:hover{border-color:rgba(239,68,68,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(239,68,68,.1);}
+        .gta .gbadge{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#ef4444;}
+        .gta .gtag{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.22);color:#ef4444;}
+        .gta .gprice b{color:#ef4444;}
+        .gta .gcta{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;}
+
+        /* ── CS2 ── */
+        .cs .gcard-img{background-image:url("https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg");background-size:cover;}
+        .cs .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .cs .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(249,115,22,.2) 0%,transparent 65%);}
+        .cs:hover{border-color:rgba(249,115,22,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(249,115,22,.1);}
+        .cs .gbadge{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:#f97316;}
+        .cs .gtag{background:rgba(249,115,22,.07);border-color:rgba(249,115,22,.22);color:#f97316;}
+        .cs .gprice b{color:#f97316;}
+        .cs .gcta{background:linear-gradient(135deg,#f97316,#c2410c);color:#fff;}
+
+        /* ── RUST ── */
+        .rust .gcard-img{background-image:url("https://cdn.cloudflare.steamstatic.com/steam/apps/252490/header.jpg");background-size:cover;}
+        .rust .gcard-grad{background:linear-gradient(to top,rgba(3,7,18,.97) 0%,rgba(3,7,18,.55) 55%,rgba(3,7,18,.1) 100%);}
+        .rust .gcard-glow{background:radial-gradient(ellipse at bottom,rgba(220,38,38,.2) 0%,transparent 65%);}
+        .rust:hover{border-color:rgba(220,38,38,.45);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 50px rgba(220,38,38,.1);}
+        .rust .gbadge{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.3);color:#dc2626;}
+        .rust .gtag{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.22);color:#dc2626;}
+        .rust .gprice b{color:#dc2626;}
+        .rust .gcta{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;}
+
+        /* ── SMALL CARDS GRID ── */
+        .small-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+
+        .scard{
+            position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);
+            min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;
+            transition:transform .35s cubic-bezier(.25,.46,.45,.94),box-shadow .35s ease,border-color .35s ease;
+        }
+        .scard:hover{transform:translateY(-6px);}
+        .scard-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .5s ease;}
+        .scard:hover .scard-img{transform:scale(1.09);}
+        .scard-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,18,.95) 0%,rgba(3,7,18,.3) 100%);}
+        .scard-body{position:relative;z-index:2;padding:1.1rem;}
+        .scard-body h4{font-size:1rem;font-weight:700;margin-bottom:3px;}
+        .scard-body p{font-size:.72rem;color:var(--muted);margin-bottom:.7rem;line-height:1.4;}
+        .sprice{font-size:.7rem;color:var(--muted);}
+        .sprice b{font-size:.98rem;color:var(--primary);font-weight:700;}
+        .s-coming{position:absolute;inset:0;z-index:5;background:rgba(3,7,18,.72);display:flex;align-items:center;justify-content:center;}
+        .s-coming span{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:50px;padding:5px 16px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);}
+
+        /* ── WHY STRIP ── */
+        .why-strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3.5rem 5%;background:linear-gradient(to right,rgba(2,175,255,.03),rgba(74,222,128,.02));}
+        .why-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+        .why-item{text-align:center;}
+        .why-icon{font-size:1.8rem;color:var(--primary);margin-bottom:.7rem;}
+        .why-item h4{font-size:.95rem;font-weight:700;margin-bottom:.35rem;}
+        .why-item p{font-size:.78rem;color:var(--muted);}
+
+        /* ── FOOTER ── */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px){
+            .big-grid{grid-template-columns:repeat(2,1fr);}
+            .small-grid{grid-template-columns:repeat(3,1fr);}
+        }
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .hero h1{font-size:4.5rem;}
+            .big-grid{grid-template-columns:1fr 1fr;}
+            .small-grid{grid-template-columns:repeat(2,1fr);}
+            .why-inner{grid-template-columns:repeat(2,1fr);}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero h1{font-size:3.4rem;}
+            .hero{padding:130px 5% 60px;}
+            .big-grid{grid-template-columns:1fr;}
+            .gcard{min-height:300px;}
+            .small-grid{grid-template-columns:1fr 1fr;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero{padding:100px 4% 50px;}
+            .hero h1{font-size:2.8rem;}
+            .hero p{font-size:.9rem;}
+            .small-grid{grid-template-columns:1fr 1fr;gap:.8rem;}
+            .scard{min-height:170px;}
+            .why-inner{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+            .f-btn{padding:7px 14px;font-size:.76rem;}
+        }
+        @media(max-width:360px){
+            .small-grid{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item active">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-solid fa-robot"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html" style="color:var(--primary)"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html"><i class="fa-solid fa-robot"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <div class="hero-pill"><i class="fa-solid fa-gamepad"></i>&nbsp; 10+ Games Supported</div>
+        <h1>Pick Your <span class="hl">Game.</span><br>We Handle the Rest.</h1>
+        <p>Instant deployment, enterprise hardware, 3 global locations — built for every game you love.</p>
+        <div class="filter-row" id="filterRow">
+            <button class="f-btn active" data-f="all">All Games</button>
+            <button class="f-btn" data-f="survival">Survival</button>
+            <button class="f-btn" data-f="fps">FPS / Shooter</button>
+            <button class="f-btn" data-f="adventure">Adventure</button>
+            <button class="f-btn" data-f="coming">Coming Soon</button>
+        </div>
+    </div>
+</section>
+
+<!-- GAMES -->
+<div class="games-wrap">
+
+    <!-- BIG CARDS -->
+    <div class="section-eyebrow">Featured Games</div>
+    <div class="big-grid" id="bigGrid">
+
+        <!-- MINECRAFT -->
+        <a href="minecraft.html" class="gcard mc" data-cat="survival">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-fire"></i> Most Popular</div>
+                <div class="gtags"><span class="gtag">Java</span><span class="gtag">Bedrock</span><span class="gtag">Modpacks</span><span class="gtag">SMP</span></div>
+                <h3>Minecraft</h3>
+                <p class="gdesc">Java & Bedrock. SMP, Skyblock, Survival, Modded — all on one platform with instant one-click deployment.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹199/mo</b></div>
+                    <button class="gcta">Get Server <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+        <!-- PALWORLD -->
+        <a href="palworld.html" class="gcard pal" data-cat="survival">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-bolt-lightning"></i> Trending</div>
+                <div class="gtags"><span class="gtag">Survival</span><span class="gtag">Co-op</span><span class="gtag">Open World</span></div>
+                <h3>Palworld</h3>
+                <p class="gdesc">Catch Pals, build bases, fight with friends. Low-latency servers optimised for Palworld's demanding simulation.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹249/mo</b></div>
+                    <button class="gcta">Get Server <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+        <!-- HYTALE -->
+        <a href="hytale.html" class="gcard hyt" data-cat="coming adventure">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-wand-magic-sparkles"></i> Coming Soon</div>
+                <div class="gtags"><span class="gtag">Fantasy</span><span class="gtag">RPG</span><span class="gtag">Adventure</span></div>
+                <h3>Hytale</h3>
+                <p class="gdesc">The most anticipated voxel RPG. Reserve your server today and be first in-world the moment it launches.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹249/mo</b></div>
+                    <button class="gcta">Reserve Now <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+        <!-- GTA V -->
+        <a href="https://billing.solocloud.host" class="gcard gta" data-cat="fps adventure">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-car"></i> FiveM / RageMP</div>
+                <div class="gtags"><span class="gtag">FiveM</span><span class="gtag">RageMP</span><span class="gtag">RP Server</span></div>
+                <h3>GTA V</h3>
+                <p class="gdesc">Run your own FiveM or RageMP roleplay server. Full script support, instant setup, and low-ping nodes.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹399/mo</b></div>
+                    <button class="gcta">Get Server <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+        <!-- CS2 -->
+        <a href="https://billing.solocloud.host" class="gcard cs" data-cat="fps">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-crosshairs"></i> CS2 / CS:GO</div>
+                <div class="gtags"><span class="gtag">128-Tick</span><span class="gtag">Competitive</span><span class="gtag">Workshop</span></div>
+                <h3>CS2 / CS:GO</h3>
+                <p class="gdesc">128-tick servers with sub-20ms latency. Custom maps, plugins, and workshop content — ready in seconds.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹299/mo</b></div>
+                    <button class="gcta">Get Server <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+        <!-- RUST -->
+        <a href="https://billing.solocloud.host" class="gcard rust" data-cat="survival fps">
+            <div class="gcard-img"></div><div class="gcard-grad"></div><div class="gcard-glow"></div>
+            <div class="gcard-body">
+                <div class="gbadge"><i class="fa-solid fa-skull"></i> Survival PvP</div>
+                <div class="gtags"><span class="gtag">PvP</span><span class="gtag">Wipe Cycles</span><span class="gtag">Oxide</span></div>
+                <h3>Rust</h3>
+                <p class="gdesc">Brutal survival PvP at its best. High-tick servers with Oxide plugin support and automated wipe cycles.</p>
+                <div class="gcard-foot">
+                    <div class="gprice"><span>Starting from</span><b>₹349/mo</b></div>
+                    <button class="gcta">Get Server <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </a>
+
+    </div><!-- /big-grid -->
+
+    <!-- SMALL CARDS -->
+    <div class="section-eyebrow" style="margin-top:.5rem;">More Games</div>
+    <div class="small-grid" id="smallGrid">
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="survival adventure" style="border-color:rgba(139,92,246,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/346110/header.jpg');"></div>
+            <div class="scard-grad" style="background:linear-gradient(to top,rgba(3,7,18,.97),rgba(3,7,18,.2));"></div>
+            <div class="scard-body"><h4>ARK: Survival</h4><p>Tame dinosaurs, build bases.</p><div class="sprice">From <b style="color:#8b5cf6;">₹349/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="fps" style="border-color:rgba(245,158,11,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/440/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>Team Fortress 2</h4><p>Classic team-based shooter.</p><div class="sprice">From <b style="color:#f59e0b;">₹249/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="adventure" style="border-color:rgba(99,102,241,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/4000/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>Garry's Mod</h4><p>Sandbox fun, unlimited addons.</p><div class="sprice">From <b>₹229/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="adventure survival" style="border-color:rgba(16,185,129,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>Terraria</h4><p>Dig, build, fight and explore.</p><div class="sprice">From <b style="color:#10b981;">₹199/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="survival adventure" style="border-color:rgba(59,130,246,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/892970/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>Valheim</h4><p>Viking survival, brutal world.</p><div class="sprice">From <b style="color:#3b82f6;">₹299/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="survival fps" style="border-color:rgba(220,38,38,.25);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/251570/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>7 Days to Die</h4><p>Zombie survival co-op crafting.</p><div class="sprice">From <b style="color:#dc2626;">₹299/mo</b></div></div>
+        </a>
+
+        <a href="https://billing.solocloud.host" class="scard" data-cat="survival fps" style="border-color:rgba(148,163,184,.18);">
+            <div class="scard-img" style="background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/221100/header.jpg');"></div>
+            <div class="scard-grad"></div>
+            <div class="scard-body"><h4>DayZ</h4><p>Post-apocalyptic open-world.</p><div class="sprice">From <b>₹349/mo</b></div></div>
+        </a>
+
+        <div class="scard" data-cat="coming" style="cursor:default;border-color:rgba(255,255,255,.08);">
+            <div class="scard-img" style="background:linear-gradient(135deg,#0b1120,#1e293b);"></div>
+            <div class="scard-grad"></div>
+            <div class="s-coming"><span><i class="fa-solid fa-plus" style="margin-right:6px;"></i>More Coming Soon</span></div>
+            <div class="scard-body"><h4 style="color:var(--muted);">Your Game?</h4><p>Can't find it? Let us know.</p></div>
+        </div>
+
+    </div><!-- /small-grid -->
+</div>
+
+<!-- WHY STRIP -->
+<section class="why-strip">
+    <div class="why-inner">
+        <div class="why-item"><div class="why-icon"><i class="fa-solid fa-bolt-lightning"></i></div><h4>Instant Deployment</h4><p>Live in seconds — no setup forms needed.</p></div>
+        <div class="why-item"><div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div><h4>DDoS Protected</h4><p>Enterprise multi-layer filtering on every server.</p></div>
+        <div class="why-item"><div class="why-icon"><i class="fa-solid fa-earth-americas"></i></div><h4>3 Global Locations</h4><p>India, Singapore & Germany — lowest latency.</p></div>
+        <div class="why-item"><div class="why-icon"><i class="fa-solid fa-headset"></i></div><h4>24/7 Support</h4><p>Real humans ready whenever you need them.</p></div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Game Server Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul><li><a href="minecraft.html">Minecraft</a></li><li><a href="hytale.html">Hytale</a></li><li><a href="palworld.html">Palworld</a></li><li><a href="games.html">All Games</a></li></ul></div>
+        <div class="fc"><h4>Services</h4><ul><li><a href="bothosting.html">Bot Hosting</a></li><li><a href="domain.html">Domains</a></li><li><a href="vpshosting.html">VPS</a></li></ul></div>
+        <div class="fc"><h4>Company</h4><ul><li><a href="aboutus.html">About</a></li><li><a href="legal.html">Legal</a></li><li><a href="payment.html">Payments</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="fc"><h4>Tools</h4><ul><li><a href="tools.html">Panel Demo</a></li></ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<script>
+// Hamburger
+const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+hb.addEventListener('click', () => {
+    const o = mm.classList.toggle('open');
+    hb.classList.toggle('open', o);
+    document.body.style.overflow = o ? 'hidden' : '';
+});
+mm.addEventListener('click', e => {
+    if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+});
+function mSub(el){
+    const s = el.nextElementSibling;
+    s.classList.toggle('open');
+    el.classList.toggle('expanded', s.classList.contains('open'));
+}
+
+// Filter
+document.querySelectorAll('.f-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.f;
+        [...document.querySelectorAll('#bigGrid .gcard'),
+         ...document.querySelectorAll('#smallGrid .scard, #smallGrid div[data-cat]')].forEach(c => {
+            const cats = c.dataset.cat || '';
+            c.style.display = (f === 'all' || cats.includes(f)) ? 'flex' : 'none';
+        });
+    });
+});
+</script>
+</body>
+</html>

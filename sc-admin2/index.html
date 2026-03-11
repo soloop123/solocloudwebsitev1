@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoloCloud - Premium Game Server Hosting</title>
+    <meta name="description" content="SoloCloud provides high performance game server hosting with powerful hardware, low latency and 24/7 support. Deploy your server instantly.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #030712;
+            --bg-secondary: #0b1120;
+            --primary: #02afff;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #00e5ff;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --germany-glow: #00bfff;
+            --india-glow: #ff6b35;
+            --singapore-glow: #00ff88;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-light); overflow-x: hidden; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        h1, h2, h3, h4 { color: #fff; font-weight: 700; }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(to right, var(--text-light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        /* ===================== NAVBAR ===================== */
+        nav {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 1200px; height: 80px;
+            background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 40px;
+            z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; font-weight: 800; flex-shrink: 0; }
+        .logo img { height: 40px; }
+        .logo span { color: var(--primary); }
+
+        .nav-content-right { display: flex; align-items: center; gap: 2rem; height: 100%; }
+        .nav-links { display: flex; gap: 1.5rem; height: 100%; align-items: center; }
+        .nav-item { position: relative; height: 100%; display: flex; align-items: center; cursor: pointer; font-weight: 500; font-size: 0.9rem; transition: var(--transition); color: #ffffff; white-space: nowrap; }
+        .nav-item:hover { color: var(--primary); }
+
+        /* Dropdown */
+        .dropdown {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px);
+            opacity: 0; visibility: hidden; background: var(--bg-secondary); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 1.5rem; transition: var(--transition); display: grid; gap: 1rem; z-index: 100;
+        }
+        .nav-item:hover .dropdown { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
+        .dropdown-games { grid-template-columns: repeat(2, 1fr); width: 400px; }
+        .dropdown-single { grid-template-columns: 1fr; width: 220px; }
+
+        .icon-card { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 8px; transition: var(--transition); }
+        .icon-card:hover { background: rgba(255,255,255,0.05); }
+        .icon-card i { color: var(--primary); font-size: 1.2rem; }
+        .icon-card span { font-size: 0.85rem; font-weight: 600; }
+
+        .dropdown-games .icon-card {
+            position: relative; overflow: hidden; border-radius: 12px; height: 100px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; gap: 5px; padding: 0; border: 1px solid var(--glass-border); transition: var(--transition);
+        }
+        .dropdown-games .icon-card::before {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            z-index: 1; transition: var(--transition);
+        }
+        .dropdown-games .icon-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2); }
+        .dropdown-games .icon-card:hover::before { background: rgba(0,0,0,0.4); }
+        .dropdown-games .icon-card i, .dropdown-games .icon-card span { position: relative; z-index: 2; color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+
+        .bg-minecraft { background: url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat; }
+        .bg-palworld { background: url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat; }
+        .bg-hytale { background: url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat; }
+        .bg-allgames { background: url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat; }
+
+        .dropdown-single .icon-card {
+            display: flex; align-items: center; gap: 12px; padding: 12px 15px;
+            background: transparent; border-radius: 8px; border: 1px solid transparent;
+            height: auto; flex-direction: row; justify-content: flex-start; transition: var(--transition);
+        }
+        .dropdown-single .icon-card:hover { background: rgba(255,255,255,0.05); border-color: var(--glass-border); transform: translateX(5px); }
+        .dropdown-single .icon-card::before { display: none; }
+        .dropdown-single .icon-card i { color: var(--primary); font-size: 1.1rem; }
+        .dropdown-single .icon-card span { color: var(--text-light); font-size: 0.9rem; font-weight: 500; }
+
+        .nav-auth { display: flex; align-items: center; gap: 1rem; }
+        .btn-login { font-size: 0.9rem; font-weight: 500; }
+        .btn-signup { padding: 8px 18px; border-radius: 20px; font-size: 0.85rem; }
+
+        /* ===================== HAMBURGER ===================== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: transparent;
+            border: none;
+            z-index: 1100;
+        }
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ===================== MOBILE MENU ===================== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 7, 18, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            flex-direction: column;
+            padding: 100px 2rem 2rem;
+            overflow-y: auto;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .mobile-menu.open { display: flex; opacity: 1; transform: translateY(0); }
+
+        .mobile-nav-item { border-bottom: 1px solid var(--glass-border); }
+        .mobile-nav-link {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 0; font-size: 1.1rem; font-weight: 600;
+            color: #fff; cursor: pointer; transition: var(--transition);
+        }
+        .mobile-nav-link:hover { color: var(--primary); }
+        .mobile-nav-link i { font-size: 0.8rem; transition: var(--transition); }
+        .mobile-nav-link.expanded i { transform: rotate(180deg); color: var(--primary); }
+
+        .mobile-submenu { display: none; padding: 0.5rem 0 1rem 1rem; gap: 0.5rem; flex-direction: column; }
+        .mobile-submenu.open { display: flex; }
+        .mobile-submenu a {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.6rem 0.8rem; border-radius: 8px;
+            font-size: 0.95rem; color: var(--text-muted); transition: var(--transition);
+        }
+        .mobile-submenu a:hover { background: rgba(255,255,255,0.05); color: var(--primary); }
+        .mobile-submenu a i { color: var(--primary); width: 18px; text-align: center; }
+
+        .mobile-auth { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+        .mobile-auth a { display: block; text-align: center; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 1rem; }
+        .mobile-auth .btn-login-mobile { border: 1px solid var(--glass-border); color: #fff; }
+        .mobile-auth .btn-signup-mobile { background: var(--primary); color: #fff; }
+
+        /* ===================== HERO ===================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding: 140px 5% 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(3, 7, 18, 0.8), rgba(3, 7, 18, 0.6)), url('https://i.ibb.co/0RHbXbQR/hero.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-container { max-width: 1300px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; z-index: 2; }
+        .trust-badge { color: #ffb400; font-size: 0.9rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .hero-left h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
+        .hero-left h1 span { color: var(--primary); }
+        .hero-left p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px; }
+        .hero-btns { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+
+        .service-mini-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; max-width: 500px; }
+        .mini-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 12px; transition: var(--transition); cursor: pointer; }
+        .mini-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.08); }
+        .mini-card i { color: var(--primary); font-size: 1.2rem; flex-shrink: 0; }
+
+        /* Game Panel */
+        .game-panel { background: var(--glass-bg); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+        .game-row { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; background: rgba(255,255,255,0.02); border-radius: 16px; transition: var(--transition); border: 1px solid transparent; gap: 1rem; }
+        .game-row:hover { border-color: var(--primary); background: rgba(59,130,246,0.05); }
+        .game-info-box { display: flex; align-items: center; gap: 15px; }
+        .game-info-box i { font-size: 1.8rem; color: var(--primary); flex-shrink: 0; }
+        .game-pricing { text-align: right; flex-shrink: 0; }
+        .game-pricing span { font-size: 0.75rem; color: var(--text-muted); display: block; }
+        .game-pricing b { color: var(--accent); font-size: 1.1rem; }
+
+        .btn { padding: 14px 32px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: var(--transition); font-size: 1rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { background: transparent; border: 1px solid var(--glass-border); color: white; }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
+
+        /* ===================== STATS ===================== */
+        .stats-section { padding: 4rem 5%; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .stat-num { font-size: 3rem; font-weight: 800; color: var(--primary); display: block; }
+
+        /* ===================== WHY CHOOSE US ===================== */
+        .why-choose-us { padding: 6rem 5%; background: radial-gradient(circle at center, rgba(2, 175, 255, 0.05) 0%, var(--bg-main) 70%); }
+        .hexagon-container { display: grid; grid-template-columns: 1fr 300px 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; align-items: center; }
+        .hex-center {
+            width: 280px; height: 320px;
+            background: linear-gradient(135deg, var(--primary), #0066cc);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: #fff; padding: 20px;
+            box-shadow: 0 0 30px rgba(2, 175, 255, 0.4);
+        }
+        .hex-center h3 { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1px; background: none; -webkit-text-fill-color: white; color: white; }
+        .feature-column { display: flex; flex-direction: column; gap: 2rem; }
+        .feat-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 16px; transition: var(--transition); }
+        .feat-card:hover { transform: scale(1.05); border-color: var(--primary); box-shadow: 0 0 20px rgba(2, 175, 255, 0.2); }
+        .feat-icon-blue { font-size: 1.8rem; color: var(--primary); text-shadow: 0 0 10px rgba(2, 175, 255, 0.5); flex-shrink: 0; }
+        .feat-text h4 { font-size: 1.1rem; margin-bottom: 5px; color: white; }
+        .feat-text p { font-size: 0.85rem; color: var(--text-muted); }
+        .feat-right { flex-direction: row-reverse; text-align: right; }
+
+        /* ===================== INFLUENCERS ===================== */
+        .influencers-section { padding: 70px 5%; text-align: center; }
+        .influencers-section h2 { font-size: 2.4rem; margin-bottom: 50px; font-weight: 700; }
+        .influencers-row { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; }
+        .influencer { display: flex; align-items: center; gap: 12px; }
+        .influencer img { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; }
+        .name { display: block; font-weight: 600; font-size: 0.95rem; }
+        .role { font-size: 0.8rem; color: #9ca3af; }
+        .divider { width: 1px; height: 40px; background: rgba(255,255,255,0.1); }
+
+        /* ===================== LOCATIONS ===================== */
+        .locations-section { padding: 4rem 5%; }
+        .network-container { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; max-width: 1300px; margin: 0 auto; align-items: start; }
+        .map-wrap { position: relative; border-radius: 24px; border: 1px solid var(--glass-border); overflow: hidden; background: #030712; }
+        .map-img { width: 100%; display: block; }
+
+        .country-logo {
+            position: absolute; width: 32px; height: 24px; border-radius: 4px; overflow: hidden;
+            border: 2px solid white; cursor: pointer; transform: translate(-50%, -50%);
+            transition: var(--transition); background: var(--bg-main);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 2;
+        }
+        .country-logo img { width: 100%; height: 100%; object-fit: cover; }
+        .country-logo::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 300%; height: 300%;
+            border-radius: 50%; z-index: -1; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .country-logo.germany::after { background: radial-gradient(circle, var(--germany-glow) 0%, transparent 70%); }
+        .country-logo.india::after { background: radial-gradient(circle, var(--india-glow) 0%, transparent 70%); }
+        .country-logo.singapore::after { background: radial-gradient(circle, var(--singapore-glow) 0%, transparent 70%); }
+        .country-logo:hover::after, .country-logo.active::after { opacity: 1; animation: glowPulse 2s infinite; }
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
+        }
+        .country-logo:hover { transform: translate(-50%, -50%) scale(1.2); border-color: #00ff88; box-shadow: 0 0 15px rgba(0,255,136,0.6); }
+        .country-logo.active { border-color: #00ff88; transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 10px rgba(0,255,136,0.8), 0 0 20px rgba(0,255,136,0.4), 0 2px 4px rgba(0,0,0,0.5); z-index: 10; }
+        .country-logo.germany { top: 27%; left: 23%; }
+        .country-logo.india { top: 38%; left: 72%; }
+        .country-logo.singapore { top: 52%; left: 82%; }
+
+        /* Mobile Location Tabs */
+        .mobile-location-tabs {
+            display: none;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .location-tab-btn {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 18px; border-radius: 50px;
+            border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03);
+            color: var(--text-muted); font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition); font-family: 'Poppins', sans-serif;
+        }
+        .location-tab-btn img { width: 20px; height: 15px; border-radius: 2px; object-fit: cover; }
+        .location-tab-btn.active { border-color: var(--primary); color: #fff; background: rgba(2,175,255,0.1); }
+
+        .location-card { background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem; transition: var(--transition); }
+        .location-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border); }
+        .location-flag-large { width: 60px; height: 45px; border-radius: 8px; object-fit: cover; border: 2px solid var(--primary); }
+        .location-title h3 { font-size: 2rem; margin-bottom: 0.2rem; }
+        .location-title p { color: var(--text-muted); font-size: 0.9rem; }
+        .location-description { margin-bottom: 1.5rem; color: var(--text-light); font-size: 1rem; line-height: 1.6; }
+        .learn-more-btn { display: inline-block; padding: 0.8rem 1.5rem; background: transparent; border: 1px solid var(--primary); border-radius: 8px; color: var(--primary); font-weight: 500; transition: var(--transition); text-align: center; }
+        .learn-more-btn:hover { background: var(--primary); color: white; }
+
+        /* ===================== REVIEWS ===================== */
+        .reviews-section { padding: 80px 5%; background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.03)); }
+        .reviews-header { text-align: center; margin-bottom: 4rem; }
+        .trustpilot-rating { display: flex; align-items: center; justify-content: center; gap: 10px; color: #00b67a; font-size: 1.1rem; flex-wrap: wrap; }
+        .reviews-masonry { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+        .review-card { padding: 2rem; display: flex; flex-direction: column; gap: 1.2rem; transition: var(--transition); }
+        .review-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .review-card.highlighted { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.05); }
+        .review-stars { color: #ffb400; font-size: 0.9rem; display: flex; gap: 4px; }
+        .review-text { font-style: italic; color: var(--text-light); font-size: 0.95rem; line-height: 1.7; flex-grow: 1; }
+        .review-user { display: flex; align-items: center; gap: 15px; margin-top: 10px; padding-top: 15px; border-top: 1px solid var(--glass-border); }
+        .user-avatar { width: 45px; height: 45px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+        .user-name { display: block; font-weight: 600; font-size: 1rem; }
+        .user-status { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--text-muted); }
+        .user-status i { color: #00b67a; }
+
+        /* ===================== FOOTER ===================== */
+        footer { background: #02040a; border-top: 1px solid var(--glass-border); padding: 5rem 5% 2rem; margin-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto; }
+        .footer-brand .logo { font-size: 2rem; margin-bottom: 1rem; display: inline-block; }
+        .footer-brand p { margin: 1.5rem 0 2rem 0; color: var(--text-muted); font-size: 1rem; line-height: 1.6; max-width: 300px; }
+        .social-links { display: flex; gap: 1.2rem; margin-top: 1rem; }
+        .social-links a { color: var(--text-muted); font-size: 1.4rem; transition: var(--transition); }
+        .social-links a:hover { color: var(--primary) !important; transform: translateY(-3px); }
+        .footer-col h4 { font-size: 1.3rem; margin-bottom: 2rem; color: white; }
+        .footer-col ul li { margin-bottom: 1.2rem; }
+        .footer-col ul li a { color: var(--text-muted); font-size: 1rem; transition: 0.3s; font-weight: 400; }
+        .footer-col ul li a:hover { color: var(--primary) !important; padding-left: 5px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; max-width: 1300px; margin: 3rem auto 0; padding: 2rem 0 1rem; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.95rem; flex-wrap: wrap; gap: 1rem; }
+        .footer-bottom div:last-child { display: flex; gap: 2rem; }
+        .footer-bottom a { color: var(--text-muted); font-size: 0.95rem; transition: 0.3s; }
+        .footer-bottom a:hover { color: var(--primary); }
+
+        /* ===================== RESPONSIVE ===================== */
+
+        /* Tablet: up to 992px */
+        @media (max-width: 992px) {
+            .hamburger { display: flex; }
+            .nav-content-right { display: none; }
+
+            nav { height: 70px; padding: 0 1.5rem; top: 12px; width: 92%; }
+            .logo { font-size: 1.3rem; }
+
+            .hero { padding: 110px 5% 60px; background-attachment: scroll; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+            .hero-left h1 { font-size: 2.4rem; }
+            .hero-left p { margin: 0 auto 2rem; }
+            .hero-btns { justify-content: center; }
+            .service-mini-grid { margin: 0 auto; max-width: 420px; }
+
+            .hero-right { display: none; } /* Hide game panel on mobile - already shown in mini cards */
+
+            .hexagon-container { grid-template-columns: 1fr; justify-items: center; }
+            .hex-center { margin: 2rem 0; width: 220px; height: 250px; }
+            .hex-center h3 { font-size: 1.3rem; }
+            .feat-right { flex-direction: row; text-align: left; }
+
+            .network-container { grid-template-columns: 1fr; }
+            .mobile-location-tabs { display: flex; }
+
+            .influencers-row { gap: 15px; }
+            .divider { display: none; }
+
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .footer-brand { grid-column: span 2; }
+
+            .reviews-masonry { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+        }
+
+        /* Mobile: up to 768px */
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+
+            .hero-left h1 { font-size: 2rem; }
+            .hero-left p { font-size: 0.95rem; }
+            .service-mini-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .mini-card { padding: 0.75rem; font-size: 0.85rem; }
+            .btn { padding: 12px 24px; font-size: 0.9rem; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .stat-num { font-size: 2.2rem; }
+
+            .feat-card { padding: 1.2rem; gap: 1rem; }
+            .feat-text h4 { font-size: 1rem; }
+            .feat-text p { font-size: 0.8rem; }
+
+            .influencers-section h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            .influencer img { width: 52px; height: 52px; }
+
+            .location-card { padding: 1.5rem; }
+            .location-title h3 { font-size: 1.6rem; }
+            .location-flag-large { width: 48px; height: 36px; }
+
+            .reviews-masonry { grid-template-columns: 1fr; }
+            .review-card { padding: 1.5rem; }
+
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .footer-brand { grid-column: span 2; }
+            .footer-col h4 { font-size: 1.1rem; margin-bottom: 1.2rem; }
+            .footer-col ul li a { font-size: 0.9rem; }
+        }
+
+        /* Small mobile: up to 480px */
+        @media (max-width: 480px) {
+            nav { height: 64px; border-radius: 32px; padding: 0 1.2rem; top: 10px; width: 94%; }
+            .logo { font-size: 1.1rem; }
+            .logo img { height: 32px; }
+
+            .hero { padding: 95px 4% 50px; }
+            .hero-left h1 { font-size: 1.75rem; }
+            .trust-badge { font-size: 0.8rem; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .stat-num { font-size: 1.9rem; }
+
+            .location-tab-btn { padding: 8px 12px; font-size: 0.78rem; }
+
+            .influencer { flex-direction: column; text-align: center; gap: 6px; }
+            .influencers-row { gap: 20px; }
+
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            .footer-brand { grid-column: span 2; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom div:last-child { flex-wrap: wrap; justify-content: center; }
+            .social-links { justify-content: center; }
+
+            .hexagon-container { gap: 1rem; }
+            .hex-center { width: 180px; height: 205px; }
+            .hex-center h3 { font-size: 1rem; }
+        }
+
+        /* Very small: up to 360px */
+        @media (max-width: 360px) {
+            .hero-left h1 { font-size: 1.5rem; }
+            .service-mini-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .location-tab-btn span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== NAVBAR ========== -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+
+    <!-- Desktop Nav -->
+    <div class="nav-content-right">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i>
+                <div class="dropdown dropdown-games">
+                    <a href="minecraft.html" class="icon-card bg-minecraft"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="icon-card bg-hytale"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="icon-card bg-palworld"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="icon-card bg-allgames"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Services <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i>
+                <div class="dropdown dropdown-single">
+                    <a href="bothosting.html" class="icon-card"><i class="fa-solid fa-robot"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="icon-card"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="icon-card"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Company <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:4px;"></i>
+                <div class="dropdown dropdown-single">
+                    <a href="aboutus.html" class="icon-card"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="icon-card"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="icon-card"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="icon-card"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="icon-card"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="icon-card"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="icon-card"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item btn-login">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn btn-primary btn-signup">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<!-- ========== MOBILE MENU ========== -->
+<div class="mobile-menu" id="mobileMenu">
+    <ul>
+        <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link" style="color: var(--primary);">Home</a></li>
+        <li class="mobile-nav-item"><a href="minecraft.html" class="mobile-nav-link">Minecraft</a></li>
+
+        <li class="mobile-nav-item">
+            <div class="mobile-nav-link" onclick="toggleMobileSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mobile-submenu">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> See All Games</a>
+            </div>
+        </li>
+
+        <li class="mobile-nav-item">
+            <div class="mobile-nav-link" onclick="toggleMobileSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mobile-submenu">
+                <a href="bothosting.html"><i class="fa-solid fa-robot"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+
+        <li class="mobile-nav-item">
+            <div class="mobile-nav-link" onclick="toggleMobileSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mobile-submenu">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+
+        <li class="mobile-nav-item"><a href="tools.html" class="mobile-nav-link">Tools</a></li>
+    </ul>
+
+    <div class="mobile-auth">
+        <a href="https://billing.solocloud.host/login" class="btn-login-mobile">Login</a>
+        <a href="https://billing.solocloud.host/register" class="btn-signup-mobile">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+    <div class="hero-container">
+        <div class="hero-left">
+            <div class="trust-badge">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <span>4.9/5 Trusted Customer Reviews</span>
+            </div>
+            <h1>Experience Next Level <span>Game Hosting</span> with SoloCloud</h1>
+            <p>The Ultimate 24/7 Game Hosting Experience Delivering Unmatched Speed, Reliability, and Power Since 2023</p>
+            <div class="hero-btns">
+                <a href="games.html"><button class="btn btn-primary">View Plans</button></a>
+                <a href="https://billing.solocloud.host/login"><button class="btn btn-outline">Get Started</button></a>
+            </div>
+            <div class="service-mini-grid">
+                <div class="mini-card"><i class="fa-solid fa-gamepad"></i><span>Game Servers</span></div>
+                <div class="mini-card"><i class="fa-solid fa-robot"></i><span>Bot Hosting</span></div>
+                <div class="mini-card"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></div>
+                <div class="mini-card"><i class="fa-solid fa-globe"></i><span>Domains</span></div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="game-panel">
+                <div class="game-row">
+                    <div class="game-info-box"><i class="fa-solid fa-gamepad"></i><div><h4>Game Servers</h4><p>Minecraft, Hytale, Palworld & More</p></div></div>
+                    <div class="game-pricing"><span>Starting at</span><b>₹199/mo</b></div>
+                </div>
+                <div class="game-row">
+                    <div class="game-info-box"><i class="fa-solid fa-robot"></i><div><h4>Bot Hosting</h4><p>JavaScript, Python & More</p></div></div>
+                    <div class="game-pricing"><span>Starting at</span><b>₹99/mo</b></div>
+                </div>
+                <div class="game-row">
+                    <div class="game-info-box"><i class="fa-solid fa-server"></i><div><h4>VPS Hosting</h4><p>Ubuntu, Debian & More</p></div></div>
+                    <div class="game-pricing"><span>Starting at</span><b>₹499/mo</b></div>
+                </div>
+                <div class="game-row">
+                    <div class="game-info-box"><i class="fa-solid fa-globe"></i><div><h4>Domains</h4><p>Get A Domain Name</p></div></div>
+                    <div class="game-pricing"><span>Starting at</span><b>₹199/mo</b></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ========== STATS ========== -->
+<section class="stats-section">
+    <div class="stats-grid">
+        <div><span class="stat-num" data-target="1000">0</span><p>Servers Deployed</p></div>
+        <div><span class="stat-num" data-target="5000">0</span><p>Active Players</p></div>
+        <div><span class="stat-num" data-target="3">0</span><p>Global Locations</p></div>
+        <div><span class="stat-num" data-target="1000000">0</span><p>Attacks Mitigated</p></div>
+    </div>
+</section>
+
+
+
+<!-- ========== WHY CHOOSE US ========== -->
+<section class="why-choose-us">
+    <h2 class="section-title">High Performance Infrastructure</h2>
+    <div class="hexagon-container">
+        <div class="feature-column">
+            <div class="feat-card">
+                <div class="feat-icon-blue"><i class="fa-solid fa-microchip"></i></div>
+                <div class="feat-text"><h4>High Performance Nodes</h4><p>Powered by enterprise grade AMD EPYC and Intel processors for maximum stability and speed.</p></div>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon-blue"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="feat-text"><h4>Advanced DDoS Protection</h4><p>Enterprise level protection with multi layer filtering to keep your servers online during attacks.</p></div>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon-blue"><i class="fa-solid fa-bolt-lightning"></i></div>
+                <div class="feat-text"><h4>Instant Server Deployment</h4><p>Your server is automatically deployed and ready to use within seconds after purchase.</p></div>
+            </div>
+        </div>
+        <div class="hex-center"><h3>WHY CHOOSE SOLO CLOUD</h3></div>
+        <div class="feature-column">
+            <div class="feat-card feat-right">
+                <div class="feat-icon-blue"><i class="fa-solid fa-earth-americas"></i></div>
+                <div class="feat-text"><h4>Global Server Locations</h4><p>Strategically located datacenters around the world to ensure the lowest possible latency.</p></div>
+            </div>
+            <div class="feat-card feat-right">
+                <div class="feat-icon-blue"><i class="fa-solid fa-gauge-high"></i></div>
+                <div class="feat-text"><h4>High Frequency CPUs</h4><p>Dedicated high performance CPU resources designed for smooth gameplay and fast processing.</p></div>
+            </div>
+            <div class="feat-card feat-right">
+                <div class="feat-icon-blue"><i class="fa-solid fa-headset"></i></div>
+                <div class="feat-text"><h4>24/7 Expert Support</h4><p>Our experienced support team is available around the clock to assist you anytime.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== INFLUENCERS ========== -->
+<section class="influencers-section">
+    <h2>Trusted by 1,000+ Gamers & Creators</h2>
+    <div class="influencers-row">
+        <div class="influencer">
+            <img src="https://yt3.googleusercontent.com/_GTQUHxBWi36_WQFSV8N134iktb5r4Cz6K1VHSTiocPJkRd4DlIjjGFkLGxARNtcNLm5MXO1Kg=s160-c-k-c0x00ffffff-no-rj" alt="SoloPlayz">
+            <div><span class="name">SoloPlayz</span><span class="role">YouTuber</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="influencer">
+            <img src="https://yt3.googleusercontent.com/2uaGtJ0tfxzEWbSFUOPkXzXtz6gqTTn292gYpYmHefY3hh7cLKxLP-Xb_qy6YQUZ66iiN2m-Hw=s160-c-k-c0x00ffffff-no-rj" alt="Sideyy">
+            <div><span class="name">Sideyy</span><span class="role">YouTuber</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="influencer">
+            <img src="https://yt3.googleusercontent.com/ZrCoJmsGfrVXrvegwYvJaMUS2NplTJof0X3TaERyRPJkl2OANDuC4DtcyC1IeGCvBdRS2Rz1514=s160-c-k-c0x00ffffff-no-rj" alt="Not Sensei">
+            <div><span class="name">Not Sensei</span><span class="role">YouTuber</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="influencer">
+            <img src="https://yt3.googleusercontent.com/ju64_k0PCgUUT5ntCHmFq7g8miylIeo5qyHxMPXMuttt-gG2qtNtx6rcFxJQJg78mm9UEH9X=s160-c-k-c0x00ffffff-no-rj" alt="NotGamerPratham">
+            <div><span class="name">NotGamerPratham</span><span class="role">YouTuber</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== LOCATIONS ========== -->
+<section class="locations-section">
+    <h2 class="section-title">Global Data Center Network 3+ Locations</h2>
+
+    <!-- Mobile tabs -->
+    <div class="mobile-location-tabs" id="mobileLocationTabs">
+        <button class="location-tab-btn active" onclick="selectLocationTab(this, 'india')">
+            <img src="https://flagcdn.com/w80/in.png" alt="India"> <span>India</span>
+        </button>
+        <button class="location-tab-btn" onclick="selectLocationTab(this, 'singapore')">
+            <img src="https://flagcdn.com/w80/sg.png" alt="Singapore"> <span>Singapore</span>
+        </button>
+        <button class="location-tab-btn" onclick="selectLocationTab(this, 'germany')">
+            <img src="https://flagcdn.com/w80/de.png" alt="Germany"> <span>Germany</span>
+        </button>
+    </div>
+
+    <div class="network-container">
+        <div class="map-wrap glass-panel">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" class="map-img" alt="SoloCloud Global Map">
+            <div class="country-logo germany" onclick="showLocation('germany')"><img src="https://flagcdn.com/w80/de.png" alt="Germany"></div>
+            <div class="country-logo india" onclick="showLocation('india')"><img src="https://flagcdn.com/w80/in.png" alt="India"></div>
+            <div class="country-logo singapore" onclick="showLocation('singapore')"><img src="https://flagcdn.com/w80/sg.png" alt="Singapore"></div>
+        </div>
+
+        <div class="location-card glass-panel" id="locationCard"></div>
+    </div>
+</section>
+
+<!-- ========== REVIEWS ========== -->
+<section class="reviews-section">
+    <div class="reviews-header">
+        <h2 class="section-title">Trusted by Customers</h2>
+        <div class="trustpilot-rating">
+            <i class="fa-solid fa-star"></i>
+            <span>Excellent 4.9/5 on <a href="https://www.trustpilot.com/review/solocloud.host" target="_blank" rel="noopener noreferrer"><b>Trustpilot</b></a></span>
+        </div>
+    </div>
+    <div class="reviews-masonry">
+        <div class="review-card glass-panel">
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="review-text">"I run a survival server for my friends and the performance on SoloCloud is amazing. No lag and TPS stays stable even with many players online. Definitely one of the best hosts I've used."</p>
+            <div class="review-user">
+                <div class="user-avatar">AS</div>
+                <div class="user-info"><span class="user-name">Arjun S.</span><span class="user-status"><i class="fa-solid fa-circle-check"></i> Verified Customer</span></div>
+            </div>
+        </div>
+        <div class="review-card glass-panel highlighted">
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="review-text">"Great support team. I had an issue installing a modpack and the SoloCloud support team helped me fix it within minutes."</p>
+            <div class="review-user">
+                <div class="user-avatar">RP</div>
+                <div class="user-info"><span class="user-name">Rohan P.</span><span class="user-status"><i class="fa-solid fa-circle-check"></i> Verified Customer</span></div>
+            </div>
+        </div>
+        <div class="review-card glass-panel">
+            <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="review-text">"My SMP server has around 60+ players and SoloCloud handles it smoothly. Startup time is fast and the node performance is really fast. Highly recommended."</p>
+            <div class="review-user">
+                <div class="user-avatar">AK</div>
+                <div class="user-info"><span class="user-name">Amit K.</span><span class="user-status"><i class="fa-solid fa-circle-check"></i> Verified Customer</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Next generation game hosting providing premium performance and reliability for communities worldwide.</p>
+            <div class="social-links">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Games</h4>
+            <ul>
+                <li><a href="minecraft.html">Minecraft</a></li>
+                <li><a href="hytale.html">Hytale</a></li>
+                <li><a href="palworld.html">Palworld</a></li>
+                <li><a href="games.html">See All Games</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href="bothosting.html">Bot Hosting</a></li>
+                <li><a href="domain.html">Domain Name</a></li>
+                <li><a href="vpshosting.html">VPS Hosting</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="aboutus.html">About us</a></li>
+                <li><a href="legal.html">Legal</a></li>
+                <li><a href="payment.html">Payment</a></li>
+                <li><a href="branding.html">Branding</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+                <li><a href="infrastructure.html">Infrastructure</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Tools</h4>
+            <ul>
+                <li><a href="tools.html">Tools</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div>© 2026 SoloCloud. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<script>
+    // ========== STATS COUNTER ==========
+    const counters = document.querySelectorAll(".stat-num");
+    counters.forEach(counter => {
+        const target = +counter.getAttribute("data-target");
+        let count = 0;
+        const speed = 60;
+        const updateCount = () => {
+            const increment = target / speed;
+            if (count < target) {
+                count += increment;
+                counter.innerText = Math.ceil(count).toLocaleString();
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = target.toLocaleString() + "+";
+            }
+        };
+        updateCount();
+    });
+
+    // ========== HAMBURGER / MOBILE MENU ==========
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    mobileMenu.addEventListener('click', (e) => {
+        if (e.target === mobileMenu) {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+    });
+
+    function toggleMobileSub(el) {
+        const submenu = el.nextElementSibling;
+        const isOpen = submenu.classList.toggle('open');
+        el.classList.toggle('expanded', isOpen);
+    }
+
+    // ========== LOCATION LOGIC ==========
+    const locations = {
+        germany: {
+            name: 'GERMANY', country: 'EUROPE',
+            flag: 'https://flagcdn.com/w80/de.png',
+            description: 'Central European location providing excellent connectivity to EU countries with low latency.'
+        },
+        india: {
+            name: 'INDIA', country: 'ASIA',
+            flag: 'https://flagcdn.com/w80/in.png',
+            description: 'Great location for India and South Asia. Optimized for low latency to major Indian ISPs.'
+        },
+        singapore: {
+            name: 'SINGAPORE', country: 'ASIA',
+            flag: 'https://flagcdn.com/w80/sg.png',
+            description: 'Southeast Asia hub with excellent connectivity to Indonesia, Malaysia, Thailand, and many more.'
+        }
+    };
+
+    function showLocation(key) {
+        const loc = locations[key];
+        const card = document.getElementById('locationCard');
+
+        document.querySelectorAll('.country-logo').forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.country-logo.${key}`);
+        if (active) active.classList.add('active');
+
+        card.innerHTML = `
+            <div class="location-header">
+                <img src="${loc.flag}" class="location-flag-large" alt="${loc.country}">
+                <div class="location-title">
+                    <h3>${loc.name}</h3>
+                    <p>${loc.country}</p>
+                </div>
+            </div>
+            <div class="location-description">${loc.description}</div>
+            <a href="infrastructure.html" class="learn-more-btn" style="display:block;">
+                Learn More <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i>
+            </a>
+        `;
+    }
+
+    function selectLocationTab(btn, key) {
+        document.querySelectorAll('.location-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        showLocation(key);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => showLocation('india'));
+</script>
+</body>
+</html>

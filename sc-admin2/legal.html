@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal & Terms of Service — SoloCloud Hosting</title>
+    <meta name="description" content="SoloCloud Terms of Service, Acceptable Use Policy, and legal documentation.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:      #030712;
+            --bg2:     #080f1f;
+            --bg3:     #0d1526;
+            --primary: #02afff;
+            --acc:     #00e5ff;
+            --border:  rgba(255,255,255,0.07);
+            --border-p:rgba(2,175,255,0.20);
+            --text:    #f1f5f9;
+            --muted:   #64748b;
+            --muted2:  #94a3b8;
+            --green:   #23d18b;
+            --red:     #ef4444;
+            --yellow:  #f59e0b;
+            --tr:      all .3s cubic-bezier(.4,0,.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc {background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{flex-direction:row;justify-content:flex-start;padding:12px 15px;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ══════════════
+           HERO
+        ══════════════ */
+        .hero{
+            position:relative;padding:160px 5% 70px;
+            text-align:center;overflow:hidden;
+        }
+        .hero::before{
+            content:'';position:absolute;inset:0;
+            background:radial-gradient(ellipse 65% 55% at 50% 20%,rgba(2,175,255,.08) 0%,transparent 60%);
+            z-index:0;
+        }
+        .hero::after{
+            content:'';position:absolute;inset:0;
+            background-image:radial-gradient(rgba(2,175,255,.13) 1px,transparent 1px);
+            background-size:38px 38px;z-index:0;
+            mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 20%,transparent 100%);
+        }
+        .hero-content{position:relative;z-index:2;max-width:700px;margin:0 auto;}
+        .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.28);border-radius:50px;padding:6px 20px;font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.6rem;}
+        .hero h1{font-size:3.2rem;font-weight:900;line-height:1.15;margin-bottom:1rem;}
+        .hero h1 .hl{background:linear-gradient(135deg,var(--primary),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:.95rem;color:var(--muted2);line-height:1.75;max-width:540px;margin:0 auto;}
+
+        /* last updated badge */
+        .updated-badge{
+            display:inline-flex;align-items:center;gap:6px;
+            margin-top:1.8rem;
+            background:rgba(255,255,255,.03);border:1px solid var(--border);
+            border-radius:50px;padding:6px 16px;
+            font-size:.75rem;color:var(--muted2);
+            font-family:'JetBrains Mono',monospace;
+        }
+        .updated-badge i{color:var(--green);}
+
+        /* ══════════════
+           LAYOUT — SIDEBAR + CONTENT
+        ══════════════ */
+        .legal-layout{
+            max-width:1200px;margin:4rem auto 6rem;
+            padding:0 5%;
+            display:grid;
+            grid-template-columns:280px 1fr;
+            gap:3rem;
+            align-items:start;
+        }
+
+        /* ── SIDEBAR (sticky nav) ── */
+        .sidebar{
+            position:sticky;top:110px;
+        }
+        .sidebar-card{
+            background:rgba(255,255,255,.02);
+            border:1px solid var(--border);
+            border-radius:18px;
+            overflow:hidden;
+        }
+        .sidebar-head{
+            padding:1.2rem 1.4rem;
+            border-bottom:1px solid var(--border);
+            font-size:.72rem;font-weight:700;letter-spacing:2.5px;
+            text-transform:uppercase;color:var(--muted);
+            display:flex;align-items:center;gap:8px;
+        }
+        .sidebar-head i{color:var(--primary);}
+        .sidebar-list{padding:.6rem 0;}
+        .sidebar-link{
+            display:flex;align-items:center;gap:10px;
+            padding:.7rem 1.4rem;
+            font-size:.84rem;font-weight:500;color:var(--muted2);
+            cursor:pointer;transition:var(--tr);
+            border-left:2px solid transparent;
+        }
+        .sidebar-link:hover{color:#fff;background:rgba(255,255,255,.03);}
+        .sidebar-link.active{color:var(--primary);border-left-color:var(--primary);background:rgba(2,175,255,.05);}
+        .sidebar-link .sec-num{
+            font-size:.65rem;font-weight:700;color:var(--muted);
+            background:rgba(255,255,255,.06);border-radius:4px;
+            padding:2px 6px;font-family:'JetBrains Mono',monospace;
+            flex-shrink:0;transition:var(--tr);
+        }
+        .sidebar-link.active .sec-num{background:rgba(2,175,255,.15);color:var(--primary);}
+
+        /* ── MAIN CONTENT ── */
+        .legal-content{}
+
+        /* agreement notice */
+        .agreement-notice{
+            background:rgba(2,175,255,.06);
+            border:1px solid rgba(2,175,255,.2);
+            border-radius:14px;
+            padding:1.2rem 1.5rem;
+            margin-bottom:2.5rem;
+            display:flex;align-items:flex-start;gap:12px;
+            font-size:.85rem;color:var(--muted2);line-height:1.6;
+        }
+        .agreement-notice i{color:var(--primary);margin-top:2px;flex-shrink:0;font-size:1rem;}
+        .agreement-notice b{color:#fff;}
+
+        /* section cards */
+        .tos-section{
+            background:rgba(255,255,255,.02);
+            border:1px solid var(--border);
+            border-radius:20px;
+            margin-bottom:1.5rem;
+            overflow:hidden;
+            transition:var(--tr);
+            scroll-margin-top:110px;
+        }
+        .tos-section:hover{border-color:var(--border-p);}
+        .tos-section.danger:hover{border-color:rgba(239,68,68,.25);}
+        .tos-section.warn:hover{border-color:rgba(245,158,11,.25);}
+
+        .tos-header{
+            display:flex;align-items:center;gap:1.2rem;
+            padding:1.6rem 2rem;
+            cursor:pointer;
+            user-select:none;
+            transition:var(--tr);
+        }
+        .tos-header:hover{background:rgba(255,255,255,.02);}
+
+        .sec-badge{
+            display:flex;align-items:center;justify-content:center;
+            width:48px;height:48px;border-radius:14px;
+            font-size:1.2rem;flex-shrink:0;
+            transition:var(--tr);
+        }
+        .badge-blue{background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.2);}
+        .badge-green{background:rgba(35,209,139,.1);border:1px solid rgba(35,209,139,.2);}
+        .badge-yellow{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);}
+        .badge-red{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);}
+        .badge-purple{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);}
+
+        .tos-section:hover .sec-badge{transform:scale(1.08);}
+
+        .tos-header-text{flex:1;}
+        .tos-sec-label{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;font-family:'JetBrains Mono',monospace;}
+        .tos-sec-title{font-size:1.1rem;font-weight:800;}
+
+        .tos-chevron{color:var(--muted);font-size:.8rem;transition:var(--tr);flex-shrink:0;}
+        .tos-section.open .tos-chevron{transform:rotate(180deg);color:var(--primary);}
+
+        .tos-body{
+            display:none;
+            padding:0 2rem 2rem;
+            border-top:1px solid var(--border);
+        }
+        .tos-section.open .tos-body{display:block;}
+        .tos-body-inner{padding-top:1.4rem;}
+        .tos-body p{font-size:.92rem;color:var(--muted2);line-height:1.8;margin-bottom:1rem;}
+        .tos-body p:last-child{margin-bottom:0;}
+
+        /* rule pills inside body */
+        .rule-pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
+        .rule-pill{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:5px 14px;border-radius:50px;
+            font-size:.76rem;font-weight:600;
+        }
+        .rp-red{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;}
+        .rp-green{background:rgba(35,209,139,.1);border:1px solid rgba(35,209,139,.2);color:#6ee7b7;}
+        .rp-yellow{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:#fcd34d;}
+        .rp-blue{background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.2);color:var(--acc);}
+
+        /* highlight box */
+        .tos-highlight{
+            background:rgba(2,175,255,.05);
+            border:1px solid rgba(2,175,255,.15);
+            border-radius:10px;padding:1rem 1.2rem;
+            margin-top:1rem;
+            font-size:.85rem;color:var(--muted2);line-height:1.65;
+        }
+        .tos-highlight i{color:var(--primary);margin-right:6px;}
+        .tos-highlight.warn-box{background:rgba(245,158,11,.05);border-color:rgba(245,158,11,.2);}
+        .tos-highlight.warn-box i{color:var(--yellow);}
+        .tos-highlight.danger-box{background:rgba(239,68,68,.05);border-color:rgba(239,68,68,.2);}
+        .tos-highlight.danger-box i{color:var(--red);}
+
+        /* ── contact strip ── */
+        .contact-strip{
+            margin-top:2rem;
+            background:rgba(255,255,255,.02);border:1px solid var(--border);
+            border-radius:16px;padding:1.5rem 2rem;
+            display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;
+        }
+        .contact-strip-text h4{font-size:1rem;font-weight:700;margin-bottom:.3rem;}
+        .contact-strip-text p{font-size:.82rem;color:var(--muted2);}
+        .contact-strip-btns{display:flex;gap:.8rem;flex-wrap:wrap;}
+        .cs-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:700;transition:var(--tr);border:none;cursor:pointer;font-family:'Poppins',sans-serif;}
+        .cs-discord{background:#5865f2;color:#fff;}
+        .cs-discord:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(88,101,242,.4);}
+        .cs-contact{background:rgba(255,255,255,.05);border:1px solid var(--border);color:#fff;}
+        .cs-contact:hover{background:rgba(255,255,255,.1);}
+
+        /* ══════════════
+           FOOTER
+        ══════════════ */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .legal-layout{grid-template-columns:1fr;gap:2rem;}
+            .sidebar{position:static;}
+            .sidebar-list{display:flex;flex-wrap:wrap;gap:.4rem;padding:.8rem;}
+            .sidebar-link{border-left:none;border-radius:50px;padding:.5rem 1rem;border:1px solid var(--border);}
+            .sidebar-link.active{border-color:var(--primary);}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero{padding:120px 5% 50px;}
+            .hero h1{font-size:2.4rem;}
+            .tos-header{padding:1.2rem 1.4rem;gap:1rem;}
+            .tos-body{padding:0 1.4rem 1.4rem;}
+            .contact-strip{flex-direction:column;text-align:center;}
+            .contact-strip-btns{justify-content:center;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero h1{font-size:2rem;}
+            .legal-layout{padding:0 4%;margin:2.5rem auto 4rem;}
+            .sec-badge{width:40px;height:40px;font-size:1rem;}
+            .tos-sec-title{font-size:1rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-brands fa-discord"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html"><i class="fa-brands fa-discord"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html" style="color:var(--primary)"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-pill"><i class="fa-solid fa-shield-halved"></i>&nbsp; Legal</div>
+        <h1>Terms of <span class="hl">Service</span></h1>
+        <p>By using any SoloCloud service you agree to the terms outlined below. Please read them carefully — they are written in plain language, not legalese.</p>
+        <div class="updated-badge"><i class="fa-solid fa-circle-check"></i> Last updated: March 2026</div>
+    </div>
+</section>
+
+<!-- ══════════ LEGAL LAYOUT ══════════ -->
+<div class="legal-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <div class="sidebar-head"><i class="fa-solid fa-list"></i> Contents</div>
+            <div class="sidebar-list" id="sidebarList">
+                <div class="sidebar-link active" onclick="scrollTo('s01')"><span class="sec-num">01</span> Acceptable Use</div>
+                <div class="sidebar-link" onclick="scrollTo('s02')"><span class="sec-num">02</span> Account Security</div>
+                <div class="sidebar-link" onclick="scrollTo('s03')"><span class="sec-num">03</span> Payments & Refunds</div>
+                <div class="sidebar-link" onclick="scrollTo('s04')"><span class="sec-num">04</span> Pricing Policy</div>
+                <div class="sidebar-link" onclick="scrollTo('s05')"><span class="sec-num">05</span> Service Uptime</div>
+                <div class="sidebar-link" onclick="scrollTo('s06')"><span class="sec-num">06</span> Data & Backups</div>
+                <div class="sidebar-link" onclick="scrollTo('s07')"><span class="sec-num">07</span> Suspension</div>
+                <div class="sidebar-link" onclick="scrollTo('s08')"><span class="sec-num">08</span> Support Policy</div>
+                <div class="sidebar-link" onclick="scrollTo('s09')"><span class="sec-num">09</span> Fraud Prevention</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="legal-content">
+
+        <!-- Agreement notice -->
+        <div class="agreement-notice">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>By registering an account or using any SoloCloud service, you confirm that you have read, understood, and agreed to be bound by these Terms of Service. If you do not agree, please discontinue use immediately. <b>These terms apply to all users without exception.</b></span>
+        </div>
+
+        <!-- SECTION 01 — Acceptable Use -->
+        <div class="tos-section open" id="s01">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-red"><i class="fa-solid fa-ban" style="color:#f87171;"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 01</div>
+                    <div class="tos-sec-title">Acceptable Use</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>All SoloCloud servers and services must be used in accordance with applicable laws and ethical standards. You are solely responsible for all content hosted on and all actions performed through your service. We take misuse seriously and act swiftly to protect our infrastructure and other customers.</p>
+                    <p>The following activities are strictly prohibited and will result in immediate account termination without notice or refund:</p>
+                    <div class="rule-pills">
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Illegal content or activity</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> DDoS / network attacks</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Hate speech or harassment</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Resource abuse / mining</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Spam or phishing</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Prohibited file distribution</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Malware hosting</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Threatening other users</span>
+                    </div>
+                    <div class="tos-highlight danger-box" style="margin-top:1.2rem;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Violations are non-negotiable. Accounts found in violation will be terminated immediately. No refunds will be issued for terminated accounts.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 02 — Account Security -->
+        <div class="tos-section" id="s02">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-blue"><i class="fa-solid fa-lock" style="color:var(--primary);"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 02</div>
+                    <div class="tos-sec-title">Account Security</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>You are fully responsible for maintaining the confidentiality of your account credentials. Any activity that occurs under your account — regardless of whether it was authorised by you — is your sole responsibility. SoloCloud cannot be held liable for losses resulting from unauthorised access to your account due to your failure to keep credentials secure.</p>
+                    <p>You must not share your account with others or allow third parties to access your services on your behalf unless you understand and accept full liability for their actions.</p>
+                    <div class="rule-pills">
+                        <span class="rule-pill rp-green"><i class="fa-solid fa-check"></i> Use a strong, unique password</span>
+                        <span class="rule-pill rp-green"><i class="fa-solid fa-check"></i> Enable two-factor authentication</span>
+                        <span class="rule-pill rp-green"><i class="fa-solid fa-check"></i> Never share login credentials</span>
+                        <span class="rule-pill rp-blue"><i class="fa-solid fa-info"></i> Report suspicious activity immediately</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 03 — Payments & Refunds -->
+        <div class="tos-section" id="s03">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-yellow"><i class="fa-solid fa-indian-rupee-sign" style="color:var(--yellow);"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 03</div>
+                    <div class="tos-sec-title">Payments & Refunds</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>All paid services require successful payment before activation. Payments must be made through the approved methods available on our billing panel. SoloCloud reserves the right to modify pricing at any time with reasonable notice to existing customers.</p>
+                    <p>Due to the immediate provisioning nature of digital hosting resources, <strong style="color:#fff;">all sales are final</strong>. No refunds will be issued once a service has been activated or resources have been allocated to your account. This includes partial-month refunds, cancellations after activation, and cases where you choose not to use the service.</p>
+                    <div class="tos-highlight warn-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i> We strongly encourage you to review your plan requirements before purchase. If you have questions, open a support ticket first — we are happy to help you choose the right plan.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 04 — Pricing Policy -->
+        <div class="tos-section" id="s04">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-blue"><i class="fa-solid fa-tag" style="color:var(--primary);"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 04</div>
+                    <div class="tos-sec-title">Pricing Policy</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>SoloCloud's pricing is carefully calculated to reflect the actual cost of our infrastructure — including hardware, bandwidth, DDoS protection, support, and operations. Our prices represent fair and honest value for the quality of service provided.</p>
+                    <p>We ask that customers respect this and refrain from excessive bargaining, particularly on VPS plans where margins are thin and resources are dedicated. Repeated or aggressive negotiation attempts may result in a refusal of service.</p>
+                    <div class="tos-highlight">
+                        <i class="fa-solid fa-circle-info"></i> Promotional discounts and deals are offered periodically through our official Discord server. Follow <a href="https://discord.gg/VRMUnDkf95" target="_blank" style="color:var(--primary);">our Discord</a> for updates on special offers.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 05 — Service Uptime -->
+        <div class="tos-section" id="s05">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-green"><i class="fa-solid fa-signal" style="color:var(--green);"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 05</div>
+                    <div class="tos-sec-title">Service Uptime</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>SoloCloud strives to maintain a 99% uptime benchmark across all services. We invest heavily in redundant infrastructure, proactive monitoring, and rapid response to outages to meet this target.</p>
+                    <p>However, we cannot guarantee uninterrupted service at all times. Planned maintenance windows, upstream provider issues, hardware failures, or force majeure events may occasionally result in downtime. Where possible, we will provide advance notice of scheduled maintenance via our Discord server and status page.</p>
+                    <div class="rule-pills">
+                        <span class="rule-pill rp-green"><i class="fa-solid fa-check"></i> 99% uptime target</span>
+                        <span class="rule-pill rp-blue"><i class="fa-solid fa-info"></i> Advance maintenance notices</span>
+                        <span class="rule-pill rp-yellow"><i class="fa-solid fa-triangle-exclamation"></i> No guarantee of 100% uptime</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 06 — Data & Backups -->
+        <div class="tos-section" id="s06">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-purple"><i class="fa-solid fa-database" style="color:#a78bfa;"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 06</div>
+                    <div class="tos-sec-title">Data & Backups</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>You are solely responsible for the backup and integrity of your data. While some plans include automated backup features as described in their plan details, backup availability is not guaranteed for free tier services or as a default on all plans.</p>
+                    <p>SoloCloud accepts no liability for data loss resulting from hardware failure, accidental deletion, account termination, or any other cause. We strongly recommend maintaining your own independent backups of all important data at all times, regardless of your plan.</p>
+                    <div class="tos-highlight warn-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Always keep offline copies of your world files, bot code, database exports, and any critical data. Do not rely solely on SoloCloud's infrastructure for data preservation.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 07 — Suspension -->
+        <div class="tos-section danger" id="s07">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-red"><i class="fa-solid fa-circle-pause" style="color:#f87171;"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 07</div>
+                    <div class="tos-sec-title">Suspension</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>SoloCloud reserves the right to suspend or permanently terminate any account or service at any time, with or without prior notice, for any of the following reasons:</p>
+                    <div class="rule-pills" style="margin-bottom:1rem;">
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Violation of these Terms of Service</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Resource abuse or overuse</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Non-payment of due invoices</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Chargebacks or payment disputes</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Abusive behaviour toward staff</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Fraudulent activity</span>
+                    </div>
+                    <p>In cases of serious violations, accounts may be terminated immediately without notice and all associated data will be permanently deleted. For minor or first-time violations, we may issue a warning or temporary suspension at our discretion.</p>
+                    <div class="tos-highlight danger-box">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Suspended or terminated accounts are not eligible for refunds. If you believe a suspension was made in error, contact us through the billing ticket system.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 08 — Support Policy -->
+        <div class="tos-section" id="s08">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-blue"><i class="fa-solid fa-headset" style="color:var(--primary);"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 08</div>
+                    <div class="tos-sec-title">Support Policy</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>SoloCloud provides support exclusively for active, paid services. Support requests must be submitted through our official approved channels — either through the billing panel ticket system or our Discord server support channel.</p>
+                    <p>Response times vary depending on the complexity and volume of requests. While we aim to respond to all tickets promptly, we do not guarantee specific response times for standard support. Priority support with faster response times is available on eligible higher-tier plans.</p>
+                    <div class="rule-pills">
+                        <span class="rule-pill rp-green"><i class="fa-solid fa-check"></i> Active services only</span>
+                        <span class="rule-pill rp-blue"><i class="fa-solid fa-info"></i> Discord or billing tickets</span>
+                        <span class="rule-pill rp-yellow"><i class="fa-solid fa-triangle-exclamation"></i> Response times vary</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> No DMs to staff members</span>
+                    </div>
+                    <div class="tos-highlight" style="margin-top:1rem;">
+                        <i class="fa-solid fa-circle-info"></i> Please be respectful toward our support team. Abusive or threatening behaviour toward staff will result in immediate account suspension.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 09 — Fraud Prevention -->
+        <div class="tos-section danger" id="s09">
+            <div class="tos-header" onclick="toggleSection(this)">
+                <div class="sec-badge badge-red"><i class="fa-solid fa-user-shield" style="color:#f87171;"></i></div>
+                <div class="tos-header-text">
+                    <div class="tos-sec-label">Section 09</div>
+                    <div class="tos-sec-title">Fraud Prevention</div>
+                </div>
+                <i class="fa-solid fa-chevron-down tos-chevron"></i>
+            </div>
+            <div class="tos-body">
+                <div class="tos-body-inner">
+                    <p>SoloCloud actively monitors all accounts and transactions for fraudulent activity. This includes but is not limited to: payment fraud, use of stolen payment methods, abuse of free trials or promotions, chargebacks without legitimate cause, and attempts to circumvent billing systems.</p>
+                    <p>Any account found to be engaged in fraudulent activity will be terminated immediately without notice or refund. The user will be permanently blacklisted across all SoloCloud services. Where applicable, fraudulent activity may be reported to relevant authorities and payment providers.</p>
+                    <div class="rule-pills">
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Stolen payment methods</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Unjustified chargebacks</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Promotion abuse</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Multi-account fraud</span>
+                        <span class="rule-pill rp-red"><i class="fa-solid fa-xmark"></i> Billing system circumvention</span>
+                    </div>
+                    <div class="tos-highlight danger-box" style="margin-top:1rem;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Permanent blacklisting means all future accounts and services created by the same individual will also be terminated. We share fraud data with partner providers to prevent re-registration.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact strip -->
+        <div class="contact-strip">
+            <div class="contact-strip-text">
+                <h4>Questions about these terms?</h4>
+                <p>Reach out to us on Discord or through a billing ticket and we'll be happy to clarify anything.</p>
+            </div>
+            <div class="contact-strip-btns">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank" class="cs-btn cs-discord"><i class="fa-brands fa-discord"></i> Discord Server</a>
+                <a href="contact.html" class="cs-btn cs-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Game, Bot & VPS Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul>
+            <li><a href="minecraft.html">Minecraft</a></li>
+            <li><a href="hytale.html">Hytale</a></li>
+            <li><a href="palworld.html">Palworld</a></li>
+            <li><a href="games.html">All Games</a></li>
+        </ul></div>
+        <div class="fc"><h4>Services</h4><ul>
+            <li><a href="bothosting.html">Bot Hosting</a></li>
+            <li><a href="domain.html">Domains</a></li>
+            <li><a href="vpshosting.html">VPS</a></li>
+        </ul></div>
+        <div class="fc"><h4>Company</h4><ul>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="legal.html">Legal</a></li>
+            <li><a href="payment.html">Payments</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="fc"><h4>Tools</h4><ul>
+            <li><a href="tools.html">Panel Demo</a></li>
+        </ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<script>
+    // Hamburger
+    const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+    hb.addEventListener('click', () => {
+        const o = mm.classList.toggle('open');
+        hb.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+    });
+    mm.addEventListener('click', e => {
+        if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+    });
+    function mSub(el){
+        const s = el.nextElementSibling;
+        s.classList.toggle('open');
+        el.classList.toggle('expanded', s.classList.contains('open'));
+    }
+
+    // Accordion toggle
+    function toggleSection(header){
+        const section = header.parentElement;
+        const wasOpen = section.classList.contains('open');
+        section.classList.toggle('open', !wasOpen);
+    }
+
+    // Smooth scroll + sidebar highlight
+    function scrollTo(id){
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    // Sidebar active highlight on scroll
+    const sections = ['s01','s02','s03','s04','s05','s06','s07','s08','s09'];
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if(e.isIntersecting){
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                const idx = sections.indexOf(e.target.id);
+                if(idx >= 0 && sidebarLinks[idx]) sidebarLinks[idx].classList.add('active');
+            }
+        });
+    },{threshold:.3, rootMargin:'-100px 0px -60% 0px'});
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) obs.observe(el);
+    });
+</script>
+</body>
+</html>

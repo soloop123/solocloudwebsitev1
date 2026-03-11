@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot Hosting — SoloCloud</title>
+    <meta name="description" content="24/7 Discord bot hosting with 99.9% uptime, instant deploy, and support for every bot framework. Starting from ₹99/mo.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:       #030712;
+            --bg2:      #080f1f;
+            --bg3:      #0d1526;
+            --discord:  #5865f2;
+            --discord2: #4752c4;
+            --discord3: #7289da;
+            --glow:     rgba(88,101,242,0.45);
+            --glows:    rgba(88,101,242,0.12);
+            --border-d: rgba(88,101,242,0.22);
+            --border:   rgba(255,255,255,0.07);
+            --text:     #f1f5f9;
+            --muted:    #64748b;
+            --muted2:   #94a3b8;
+            --primary:  #02afff;
+            --tr:       all .3s cubic-bezier(.4,0,.2,1);
+            --green:    #23d18b;
+            --yellow:   #f59e0b;
+            --red:      #ef4444;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAVBAR ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc {background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{display:flex;align-items:center;gap:12px;padding:12px 15px;flex-direction:row;justify-content:flex-start;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+        /* ── MOBILE MENU ── */
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ══════════════════════════════
+           HERO
+        ══════════════════════════════ */
+        .hero{
+            position:relative;min-height:100vh;
+            padding:140px 5% 80px;
+            display:flex;align-items:center;
+            overflow:hidden;
+        }
+
+        /* animated gradient backdrop */
+        .hero::before{
+            content:'';position:absolute;inset:0;
+            background:
+                radial-gradient(ellipse 70% 60% at 70% 40%, rgba(88,101,242,.14) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 10% 60%, rgba(88,101,242,.07) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 40% at 85% 85%, rgba(114,137,218,.06) 0%, transparent 50%);
+            z-index:0;
+            animation: heroPulse 8s ease-in-out infinite alternate;
+        }
+        @keyframes heroPulse{
+            0%{opacity:1;}
+            100%{opacity:.7;}
+        }
+        /* Circuit / dot grid */
+        .hero::after{
+            content:'';position:absolute;inset:0;
+            background-image:radial-gradient(rgba(88,101,242,.2) 1px, transparent 1px);
+            background-size:32px 32px;
+            z-index:0;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+        }
+
+        .hero-container{
+            max-width:1300px;width:100%;margin:0 auto;
+            display:grid;grid-template-columns:1.1fr 0.9fr;
+            gap:4rem;align-items:center;
+            position:relative;z-index:2;
+        }
+
+        .hero-pill{
+            display:inline-flex;align-items:center;gap:8px;
+            background:rgba(88,101,242,.12);border:1px solid rgba(88,101,242,.3);
+            border-radius:50px;padding:6px 18px;
+            font-size:.78rem;font-weight:700;color:var(--discord3);
+            letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.6rem;
+        }
+        .hero-left h1{
+            font-size:3.6rem;font-weight:900;line-height:1.12;margin-bottom:1.4rem;
+        }
+        .hero-left h1 .hl{
+            background:linear-gradient(135deg,var(--discord3),var(--discord));
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+        }
+        .hero-left p{font-size:1.05rem;color:var(--muted2);margin-bottom:2.5rem;max-width:560px;line-height:1.75;}
+        .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;}
+        .btn{padding:14px 30px;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;border:none;transition:var(--tr);display:inline-flex;align-items:center;gap:8px;}
+        .btn-discord{background:linear-gradient(135deg,var(--discord),var(--discord2));color:#fff;box-shadow:0 4px 25px rgba(88,101,242,.35);}
+        .btn-discord:hover{transform:translateY(-2px);box-shadow:0 8px 35px rgba(88,101,242,.5);}
+        .btn-ghost{background:rgba(255,255,255,.04);border:1px solid var(--border);color:#fff;}
+        .btn-ghost:hover{background:rgba(255,255,255,.08);}
+
+        /* mini stat pills */
+        .hero-stats{display:flex;gap:1rem;flex-wrap:wrap;}
+        .stat-pill{
+            display:flex;align-items:center;gap:8px;
+            background:rgba(255,255,255,.03);border:1px solid var(--border);
+            border-radius:50px;padding:8px 16px;font-size:.82rem;font-weight:600;
+        }
+        .stat-pill i{color:var(--discord3);}
+        .stat-pill b{color:#fff;}
+
+        /* ── BOT STATUS PANEL (right side) ── */
+        .bot-panel{
+            background:rgba(13,21,38,.82);
+            backdrop-filter:blur(16px);
+            border:1px solid var(--border-d);
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 0 60px rgba(88,101,242,.08);
+            position:relative;
+        }
+        .bot-panel::before{
+            content:'';position:absolute;top:-1px;left:0;right:0;height:3px;
+            background:linear-gradient(90deg,transparent,var(--discord),transparent);
+        }
+
+        /* fake titlebar */
+        .panel-titlebar{
+            background:rgba(8,15,31,.9);
+            padding:.8rem 1.2rem;
+            display:flex;align-items:center;gap:.6rem;
+            border-bottom:1px solid var(--border);
+        }
+        .tb-dot{width:12px;height:12px;border-radius:50%;}
+        .tb-dot.r{background:#ff5f57;}
+        .tb-dot.y{background:#febc2e;}
+        .tb-dot.g{background:#28c840;}
+        .tb-title{margin-left:.5rem;font-size:.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+
+        /* bot list inside panel */
+        .bot-list{padding:1.2rem;}
+        .bot-entry{
+            display:flex;align-items:center;gap:12px;
+            padding:.85rem 1rem;border-radius:12px;
+            background:rgba(255,255,255,.025);
+            border:1px solid rgba(255,255,255,.05);
+            margin-bottom:.7rem;
+            transition:var(--tr);position:relative;overflow:hidden;
+        }
+        .bot-entry:last-child{margin-bottom:0;}
+        .bot-entry:hover{border-color:var(--border-d);background:var(--glows);}
+        .bot-entry::after{
+            content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+            background:linear-gradient(90deg,transparent,rgba(88,101,242,.06),transparent);
+            transition:left .5s ease;
+        }
+        .bot-entry:hover::after{left:100%;}
+
+        .bot-avatar{
+            width:40px;height:40px;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.1rem;flex-shrink:0;
+            border:2px solid rgba(88,101,242,.3);
+        }
+        .bot-info{flex:1;min-width:0;}
+        .bot-name{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .bot-sub{font-size:.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+        .bot-status{display:flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;flex-shrink:0;}
+        .status-dot{width:8px;height:8px;border-radius:50%;}
+        .status-dot.online{background:var(--green);box-shadow:0 0 6px var(--green);}
+        .status-dot.idle{background:var(--yellow);}
+        .status-dot.offline{background:var(--muted);}
+
+        /* uptime bar */
+        .uptime-row{padding:1.2rem;border-top:1px solid var(--border);}
+        .uptime-label{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;margin-bottom:.6rem;}
+        .uptime-label span{color:var(--muted);}
+        .uptime-label b{color:var(--green);}
+        .uptime-bar{height:6px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;}
+        .uptime-fill{height:100%;width:99.9%;background:linear-gradient(90deg,var(--discord),var(--green));border-radius:10px;
+            animation:fillAnim 1.5s ease-out forwards;}
+        @keyframes fillAnim{from{width:0;}to{width:99.9%;}}
+
+        /* terminal snippet */
+        .terminal-row{
+            background:rgba(3,7,18,.8);
+            border-top:1px solid var(--border);
+            padding:1rem 1.2rem;
+            font-family:'JetBrains Mono',monospace;
+            font-size:.72rem;
+            line-height:1.8;
+            color:var(--muted2);
+        }
+        .t-green{color:var(--green);}
+        .t-blue{color:var(--discord3);}
+        .t-yellow{color:var(--yellow);}
+        .cursor{display:inline-block;width:7px;height:13px;background:var(--discord);border-radius:1px;vertical-align:text-bottom;animation:blink .9s step-end infinite;}
+        @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+        /* ══════════════════════════════
+           SUPPORTED FRAMEWORKS STRIP
+        ══════════════════════════════ */
+        .frameworks-strip{
+            padding:3rem 5%;
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+            background:rgba(8,15,31,.6);
+        }
+        .frameworks-inner{max-width:1100px;margin:0 auto;}
+        .fw-label{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;}
+        .fw-row{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+        .fw-chip{
+            display:flex;align-items:center;gap:9px;
+            padding:10px 20px;border-radius:50px;
+            background:rgba(255,255,255,.03);border:1px solid var(--border);
+            font-size:.85rem;font-weight:600;color:var(--muted2);
+            transition:var(--tr);cursor:default;
+        }
+        .fw-chip:hover{border-color:var(--border-d);color:#fff;background:var(--glows);}
+        .fw-chip i{font-size:1rem;}
+
+        /* ══════════════════════════════
+           FEATURES SECTION
+        ══════════════════════════════ */
+        .features-section{padding:6rem 5%;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(88,101,242,.05) 0%,transparent 60%);}
+        .section-header{text-align:center;margin-bottom:3.5rem;}
+        .section-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--discord3);margin-bottom:.8rem;}
+        .section-title{font-size:2.5rem;font-weight:800;background:linear-gradient(to right,#fff,var(--muted2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+        .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1200px;margin:0 auto;}
+        .feat-card{
+            padding:2rem;border-radius:20px;
+            background:rgba(255,255,255,.02);border:1px solid var(--border);
+            transition:var(--tr);position:relative;overflow:hidden;
+        }
+        .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--discord),transparent);opacity:0;transition:var(--tr);}
+        .feat-card:hover{transform:translateY(-6px);border-color:var(--border-d);box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 30px rgba(88,101,242,.07);}
+        .feat-card:hover::after{opacity:1;}
+        .feat-card:hover .feat-icon{background:rgba(88,101,242,.22);transform:scale(1.1) rotate(-3deg);}
+        .feat-icon{width:54px;height:54px;background:rgba(88,101,242,.1);border:1px solid var(--border-d);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;font-size:1.4rem;color:var(--discord3);transition:var(--tr);}
+        .feat-card h4{font-size:1.05rem;margin-bottom:.6rem;}
+        .feat-card p{font-size:.86rem;color:var(--muted2);line-height:1.65;}
+
+        .feat-card.highlight{
+            grid-column:span 2;
+            background:linear-gradient(135deg,rgba(88,101,242,.07),rgba(88,101,242,.02));
+            border-color:var(--border-d);
+            display:flex;gap:2rem;align-items:center;
+        }
+        .feat-card.highlight .content{flex:1;}
+        .feat-card.highlight .badge{
+            flex-shrink:0;width:130px;height:130px;
+            background:radial-gradient(circle,rgba(88,101,242,.18),rgba(88,101,242,.04));
+            border:1px solid var(--border-d);border-radius:50%;
+            display:flex;align-items:center;justify-content:center;font-size:3.2rem;
+        }
+
+        /* ══════════════════════════════
+           PLANS SECTION
+        ══════════════════════════════ */
+        .plans-section{padding:6rem 5%;background:radial-gradient(ellipse 50% 40% at 50% 100%,rgba(88,101,242,.05) 0%,transparent 60%);}
+        .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+
+        .plan-card{
+            border-radius:20px;padding:2rem;border:1px solid var(--border);
+            background:rgba(255,255,255,.02);transition:var(--tr);
+            display:flex;flex-direction:column;gap:1.5rem;position:relative;overflow:hidden;
+        }
+        .plan-card:hover{transform:translateY(-5px);border-color:var(--border-d);}
+        .plan-card.featured{
+            border-color:var(--discord);
+            background:linear-gradient(135deg,rgba(88,101,242,.1),rgba(88,101,242,.03));
+            box-shadow:0 0 40px rgba(88,101,242,.12);
+        }
+        .plan-card.featured::before{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--discord),transparent);}
+        .popular-badge{position:absolute;top:1.2rem;right:1.2rem;background:var(--discord);border-radius:50px;padding:4px 12px;font-size:.68rem;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase;}
+
+        .plan-name{font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--discord3);}
+        .plan-price{font-size:2.5rem;font-weight:900;line-height:1;}
+        .plan-price span{font-size:.85rem;font-weight:500;color:var(--muted2);}
+        .plan-desc{font-size:.83rem;color:var(--muted2);}
+
+        .plan-features{display:flex;flex-direction:column;gap:.75rem;flex:1;}
+        .pf{display:flex;align-items:center;gap:10px;font-size:.86rem;}
+        .pf i{color:var(--discord3);font-size:.85rem;flex-shrink:0;width:16px;text-align:center;}
+        .pf.no{color:var(--muted);}
+        .pf.no i{color:var(--muted);}
+
+        .plan-btn{
+            display:block;text-align:center;padding:13px;border-radius:12px;
+            font-weight:700;font-size:.95rem;transition:var(--tr);cursor:pointer;border:none;font-family:'Poppins',sans-serif;
+        }
+        .plan-btn-outline{background:transparent;border:1px solid var(--border-d);color:var(--discord3);}
+        .plan-btn-outline:hover{background:rgba(88,101,242,.12);}
+        .plan-btn-filled{background:linear-gradient(135deg,var(--discord),var(--discord2));color:#fff;box-shadow:0 4px 20px rgba(88,101,242,.3);}
+        .plan-btn-filled:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(88,101,242,.45);}
+
+        /* ══════════════════════════════
+           UPTIME / STATS STRIP
+        ══════════════════════════════ */
+        .stats-strip{
+            padding:4rem 5%;
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
+        }
+        .stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;}
+        .stat-block{}
+        .stat-number{font-size:2.8rem;font-weight:900;color:var(--discord3);line-height:1;margin-bottom:.4rem;}
+        .stat-label{font-size:.82rem;color:var(--muted2);}
+
+        /* ══════════════════════════════
+           HOW IT WORKS
+        ══════════════════════════════ */
+        .how-section{padding:6rem 5%;}
+        .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1100px;margin:0 auto;position:relative;}
+        .steps-grid::before{
+            content:'';position:absolute;top:28px;left:12%;right:12%;height:1px;
+            background:linear-gradient(90deg,transparent,var(--border-d),var(--border-d),transparent);
+            z-index:0;
+        }
+        .step{text-align:center;position:relative;z-index:1;}
+        .step-num{
+            width:56px;height:56px;border-radius:50%;
+            background:linear-gradient(135deg,var(--discord),var(--discord2));
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.2rem;font-weight:800;color:#fff;margin:0 auto 1.2rem;
+            box-shadow:0 0 25px rgba(88,101,242,.4);
+        }
+        .step h4{font-size:.95rem;font-weight:700;margin-bottom:.5rem;}
+        .step p{font-size:.8rem;color:var(--muted2);line-height:1.6;}
+
+        /* ══════════════════════════════
+           FOOTER
+        ══════════════════════════════ */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;margin-top:4rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ══════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════ */
+        @media(max-width:1100px){
+            .feat-grid{grid-template-columns:1fr 1fr;}
+            .feat-card.highlight{grid-column:span 2;}
+            .plans-grid{grid-template-columns:1fr 1fr;}
+        }
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .hero{padding:110px 5% 60px;min-height:auto;}
+            .hero-container{grid-template-columns:1fr;gap:2.5rem;}
+            .hero-left h1{font-size:2.6rem;}
+            .hero-left p{margin-bottom:2rem;}
+            .hero-btns{justify-content:flex-start;}
+            .plans-grid{grid-template-columns:1fr;}
+            .steps-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .steps-grid::before{display:none;}
+            .stats-inner{grid-template-columns:repeat(2,1fr);}
+            .feat-grid{grid-template-columns:1fr;}
+            .feat-card.highlight{grid-column:span 1;flex-direction:column;}
+            .feat-card.highlight .badge{width:80px;height:80px;font-size:2.2rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero-left h1{font-size:2.1rem;}
+            .hero-btns{flex-direction:column;align-items:flex-start;}
+            .btn{width:100%;justify-content:center;}
+            .hero-stats{flex-direction:column;gap:.6rem;}
+            .plans-grid{grid-template-columns:1fr;}
+            .steps-grid{grid-template-columns:1fr 1fr;}
+            .section-title{font-size:2rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero{padding:95px 4% 50px;}
+            .hero-left h1{font-size:1.85rem;}
+            .steps-grid{grid-template-columns:1fr;}
+            .stats-inner{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .stat-number{font-size:2.2rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-brands fa-discord"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html" style="color:var(--discord3)"><i class="fa-brands fa-discord"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-left">
+            <div class="hero-pill"><i class="fa-brands fa-discord"></i>&nbsp; Discord Bot Hosting</div>
+            <h1>Your Bot.<br><span class="hl">Always Online.</span><br>Always Fast.</h1>
+            <p>Deploy any Discord bot in seconds — Python, Node.js, Java, or Go. 99.9% uptime SLA, automated restarts, and real-time logs. Starting from just ₹99/mo.</p>
+            <div class="hero-btns">
+                <a href="https://billing.solocloud.host/register" class="btn btn-discord"><i class="fa-brands fa-discord"></i> Deploy Your Bot</a>
+                <a href="#plans" class="btn btn-ghost"><i class="fa-solid fa-list"></i> View Plans</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-pill"><i class="fa-solid fa-circle" style="color:var(--green);font-size:.5rem;"></i> <b>99.9%</b> Uptime SLA</div>
+                <div class="stat-pill"><i class="fa-solid fa-bolt-lightning"></i> <b>Instant</b> Deployment</div>
+                <div class="stat-pill"><i class="fa-solid fa-rotate"></i> <b>Auto</b> Restart on Crash</div>
+            </div>
+        </div>
+
+        <!-- Bot status panel -->
+        <div class="bot-panel">
+            <!-- Fake window chrome -->
+            <div class="panel-titlebar">
+                <div class="tb-dot r"></div>
+                <div class="tb-dot y"></div>
+                <div class="tb-dot g"></div>
+                <span class="tb-title">SoloCloud Bot Dashboard</span>
+            </div>
+
+            <!-- Bot list -->
+            <div class="bot-list">
+                <div class="bot-entry">
+                    <div class="bot-avatar" style="background:rgba(88,101,242,.15);">🎵</div>
+                    <div class="bot-info">
+                        <div class="bot-name">MusicMaster#4521</div>
+                        <div class="bot-sub">node.js · 47MB RAM · 0.2% CPU</div>
+                    </div>
+                    <div class="bot-status"><div class="status-dot online"></div><span style="color:var(--green);">Online</span></div>
+                </div>
+                <div class="bot-entry">
+                    <div class="bot-avatar" style="background:rgba(35,209,139,.1);">🛡️</div>
+                    <div class="bot-info">
+                        <div class="bot-name">GuardBot#7812</div>
+                        <div class="bot-sub">python · 32MB RAM · 0.1% CPU</div>
+                    </div>
+                    <div class="bot-status"><div class="status-dot online"></div><span style="color:var(--green);">Online</span></div>
+                </div>
+                <div class="bot-entry">
+                    <div class="bot-avatar" style="background:rgba(245,158,11,.1);">🎮</div>
+                    <div class="bot-info">
+                        <div class="bot-name">GameBot#0099</div>
+                        <div class="bot-sub">java · 128MB RAM · 0.8% CPU</div>
+                    </div>
+                    <div class="bot-status"><div class="status-dot online"></div><span style="color:var(--green);">Online</span></div>
+                </div>
+            </div>
+
+            <!-- Uptime bar -->
+            <div class="uptime-row">
+                <div class="uptime-label"><span>30-day uptime</span><b>99.97%</b></div>
+                <div class="uptime-bar"><div class="uptime-fill"></div></div>
+            </div>
+
+            <!-- Terminal snippet -->
+            <div class="terminal-row">
+                <span class="t-green">✔</span> <span class="t-blue">MusicMaster</span> started successfully<br>
+                <span class="t-green">✔</span> Logged in as <span class="t-yellow">MusicMaster#4521</span><br>
+                <span class="t-green">✔</span> Watching <span class="t-blue">2,847</span> servers<br>
+                <span class="t-green">►</span> Listening on port <span class="t-yellow">3000</span> <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FRAMEWORKS STRIP ══════════ -->
+<section class="frameworks-strip">
+    <div class="frameworks-inner">
+        <div class="fw-label">Supports every major bot framework &amp; language</div>
+        <div class="fw-row">
+            <div class="fw-chip"><i class="fa-brands fa-node-js" style="color:#5fa04e;"></i> Node.js</div>
+            <div class="fw-chip"><i class="fa-brands fa-python" style="color:#3776ab;"></i> Python</div>
+            <div class="fw-chip"><i class="fa-brands fa-java" style="color:#f89820;"></i> Java</div>
+            <div class="fw-chip"><i class="fa-solid fa-code" style="color:#00add8;"></i> Go</div>
+            <div class="fw-chip"><i class="fa-solid fa-gem" style="color:#cc342d;"></i> Ruby</div>
+            <div class="fw-chip"><i class="fa-solid fa-hashtag" style="color:#239120;"></i> C# / .NET</div>
+            <div class="fw-chip"><i class="fa-brands fa-rust" style="color:#ce412b;"></i> Rust</div>
+            <div class="fw-chip"><i class="fa-solid fa-ellipsis"></i> &amp; more</div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="features-section">
+    <div class="section-header">
+        <div class="section-eyebrow">Why SoloCloud</div>
+        <h2 class="section-title">Everything Your Bot Needs</h2>
+    </div>
+    <div class="feat-grid">
+
+        <div class="feat-card highlight">
+            <div class="content">
+                <div class="feat-icon"><i class="fa-solid fa-rotate"></i></div>
+                <h4>Auto-Restart on Crash</h4>
+                <p>Our monitoring detects crashes and restarts your bot in under 3 seconds — no manual intervention needed. Your community never even notices a hiccup. Combines with our 99.9% uptime SLA so your bot is always ready.</p>
+            </div>
+            <div class="badge">🤖</div>
+        </div>
+
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-terminal"></i></div>
+            <h4>Real-Time Console Logs</h4>
+            <p>Watch your bot's stdout/stderr live in your browser. Filter, search, and download logs at any time — no SSH required.</p>
+        </div>
+
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <h4>Instant Deployment</h4>
+            <p>Upload your files or paste a Git repo URL — your bot is running in seconds. No complicated configuration or server setup needed.</p>
+        </div>
+
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-gauge-high"></i></div>
+            <h4>Dedicated Resources</h4>
+            <p>Every plan gets dedicated RAM and CPU — no noisy neighbours. Your bot gets consistent performance even during peak Discord activity hours.</p>
+        </div>
+
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-clock"></i></div>
+            <h4>Scheduled Tasks / Cron</h4>
+            <p>Set up cron jobs and scheduled tasks right from the dashboard. Perfect for daily announcements, stat resets, or timed giveaways.</p>
+        </div>
+
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-database"></i></div>
+            <h4>Persistent Storage</h4>
+            <p>Your bot's data files, SQLite databases, and JSON configs survive restarts and updates. Storage persists across the life of your plan.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════ PLANS ══════════ -->
+<section class="plans-section" id="plans">
+    <div class="section-header">
+        <div class="section-eyebrow">Pricing</div>
+        <h2 class="section-title">Simple, Honest Pricing</h2>
+    </div>
+    <div class="plans-grid">
+
+        <!-- STARTER -->
+        <div class="plan-card">
+            <div>
+                <div class="plan-name">Starter</div>
+                <div class="plan-price">₹99<span>/mo</span></div>
+                <div class="plan-desc">Perfect for hobby bots and small servers.</div>
+            </div>
+            <div class="plan-features">
+                <div class="pf"><i class="fa-solid fa-check"></i> 256 MB RAM</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 0.5 vCPU</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 2 GB SSD Storage</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Auto-restart</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Real-time console</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 99.9% Uptime SLA</div>
+                <div class="pf no"><i class="fa-solid fa-xmark"></i> Custom domain</div>
+                <div class="pf no"><i class="fa-solid fa-xmark"></i> Priority support</div>
+            </div>
+            <a href="https://billing.solocloud.host" class="plan-btn plan-btn-outline">Get Started</a>
+        </div>
+
+        <!-- PRO (featured) -->
+        <div class="plan-card featured">
+            <div class="popular-badge">Most Popular</div>
+            <div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">₹249<span>/mo</span></div>
+                <div class="plan-desc">For active community bots on multiple servers.</div>
+            </div>
+            <div class="plan-features">
+                <div class="pf"><i class="fa-solid fa-check"></i> 1 GB RAM</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 1 vCPU</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 10 GB SSD Storage</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Auto-restart</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Real-time console</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 99.9% Uptime SLA</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Custom domain / subdomain</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Scheduled tasks (cron)</div>
+                <div class="pf no"><i class="fa-solid fa-xmark"></i> Priority support</div>
+            </div>
+            <a href="https://billing.solocloud.host" class="plan-btn plan-btn-filled">Get Started</a>
+        </div>
+
+        <!-- ELITE -->
+        <div class="plan-card">
+            <div>
+                <div class="plan-name">Elite</div>
+                <div class="plan-price">₹499<span>/mo</span></div>
+                <div class="plan-desc">For large-scale bots powering thousands of servers.</div>
+            </div>
+            <div class="plan-features">
+                <div class="pf"><i class="fa-solid fa-check"></i> 2 GB RAM</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 2 vCPU</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 25 GB SSD Storage</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Auto-restart</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Real-time console</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> 99.9% Uptime SLA</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Custom domain / subdomain</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Scheduled tasks (cron)</div>
+                <div class="pf"><i class="fa-solid fa-check"></i> Priority 24/7 support</div>
+            </div>
+            <a href="https://billing.solocloud.host" class="plan-btn plan-btn-outline">Get Started</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════ STATS STRIP ══════════ -->
+<section class="stats-strip">
+    <div class="stats-inner">
+        <div class="stat-block">
+            <div class="stat-number" id="s1">0</div>
+            <div class="stat-label">Bots Hosted</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-number" id="s2">0%</div>
+            <div class="stat-label">Average Uptime</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-number" id="s3">0s</div>
+            <div class="stat-label">Avg Crash Recovery</div>
+        </div>
+        <div class="stat-block">
+            <div class="stat-number" id="s4">0</div>
+            <div class="stat-label">Discord Servers Powered</div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="how-section">
+    <div class="section-header">
+        <div class="section-eyebrow">Quick Start</div>
+        <h2 class="section-title">Online in 4 Simple Steps</h2>
+    </div>
+    <div class="steps-grid">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h4>Choose a Plan</h4>
+            <p>Pick Starter, Pro, or Elite based on your bot's RAM and CPU needs.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h4>Upload Your Bot</h4>
+            <p>Drag & drop your files or connect your GitHub / GitLab repo with one click.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h4>Set Your Start Command</h4>
+            <p>Tell us how to run your bot — e.g. <code style="color:var(--discord3);font-family:'JetBrains Mono',monospace;font-size:.8rem;">node index.js</code> or <code style="color:var(--discord3);font-family:'JetBrains Mono',monospace;font-size:.8rem;">python bot.py</code>.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <h4>Go Online</h4>
+            <p>Hit Start. Your bot connects to Discord and stays online 24/7 automatically.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Bot & Game Server Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul>
+            <li><a href="minecraft.html">Minecraft</a></li>
+            <li><a href="hytale.html">Hytale</a></li>
+            <li><a href="palworld.html">Palworld</a></li>
+            <li><a href="games.html">All Games</a></li>
+        </ul></div>
+        <div class="fc"><h4>Services</h4><ul>
+            <li><a href="bothosting.html">Bot Hosting</a></li>
+            <li><a href="domain.html">Domains</a></li>
+            <li><a href="vpshosting.html">VPS</a></li>
+        </ul></div>
+        <div class="fc"><h4>Company</h4><ul>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="legal.html">Legal</a></li>
+            <li><a href="payment.html">Payments</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="fc"><h4>Tools</h4><ul>
+            <li><a href="tools.html">Panel Demo</a></li>
+        </ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<script>
+    // Hamburger
+    const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+    hb.addEventListener('click', () => {
+        const o = mm.classList.toggle('open');
+        hb.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+    });
+    mm.addEventListener('click', e => {
+        if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+    });
+    function mSub(el){
+        const s = el.nextElementSibling;
+        s.classList.toggle('open');
+        el.classList.toggle('expanded', s.classList.contains('open'));
+    }
+
+    // Animated stat counters
+    function animateCount(el, target, suffix, duration){
+        let start = 0, startTime = null;
+        const step = ts => {
+            if(!startTime) startTime = ts;
+            const prog = Math.min((ts - startTime) / duration, 1);
+            const ease = 1 - Math.pow(1 - prog, 3);
+            const val = Math.floor(ease * target);
+            el.textContent = val + suffix;
+            if(prog < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if(e.isIntersecting){
+                animateCount(document.getElementById('s1'), 500, '+', 1800);
+                animateCount(document.getElementById('s2'), 99, '.9%', 2000);
+                document.getElementById('s2').textContent = '99.9%'; // fix suffix quirk
+                animateCount(document.getElementById('s3'), 3, 's', 1400);
+                animateCount(document.getElementById('s4'), 50000, '+', 2200);
+                observer.disconnect();
+            }
+        });
+    }, {threshold:.3});
+    observer.observe(document.getElementById('s1'));
+
+    // Also correctly animate the uptime stat
+    const s2El = document.getElementById('s2');
+    const obs2 = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+            let t = 0, dur = 2000, start = null;
+            const step = ts => {
+                if(!start) start = ts;
+                const p = Math.min((ts-start)/dur,1);
+                const e = 1 - Math.pow(1-p,3);
+                s2El.textContent = (e * 99.9).toFixed(1) + '%';
+                if(p<1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+            obs2.disconnect();
+        }
+    },{threshold:.3});
+    obs2.observe(s2El);
+</script>
+</body>
+</html>

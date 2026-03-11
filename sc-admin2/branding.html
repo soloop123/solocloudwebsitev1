@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branding — SoloCloud Hosting</title>
+    <meta name="description" content="SoloCloud brand assets — logos, banners, color palette, typography, and usage guidelines for creators and partners.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:      #030712;
+            --bg2:     #080f1f;
+            --bg3:     #0d1526;
+            --primary: #02afff;
+            --acc:     #00e5ff;
+            --border:  rgba(255,255,255,0.07);
+            --border-p:rgba(2,175,255,0.20);
+            --text:    #f1f5f9;
+            --muted:   #64748b;
+            --muted2:  #94a3b8;
+            --green:   #23d18b;
+            --tr:      all .3s cubic-bezier(.4,0,.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc{background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{flex-direction:row;justify-content:flex-start;padding:12px 15px;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ══ HERO ══ */
+        .hero{position:relative;padding:155px 5% 65px;text-align:center;overflow:hidden;}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 50% 20%,rgba(2,175,255,.09) 0%,transparent 60%);z-index:0;}
+        .hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(2,175,255,.13) 1px,transparent 1px);background-size:38px 38px;z-index:0;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 20%,transparent 100%);}
+        .hero-content{position:relative;z-index:2;max-width:700px;margin:0 auto;}
+        .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.28);border-radius:50px;padding:6px 20px;font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.6rem;}
+        .hero h1{font-size:3rem;font-weight:900;line-height:1.15;margin-bottom:1rem;}
+        .hero h1 .hl{background:linear-gradient(135deg,var(--primary),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:.97rem;color:var(--muted2);max-width:560px;margin:0 auto;line-height:1.75;}
+
+        /* ══ PAGE BODY ══ */
+        .brand-wrap{max-width:1200px;margin:0 auto;padding:4rem 5% 6rem;}
+
+        /* ── section header ── */
+        .sec-hd{margin-bottom:2rem;}
+        .sec-hd .eyebrow{font-size:.68rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--primary);margin-bottom:.5rem;}
+        .sec-hd h2{font-size:1.6rem;font-weight:800;}
+        .sec-hd p{font-size:.87rem;color:var(--muted2);margin-top:.4rem;line-height:1.65;}
+
+        /* ── divider ── */
+        .brand-divider{height:1px;background:var(--border);margin:3.5rem 0;}
+
+        /* ══════════
+           LOGOS
+        ══════════ */
+        .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+
+        .logo-card{
+            border-radius:18px;border:1px solid var(--border);
+            overflow:hidden;transition:var(--tr);
+        }
+        .logo-card:hover{border-color:var(--border-p);transform:translateY(-4px);box-shadow:0 16px 35px rgba(0,0,0,.3),0 0 20px rgba(2,175,255,.06);}
+
+        /* placeholder area */
+        .asset-preview{
+            display:flex;align-items:center;justify-content:center;
+            position:relative;overflow:hidden;
+        }
+        .asset-preview.dark-bg{background:#0d1526;}
+        .asset-preview.light-bg{background:#e8edf5;}
+        .asset-preview.grad-bg{background:linear-gradient(135deg,#0d1526,#1a2744);}
+        .asset-preview.white-bg{background:#ffffff;}
+
+        /* placeholder SVG / icon */
+        .ph{
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:.6rem;color:var(--muted);font-size:.75rem;font-weight:600;
+            letter-spacing:1px;text-transform:uppercase;text-align:center;padding:1.5rem;
+        }
+        .ph i{font-size:2rem;opacity:.35;}
+        .ph span{opacity:.5;}
+
+        /* ── actual logo display inside preview ── */
+        .logo-display{
+            font-size:1.8rem;font-weight:900;
+            display:flex;align-items:center;gap:10px;
+        }
+        .logo-display .dot{
+            width:36px;height:36px;border-radius:10px;
+            background:linear-gradient(135deg,var(--primary),var(--acc));
+            display:flex;align-items:center;justify-content:center;
+            font-size:.9rem;color:#fff;font-weight:900;
+        }
+        .logo-display.on-light{color:#0d1526;}
+        .logo-display.on-light .dot{background:linear-gradient(135deg,var(--primary),#0090d4);}
+        .logo-display.mono{color:#fff;opacity:.85;}
+        .logo-display.mono .dot{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);}
+
+        .asset-footer{
+            padding:1rem 1.3rem;
+            display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+            background:rgba(255,255,255,.02);border-top:1px solid var(--border);
+        }
+        .asset-info .asset-name{font-size:.85rem;font-weight:700;}
+        .asset-info .asset-meta{font-size:.72rem;color:var(--muted2);}
+        .dl-btn{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:7px 14px;border-radius:8px;
+            background:rgba(2,175,255,.08);border:1px solid var(--border-p);
+            color:var(--primary);font-size:.76rem;font-weight:700;
+            cursor:pointer;transition:var(--tr);white-space:nowrap;
+        }
+        .dl-btn:hover{background:var(--primary);color:#fff;}
+
+        /* ══════════
+           ICON / SYMBOL
+        ══════════ */
+        .icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+        .icon-card{
+            border-radius:16px;border:1px solid var(--border);
+            overflow:hidden;transition:var(--tr);
+        }
+        .icon-card:hover{border-color:var(--border-p);transform:translateY(-4px);}
+        .icon-preview{
+            height:120px;display:flex;align-items:center;justify-content:center;
+        }
+        .icon-symbol{
+            width:64px;height:64px;border-radius:18px;
+            background:linear-gradient(135deg,var(--primary),var(--acc));
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.5rem;font-weight:900;color:#fff;
+            box-shadow:0 0 30px rgba(2,175,255,.3);
+        }
+
+        /* ══════════
+           BANNERS
+        ══════════ */
+        .banner-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+
+        .banner-card{
+            border-radius:18px;border:1px solid var(--border);
+            overflow:hidden;transition:var(--tr);
+        }
+        .banner-card:hover{border-color:var(--border-p);transform:translateY(-4px);}
+
+        /* leaderboard 728×90 */
+        .banner-leaderboard .asset-preview{height:80px;background:linear-gradient(90deg,#0d1526,#162035);}
+        .banner-leaderboard .banner-inner{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 2rem;width:100%;
+        }
+        .bi-logo{font-size:1rem;font-weight:800;}
+        .bi-logo span{color:var(--primary);}
+        .bi-tag{font-size:.72rem;color:var(--muted2);}
+        .bi-cta{padding:6px 14px;border-radius:6px;background:var(--primary);color:#fff;font-size:.72rem;font-weight:700;}
+
+        /* square 300×250 */
+        .banner-square .asset-preview{height:200px;background:linear-gradient(135deg,#0d1526,#162035);}
+        .banner-square .banner-inner-sq{
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:.6rem;text-align:center;padding:1.5rem;width:100%;
+        }
+        .bisq-logo{font-size:1.3rem;font-weight:900;}
+        .bisq-logo span{color:var(--primary);}
+        .bisq-tag{font-size:.75rem;color:var(--muted2);}
+        .bisq-price{font-size:1.2rem;font-weight:800;color:var(--primary);}
+        .bisq-cta{padding:8px 20px;border-radius:8px;background:var(--primary);color:#fff;font-size:.8rem;font-weight:700;margin-top:.3rem;}
+
+        /* wide 1200×628 (og image) */
+        .banner-og .asset-preview{height:220px;background:linear-gradient(135deg,#080f1f,#0d1526);}
+        .banner-og .banner-inner-og{
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:.7rem;text-align:center;padding:2rem;width:100%;
+            position:relative;
+        }
+        .banner-inner-og::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(2,175,255,.12) 1px,transparent 1px);background-size:28px 28px;}
+        .og-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:.6rem;}
+        .og-logo{font-size:1.8rem;font-weight:900;}
+        .og-logo span{color:var(--primary);}
+        .og-tag{font-size:.85rem;color:var(--muted2);}
+
+        /* youtube thumbnail 1280×720 */
+        .banner-yt .asset-preview{height:220px;background:linear-gradient(135deg,#0d0517,#0d1526);}
+        .banner-yt .banner-inner-yt{
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            gap:.8rem;text-align:center;padding:2rem;width:100%;
+        }
+        .yt-logo{font-size:1.6rem;font-weight:900;}
+        .yt-logo span{color:var(--primary);}
+        .yt-tag{font-size:.9rem;font-weight:700;color:#fff;}
+        .yt-sub{font-size:.75rem;color:var(--muted2);}
+
+        /* ══════════
+           DISCORD ASSETS
+        ══════════ */
+        .discord-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+        .discord-card{border-radius:18px;border:1px solid var(--border);overflow:hidden;transition:var(--tr);}
+        .discord-card:hover{border-color:var(--border-p);transform:translateY(-4px);}
+
+        /* server banner 960×540 */
+        .dc-banner .asset-preview{height:140px;background:linear-gradient(135deg,#0d1526,#162035);}
+        .dc-banner .dc-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:1rem;text-align:center;}
+        .dcb-logo{font-size:1.1rem;font-weight:900;}
+        .dcb-logo span{color:var(--primary);}
+        .dcb-tag{font-size:.72rem;color:var(--muted2);}
+
+        /* server icon 512×512 */
+        .dc-icon .asset-preview{height:120px;background:#1e2124;}
+        .dc-icon-img{
+            width:72px;height:72px;border-radius:50%;
+            background:linear-gradient(135deg,var(--primary),var(--acc));
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.4rem;font-weight:900;color:#fff;
+        }
+
+        /* invite splash */
+        .dc-splash .asset-preview{height:120px;background:linear-gradient(135deg,#060e1c,#0d1526);}
+        .dc-splash .dc-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;width:100%;padding:1rem;text-align:center;}
+        .dcs-logo{font-size:.95rem;font-weight:800;}
+        .dcs-logo span{color:var(--primary);}
+        .dcs-tag{font-size:.68rem;color:var(--muted2);}
+
+        /* ══════════
+           COLORS
+        ══════════ */
+        .color-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;}
+        .color-card{border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:var(--tr);cursor:pointer;}
+        .color-card:hover{transform:translateY(-4px);border-color:var(--border-p);}
+        .color-swatch{height:100px;}
+        .color-body{padding:1rem;background:rgba(255,255,255,.02);}
+        .color-name{font-size:.85rem;font-weight:700;margin-bottom:.25rem;}
+        .color-hex{font-size:.75rem;color:var(--muted2);font-family:'JetBrains Mono',monospace;}
+        .color-copy{font-size:.68rem;color:var(--primary);margin-top:.3rem;cursor:pointer;}
+        .color-copy:hover{text-decoration:underline;}
+
+        /* ══════════
+           TYPOGRAPHY
+        ══════════ */
+        .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+        .type-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:18px;padding:2rem;transition:var(--tr);}
+        .type-card:hover{border-color:var(--border-p);}
+        .type-label{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:1rem;}
+        .type-sample{margin-bottom:1rem;}
+        .type-weights{display:flex;flex-direction:column;gap:.4rem;font-size:.88rem;color:var(--muted2);}
+        .type-weights span b{color:#fff;}
+
+        /* ══════════
+           USAGE RULES
+        ══════════ */
+        .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
+        .rule-card{border-radius:16px;padding:1.5rem;border:1px solid var(--border);background:rgba(255,255,255,.02);}
+        .rule-card.do{border-color:rgba(35,209,139,.2);background:rgba(35,209,139,.03);}
+        .rule-card.dont{border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.03);}
+        .rule-head{display:flex;align-items:center;gap:8px;font-size:.9rem;font-weight:800;margin-bottom:1rem;}
+        .rule-head.do-head{color:var(--green);}
+        .rule-head.dont-head{color:#f87171;}
+        .rule-list{display:flex;flex-direction:column;gap:.6rem;}
+        .rule-item{display:flex;align-items:flex-start;gap:8px;font-size:.83rem;color:var(--muted2);line-height:1.5;}
+        .rule-item i{flex-shrink:0;margin-top:1px;font-size:.75rem;}
+        .rule-item.do-item i{color:var(--green);}
+        .rule-item.dont-item i{color:#f87171;}
+
+        /* ══════════
+           DOWNLOAD ALL CTA
+        ══════════ */
+        .dl-cta{
+            margin-top:3.5rem;
+            background:linear-gradient(135deg,rgba(2,175,255,.09),rgba(0,229,255,.03));
+            border:1px solid var(--border-p);border-radius:20px;
+            padding:2.5rem;text-align:center;position:relative;overflow:hidden;
+        }
+        .dl-cta::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(2,175,255,.09) 1px,transparent 1px);background-size:26px 26px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent);}
+        .dl-cta-inner{position:relative;z-index:1;}
+        .dl-cta h3{font-size:1.5rem;font-weight:800;margin-bottom:.5rem;}
+        .dl-cta p{font-size:.9rem;color:var(--muted2);margin-bottom:1.8rem;}
+        .dl-cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+        .dl-main-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#0090d4);color:#fff;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:var(--tr);box-shadow:0 4px 20px rgba(2,175,255,.3);}
+        .dl-main-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(2,175,255,.45);}
+        .dc-join-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:10px;background:#5865f2;color:#fff;font-weight:700;font-size:.95rem;border:none;cursor:pointer;transition:var(--tr);}
+        .dc-join-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(88,101,242,.4);}
+
+        /* toast */
+        .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--border-p);border-radius:12px;padding:.8rem 1.5rem;font-size:.85rem;font-weight:600;color:var(--primary);opacity:0;pointer-events:none;transition:var(--tr);z-index:3000;display:flex;align-items:center;gap:8px;}
+        .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+        /* ══════════ FOOTER ══════════ */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px){.color-grid{grid-template-columns:repeat(4,1fr);}.icon-grid{grid-template-columns:repeat(3,1fr);}}
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .logo-grid{grid-template-columns:1fr 1fr;}
+            .banner-grid{grid-template-columns:1fr;}
+            .discord-grid{grid-template-columns:1fr 1fr;}
+            .color-grid{grid-template-columns:repeat(3,1fr);}
+            .type-grid{grid-template-columns:1fr;}
+            .rules-grid{grid-template-columns:1fr;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero h1{font-size:2.4rem;}
+            .logo-grid{grid-template-columns:1fr;}
+            .icon-grid{grid-template-columns:1fr 1fr;}
+            .discord-grid{grid-template-columns:1fr;}
+            .color-grid{grid-template-columns:repeat(2,1fr);}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero h1{font-size:2rem;}
+            .brand-wrap{padding:3rem 4% 5rem;}
+            .color-grid{grid-template-columns:repeat(2,1fr);}
+            .icon-grid{grid-template-columns:1fr 1fr;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-brands fa-discord"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html"><i class="fa-brands fa-discord"></i> Bot Hosting</a>
+                <a href="domain.html"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html" style="color:var(--primary)"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-pill"><i class="fa-solid fa-palette"></i>&nbsp; Brand Kit</div>
+        <h1>SoloCloud <span class="hl">Brand Assets</span></h1>
+        <p>Official logos, banners, colors, and typography for creators, partners, and press. Replace placeholders below with your actual files.</p>
+    </div>
+</section>
+
+<!-- ══ BRAND CONTENT ══ -->
+<div class="brand-wrap">
+
+    <!-- ════════════════
+         LOGOS
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">01 — Logo</div>
+        <h2>Primary Logos</h2>
+        <p>Use the dark-background logo on dark or coloured backgrounds. Use the light version on white or light backgrounds. Never alter the logo proportions or colours.</p>
+    </div>
+
+    <div class="logo-grid">
+        <!-- Primary Dark -->
+        <div class="logo-card">
+            <div class="asset-preview dark-bg" style="height:160px;">
+                <!-- REPLACE: swap the .ph block with <img src="images/logo-dark.png" alt="Logo Dark"> -->
+                <div class="ph">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Logo — Dark BG<br>Replace with logo-dark.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">Primary Logo — Dark</div>
+                    <div class="asset-meta">PNG · SVG · Transparent</div>
+                </div>
+                <a href="assets/logo-dark.png" download class="dl-btn"><i class="fa-solid fa-download"></i> PNG</a>
+            </div>
+        </div>
+
+        <!-- Primary Light -->
+        <div class="logo-card">
+            <div class="asset-preview light-bg" style="height:160px;">
+                <!-- REPLACE: swap the .ph block with <img src="images/logo-light.png" alt="Logo Light"> -->
+                <div class="ph" style="color:#888;">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Logo — Light BG<br>Replace with logo-light.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">Primary Logo — Light</div>
+                    <div class="asset-meta">PNG · SVG · Transparent</div>
+                </div>
+                <a href="assets/logo-light.png" download class="dl-btn"><i class="fa-solid fa-download"></i> PNG</a>
+            </div>
+        </div>
+
+        <!-- Monochrome -->
+        <div class="logo-card">
+            <div class="asset-preview grad-bg" style="height:160px;">
+                <!-- REPLACE: swap the .ph block with <img src="images/logo-mono.png" alt="Logo Mono"> -->
+                <div class="ph">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Logo — Monochrome<br>Replace with logo-mono.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">Monochrome Logo</div>
+                    <div class="asset-meta">PNG · SVG · White only</div>
+                </div>
+                <a href="assets/logo-mono.png" download class="dl-btn"><i class="fa-solid fa-download"></i> PNG</a>
+            </div>
+        </div>
+
+        <!-- Horizontal -->
+        <div class="logo-card">
+            <div class="asset-preview dark-bg" style="height:160px;">
+                <div class="ph">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Logo — Horizontal<br>Replace with logo-horizontal.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">Horizontal Lockup</div>
+                    <div class="asset-meta">PNG · SVG</div>
+                </div>
+                <a href="assets/logo-horizontal.png" download class="dl-btn"><i class="fa-solid fa-download"></i> PNG</a>
+            </div>
+        </div>
+
+        <!-- Stacked -->
+        <div class="logo-card">
+            <div class="asset-preview dark-bg" style="height:160px;">
+                <div class="ph">
+                    <i class="fa-regular fa-image"></i>
+                    <span>Logo — Stacked<br>Replace with logo-stacked.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">Stacked Lockup</div>
+                    <div class="asset-meta">PNG · SVG</div>
+                </div>
+                <a href="assets/logo-stacked.png" download class="dl-btn"><i class="fa-solid fa-download"></i> PNG</a>
+            </div>
+        </div>
+
+        <!-- SVG source -->
+        <div class="logo-card">
+            <div class="asset-preview grad-bg" style="height:160px;">
+                <div class="ph">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Vector Source<br>Replace with logo.svg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info">
+                    <div class="asset-name">SVG Vector Source</div>
+                    <div class="asset-meta">SVG · Scalable · Editable</div>
+                </div>
+                <a href="assets/logo.svg" download class="dl-btn"><i class="fa-solid fa-download"></i> SVG</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         ICON / SYMBOL
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">02 — Icon &amp; Symbol</div>
+        <h2>App Icons &amp; Favicons</h2>
+        <p>Use these for Discord server icons, browser favicons, app icons, and social media profile pictures.</p>
+    </div>
+
+    <div class="icon-grid">
+        <div class="icon-card">
+            <div class="icon-preview dark-bg" style="background:#0d1526;">
+                <!-- REPLACE with <img src="images/icon-512.png"> -->
+                <div class="ph" style="height:120px;">
+                    <i class="fa-regular fa-image" style="font-size:1.5rem;"></i>
+                    <span>512×512 Icon<br>Replace with icon-512.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">App Icon</div><div class="asset-meta">512×512 · PNG</div></div>
+                <a href="assets/icon-512.png" download class="dl-btn"><i class="fa-solid fa-download"></i></a>
+            </div>
+        </div>
+        <div class="icon-card">
+            <div class="icon-preview" style="background:#1e2124;">
+                <!-- REPLACE with <img src="images/icon-discord.png"> -->
+                <div class="ph" style="height:120px;">
+                    <i class="fa-regular fa-image" style="font-size:1.5rem;"></i>
+                    <span>Discord Icon<br>Replace with icon-discord.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Discord Server Icon</div><div class="asset-meta">512×512 · PNG · Round</div></div>
+                <a href="assets/icon-discord.png" download class="dl-btn"><i class="fa-solid fa-download"></i></a>
+            </div>
+        </div>
+        <div class="icon-card">
+            <div class="icon-preview" style="background:#fff;">
+                <!-- REPLACE with <img src="images/favicon.png"> -->
+                <div class="ph" style="height:120px;color:#888;">
+                    <i class="fa-regular fa-image" style="font-size:1.5rem;"></i>
+                    <span>Favicon<br>Replace with favicon.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Favicon</div><div class="asset-meta">32×32 · 64×64 · ICO</div></div>
+                <a href="assets/favicon.ico" download class="dl-btn"><i class="fa-solid fa-download"></i></a>
+            </div>
+        </div>
+        <div class="icon-card">
+            <div class="icon-preview" style="background:#0d1526;">
+                <!-- REPLACE with <img src="images/icon-yt.png"> -->
+                <div class="ph" style="height:120px;">
+                    <i class="fa-regular fa-image" style="font-size:1.5rem;"></i>
+                    <span>YouTube Profile<br>Replace with icon-yt.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">YouTube Profile</div><div class="asset-meta">800×800 · PNG</div></div>
+                <a href="assets/icon-yt.png" download class="dl-btn"><i class="fa-solid fa-download"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         BANNERS
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">03 — Banners</div>
+        <h2>Marketing &amp; Social Banners</h2>
+        <p>Standard-size banners for YouTube, Discord, websites, and social media. Replace each placeholder with the actual image file.</p>
+    </div>
+
+    <div class="banner-grid">
+        <!-- YouTube Channel Art 2560×1440 -->
+        <div class="banner-card" style="grid-column:span 2;">
+            <div class="asset-preview" style="height:180px;background:linear-gradient(135deg,#06101e,#0d1526);">
+                <!-- REPLACE with <img src="images/banner-youtube.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+                <div class="ph">
+                    <i class="fa-brands fa-youtube" style="color:#ff0000;opacity:.4;font-size:2.5rem;"></i>
+                    <span>YouTube Channel Art — 2560×1440<br>Replace with banner-youtube.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">YouTube Channel Art</div><div class="asset-meta">2560×1440 · JPG · PNG</div></div>
+                <a href="assets/banner-youtube.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- YouTube Thumbnail -->
+        <div class="banner-card">
+            <div class="asset-preview" style="height:200px;background:linear-gradient(135deg,#0d0517,#0d1526);">
+                <!-- REPLACE with <img src="images/thumbnail-template.jpg" ...> -->
+                <div class="ph">
+                    <i class="fa-solid fa-film" style="opacity:.3;font-size:2rem;"></i>
+                    <span>YouTube Thumbnail Template<br>1280×720 · Replace with thumbnail-template.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">YouTube Thumbnail</div><div class="asset-meta">1280×720 · JPG · PSD</div></div>
+                <a href="assets/thumbnail-template.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- OG / Social Share Image -->
+        <div class="banner-card">
+            <div class="asset-preview" style="height:200px;background:linear-gradient(135deg,#080f1f,#0d1526);">
+                <!-- REPLACE with <img src="images/og-image.jpg" ...> -->
+                <div class="ph">
+                    <i class="fa-solid fa-share-nodes" style="opacity:.3;font-size:2rem;"></i>
+                    <span>Open Graph / Social Share<br>1200×628 · Replace with og-image.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">OG / Social Share Image</div><div class="asset-meta">1200×628 · JPG</div></div>
+                <a href="assets/og-image.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- Instagram Post Square -->
+        <div class="banner-card">
+            <div class="asset-preview" style="height:200px;background:linear-gradient(135deg,#0d1526,#1a2744);">
+                <!-- REPLACE with <img src="images/banner-instagram.jpg" ...> -->
+                <div class="ph">
+                    <i class="fa-brands fa-instagram" style="opacity:.3;font-size:2rem;"></i>
+                    <span>Instagram Post<br>1080×1080 · Replace with banner-instagram.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Instagram Post</div><div class="asset-meta">1080×1080 · JPG · PNG</div></div>
+                <a href="assets/banner-instagram.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- Instagram Story -->
+        <div class="banner-card">
+            <div class="asset-preview" style="height:200px;background:linear-gradient(135deg,#0d1526,#162035);">
+                <!-- REPLACE with <img src="images/banner-story.jpg" ...> -->
+                <div class="ph">
+                    <i class="fa-solid fa-mobile-screen" style="opacity:.3;font-size:2rem;"></i>
+                    <span>Instagram / WhatsApp Story<br>1080×1920 · Replace with banner-story.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Story Banner</div><div class="asset-meta">1080×1920 · JPG · PNG</div></div>
+                <a href="assets/banner-story.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- Leaderboard Ad Banner -->
+        <div class="banner-card" style="grid-column:span 2;">
+            <div class="asset-preview" style="height:90px;background:linear-gradient(90deg,#0d1526,#162035);">
+                <!-- REPLACE with <img src="images/banner-leaderboard.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+                <div class="ph" style="flex-direction:row;gap:1.5rem;">
+                    <i class="fa-solid fa-rectangle-ad" style="opacity:.3;font-size:1.5rem;"></i>
+                    <span>Leaderboard Ad Banner — 728×90 · Replace with banner-leaderboard.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Leaderboard Banner</div><div class="asset-meta">728×90 · JPG · PNG</div></div>
+                <a href="assets/banner-leaderboard.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         DISCORD ASSETS
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">04 — Discord Assets</div>
+        <h2>Discord Server Branding</h2>
+        <p>Official assets for the SoloCloud Discord server — banner, icon, and invite splash screen.</p>
+    </div>
+
+    <div class="discord-grid">
+        <!-- Server Banner -->
+        <div class="discord-card" style="grid-column:span 2;">
+            <div class="asset-preview" style="height:150px;background:linear-gradient(135deg,#0d1526,#162035);">
+                <!-- REPLACE with <img src="images/discord-banner.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+                <div class="ph">
+                    <i class="fa-brands fa-discord" style="color:#7289da;opacity:.4;font-size:2rem;"></i>
+                    <span>Discord Server Banner — 960×540<br>Replace with discord-banner.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Discord Server Banner</div><div class="asset-meta">960×540 · JPG · GIF supported</div></div>
+                <a href="assets/discord-banner.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- Server Icon -->
+        <div class="discord-card">
+            <div class="asset-preview" style="height:140px;background:#1e2124;">
+                <!-- REPLACE with <img src="images/discord-icon.png" style="width:80px;height:80px;border-radius:50%;"> -->
+                <div class="ph">
+                    <i class="fa-regular fa-image" style="font-size:1.5rem;"></i>
+                    <span>Discord Icon<br>512×512 · Replace with discord-icon.png</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Server Icon</div><div class="asset-meta">512×512 · PNG · Round</div></div>
+                <a href="assets/discord-icon.png" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+
+        <!-- Invite Splash -->
+        <div class="discord-card">
+            <div class="asset-preview" style="height:140px;background:linear-gradient(135deg,#060e1c,#0d1526);">
+                <!-- REPLACE with <img src="images/discord-splash.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+                <div class="ph">
+                    <i class="fa-solid fa-door-open" style="opacity:.3;font-size:1.5rem;"></i>
+                    <span>Invite Splash Screen<br>1920×1080 · Replace with discord-splash.jpg</span>
+                </div>
+            </div>
+            <div class="asset-footer">
+                <div class="asset-info"><div class="asset-name">Invite Splash</div><div class="asset-meta">1920×1080 · JPG</div></div>
+                <a href="assets/discord-splash.jpg" download class="dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         COLOR PALETTE
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">05 — Colors</div>
+        <h2>Brand Color Palette</h2>
+        <p>Click any color card to copy the hex code to clipboard.</p>
+    </div>
+
+    <div class="color-grid">
+        <div class="color-card" onclick="copyColor('#02afff', this)">
+            <div class="color-swatch" style="background:#02afff;"></div>
+            <div class="color-body"><div class="color-name">SoloCloud Blue</div><div class="color-hex">#02AFFF</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#00e5ff', this)">
+            <div class="color-swatch" style="background:#00e5ff;"></div>
+            <div class="color-body"><div class="color-name">Accent Cyan</div><div class="color-hex">#00E5FF</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#030712', this)">
+            <div class="color-swatch" style="background:#030712;border-bottom:1px solid rgba(255,255,255,.08);"></div>
+            <div class="color-body"><div class="color-name">Background Dark</div><div class="color-hex">#030712</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#0d1526', this)">
+            <div class="color-swatch" style="background:#0d1526;"></div>
+            <div class="color-body"><div class="color-name">Surface Dark</div><div class="color-hex">#0D1526</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#f1f5f9', this)">
+            <div class="color-swatch" style="background:#f1f5f9;"></div>
+            <div class="color-body"><div class="color-name">Text Primary</div><div class="color-hex">#F1F5F9</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#94a3b8', this)">
+            <div class="color-swatch" style="background:#94a3b8;"></div>
+            <div class="color-body"><div class="color-name">Text Secondary</div><div class="color-hex">#94A3B8</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#23d18b', this)">
+            <div class="color-swatch" style="background:#23d18b;"></div>
+            <div class="color-body"><div class="color-name">Success Green</div><div class="color-hex">#23D18B</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#f59e0b', this)">
+            <div class="color-swatch" style="background:#f59e0b;"></div>
+            <div class="color-body"><div class="color-name">Warning Amber</div><div class="color-hex">#F59E0B</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#ef4444', this)">
+            <div class="color-swatch" style="background:#ef4444;"></div>
+            <div class="color-body"><div class="color-name">Error Red</div><div class="color-hex">#EF4444</div><div class="color-copy">Click to copy</div></div>
+        </div>
+        <div class="color-card" onclick="copyColor('#8b5cf6', this)">
+            <div class="color-swatch" style="background:#8b5cf6;"></div>
+            <div class="color-body"><div class="color-name">Accent Purple</div><div class="color-hex">#8B5CF6</div><div class="color-copy">Click to copy</div></div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         TYPOGRAPHY
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">06 — Typography</div>
+        <h2>Brand Typefaces</h2>
+        <p>Use Poppins for all body text and UI. Use Bebas Neue for large display headings only.</p>
+    </div>
+
+    <div class="type-grid">
+        <div class="type-card">
+            <div class="type-label">Primary — Poppins</div>
+            <div class="type-sample">
+                <div style="font-size:2.2rem;font-weight:800;line-height:1.1;margin-bottom:.5rem;">Aa Bb Cc 123</div>
+                <div style="font-size:.9rem;color:var(--muted2);line-height:1.7;">The quick brown fox jumps over the lazy dog.<br>ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            </div>
+            <div class="type-weights">
+                <span><b style="font-weight:300;">300</b> — Light</span>
+                <span><b style="font-weight:400;">400</b> — Regular</span>
+                <span><b style="font-weight:600;">600</b> — SemiBold</span>
+                <span><b style="font-weight:700;">700</b> — Bold</span>
+                <span><b style="font-weight:800;">800</b> — ExtraBold</span>
+                <span><b style="font-weight:900;">900</b> — Black</span>
+            </div>
+        </div>
+        <div class="type-card">
+            <div class="type-label">Display — Bebas Neue</div>
+            <div class="type-sample">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;margin-bottom:.5rem;letter-spacing:2px;">SOLO CLOUD</div>
+                <div style="font-size:.9rem;color:var(--muted2);line-height:1.7;">Use for hero headings, large titles,<br>and display text only. All-caps only.</div>
+            </div>
+            <div class="type-weights">
+                <span><b>400</b> — Regular (only weight)</span>
+                <span style="color:var(--muted);font-size:.8rem;margin-top:.4rem;">⚠ Do not use Bebas Neue for body text,<br>paragraphs, or small sizes below 24px.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-divider"></div>
+
+    <!-- ════════════════
+         USAGE GUIDELINES
+    ════════════════ -->
+    <div class="sec-hd">
+        <div class="eyebrow">07 — Guidelines</div>
+        <h2>Logo Usage Rules</h2>
+        <p>Follow these guidelines when using SoloCloud brand assets in any content or media.</p>
+    </div>
+
+    <div class="rules-grid">
+        <div class="rule-card do">
+            <div class="rule-head do-head"><i class="fa-solid fa-circle-check"></i> Do</div>
+            <div class="rule-list">
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Use the logo with adequate clear space around it</div>
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Use the correct logo version for the background (dark / light)</div>
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Maintain original proportions when resizing</div>
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Use official brand colors from the palette</div>
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Credit SoloCloud when using assets in creator content</div>
+                <div class="rule-item do-item"><i class="fa-solid fa-check"></i> Use SVG files for print or large-format materials</div>
+            </div>
+        </div>
+        <div class="rule-card dont">
+            <div class="rule-head dont-head"><i class="fa-solid fa-circle-xmark"></i> Don't</div>
+            <div class="rule-list">
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Stretch, skew, or distort the logo in any way</div>
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Change the logo colors or add gradients not in the palette</div>
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Place the logo on busy backgrounds without a clear contrast</div>
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Add drop shadows, strokes, or effects to the logo</div>
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Use the logo to imply an official endorsement without permission</div>
+                <div class="rule-item dont-item"><i class="fa-solid fa-xmark"></i> Recreate, trace, or modify the logo artwork</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════
+         DOWNLOAD ALL CTA
+    ════════════════ -->
+    <div class="dl-cta">
+        <div class="dl-cta-inner">
+            <h3>Download the Full Brand Kit</h3>
+            <p>Get all logos, banners, icons, and guidelines in one ZIP file — or contact us on Discord for custom partner assets.</p>
+            <div class="dl-cta-btns">
+                <!-- REPLACE href with your actual brand kit ZIP path -->
+                <a href="assets/solocloud-brand-kit.zip" download class="dl-main-btn"><i class="fa-solid fa-download"></i> Download Brand Kit (.zip)</a>
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank" class="dc-join-btn"><i class="fa-brands fa-discord"></i> Partner with Us</a>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end brand-wrap -->
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Game, Bot & VPS Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul>
+            <li><a href="minecraft.html">Minecraft</a></li>
+            <li><a href="hytale.html">Hytale</a></li>
+            <li><a href="palworld.html">Palworld</a></li>
+            <li><a href="games.html">All Games</a></li>
+        </ul></div>
+        <div class="fc"><h4>Services</h4><ul>
+            <li><a href="bothosting.html">Bot Hosting</a></li>
+            <li><a href="domain.html">Domains</a></li>
+            <li><a href="vpshosting.html">VPS</a></li>
+        </ul></div>
+        <div class="fc"><h4>Company</h4><ul>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="legal.html">Legal</a></li>
+            <li><a href="payment.html">Payments</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="fc"><h4>Tools</h4><ul>
+            <li><a href="tools.html">Panel Demo</a></li>
+        </ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"><i class="fa-solid fa-copy"></i> <span id="toastText">Copied!</span></div>
+
+<script>
+    // Hamburger
+    const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+    hb.addEventListener('click', () => {
+        const o = mm.classList.toggle('open');
+        hb.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+    });
+    mm.addEventListener('click', e => {
+        if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+    });
+    function mSub(el){
+        const s = el.nextElementSibling;
+        s.classList.toggle('open');
+        el.classList.toggle('expanded', s.classList.contains('open'));
+    }
+
+    // Copy color hex
+    function copyColor(hex, card){
+        navigator.clipboard.writeText(hex).then(() => {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastText').textContent = hex + ' copied!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2200);
+        });
+    }
+</script>
+</body>
+</html>

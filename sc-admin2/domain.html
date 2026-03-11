@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Names — SoloCloud</title>
+    <meta name="description" content="Register your perfect domain name with SoloCloud. .com, .net, .in, .gg and more. Starting from ₹199/yr.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg:      #030712;
+            --bg2:     #080f1f;
+            --bg3:     #0d1526;
+            --primary: #02afff;
+            --acc:     #00e5ff;
+            --glow:    rgba(2,175,255,0.35);
+            --glows:   rgba(2,175,255,0.10);
+            --border-p:rgba(2,175,255,0.22);
+            --border:  rgba(255,255,255,0.07);
+            --text:    #f1f5f9;
+            --muted:   #64748b;
+            --muted2:  #94a3b8;
+            --discord: #5865f2;
+            --green:   #23d18b;
+            --tr:      all .3s cubic-bezier(.4,0,.2,1);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--bg);color:var(--text);overflow-x:hidden;}
+        a{text-decoration:none;color:inherit;}
+        ul{list-style:none;}
+
+        /* ── NAV ── */
+        nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:90%;max-width:1200px;height:80px;background:rgba(3,7,18,.85);backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:40px;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;flex-shrink:0;}
+        .logo img{height:40px;}
+        .logo span{color:var(--primary);}
+        .nav-r{display:flex;align-items:center;gap:2rem;height:100%;}
+        .nav-links{display:flex;gap:1.5rem;height:100%;align-items:center;}
+        .nav-item{position:relative;height:100%;display:flex;align-items:center;cursor:pointer;font-weight:500;font-size:.9rem;transition:var(--tr);color:#fff;white-space:nowrap;}
+        .nav-item:hover,.nav-item.active{color:var(--primary);}
+        .dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;visibility:hidden;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:var(--tr);display:grid;gap:1rem;z-index:100;}
+        .nav-item:hover .dropdown{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;}
+        .dd-games{grid-template-columns:repeat(2,1fr);width:400px;}
+        .dd-single{grid-template-columns:1fr;width:220px;}
+        .ic{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;transition:var(--tr);}
+        .ic:hover{background:rgba(255,255,255,.05);}
+        .ic i{color:var(--primary);font-size:1.1rem;}
+        .ic span{font-size:.85rem;font-weight:600;}
+        .dd-games .ic{position:relative;overflow:hidden;border-radius:12px;height:100px;flex-direction:column;justify-content:center;text-align:center;gap:5px;padding:0;border:1px solid var(--border);}
+        .dd-games .ic::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.7));z-index:1;}
+        .dd-games .ic:hover{transform:translateY(-3px);border-color:var(--primary);}
+        .dd-games .ic i,.dd-games .ic span{position:relative;z-index:2;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+        .bg-mc {background:url("https://wallpapers.com/images/featured/minecraft-background-cfljc4haleghnajo.jpg") center/cover no-repeat;}
+        .bg-pal{background:url("https://img.youtube.com/vi/o77MzDQT1cg/maxresdefault.jpg") center/cover no-repeat;}
+        .bg-hyt{background:url("https://i.pinimg.com/736x/91/c0/e9/91c0e92724d381373743b22bc5f78e49.jpg") center/cover no-repeat;}
+        .bg-all{background:url("https://i.pinimg.com/736x/fb/46/2c/fb462cfc55c2fa522b65ee4c8a437164.jpg") center/cover no-repeat;}
+        .dd-single .ic{display:flex;align-items:center;gap:12px;padding:12px 15px;flex-direction:row;justify-content:flex-start;border:1px solid transparent;}
+        .dd-single .ic:hover{background:rgba(255,255,255,.05);border-color:var(--border);transform:translateX(5px);}
+        .dd-single .ic::before{display:none;}
+        .dd-single .ic i{color:var(--primary);}
+        .dd-single .ic span{color:var(--text);font-size:.9rem;font-weight:500;}
+        .nav-auth{display:flex;align-items:center;gap:1rem;}
+        .btn-pri{padding:9px 20px;border-radius:20px;font-size:.85rem;font-weight:600;background:var(--primary);color:#fff;border:none;cursor:pointer;transition:var(--tr);}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none;z-index:1100;}
+        .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:4px;transition:var(--tr);}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+        /* ── MOBILE MENU ── */
+        .mob-menu{display:none;position:fixed;inset:0;background:rgba(3,7,18,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;padding:100px 2rem 2rem;overflow-y:auto;opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;}
+        .mob-menu.open{display:flex;opacity:1;transform:translateY(0);}
+        .mob-ni{border-bottom:1px solid var(--border);}
+        .mob-nl{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:1.1rem;font-weight:600;cursor:pointer;transition:var(--tr);}
+        .mob-nl:hover{color:var(--primary);}
+        .mob-nl i{font-size:.8rem;transition:var(--tr);}
+        .mob-nl.expanded i{transform:rotate(180deg);color:var(--primary);}
+        .mob-sub{display:none;padding:.5rem 0 1rem 1rem;gap:.5rem;flex-direction:column;}
+        .mob-sub.open{display:flex;}
+        .mob-sub a{display:flex;align-items:center;gap:10px;padding:.6rem .8rem;border-radius:8px;font-size:.95rem;color:var(--muted);transition:var(--tr);}
+        .mob-sub a:hover{background:rgba(255,255,255,.05);color:var(--primary);}
+        .mob-sub a i{color:var(--primary);width:18px;text-align:center;}
+        .mob-auth{display:flex;flex-direction:column;gap:1rem;margin-top:2rem;}
+        .mob-auth a{display:block;text-align:center;padding:14px;border-radius:12px;font-weight:600;}
+        .mob-login{border:1px solid var(--border);color:#fff;}
+        .mob-signup{background:var(--primary);color:#fff;}
+
+        /* ══════════════
+           HERO
+        ══════════════ */
+        .hero{
+            position:relative;min-height:80vh;
+            padding:150px 5% 80px;
+            display:flex;align-items:center;justify-content:center;
+            text-align:center;overflow:hidden;
+        }
+        .hero::before{
+            content:'';position:absolute;inset:0;
+            background:
+                radial-gradient(ellipse 65% 55% at 50% 30%,rgba(2,175,255,.1) 0%,transparent 60%),
+                radial-gradient(ellipse 40% 40% at 15% 70%,rgba(0,229,255,.05) 0%,transparent 50%),
+                radial-gradient(ellipse 40% 40% at 85% 70%,rgba(2,175,255,.05) 0%,transparent 50%);
+            z-index:0;
+        }
+        /* floating orbs */
+        .orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0;animation:floatOrb 10s ease-in-out infinite;}
+        .orb1{width:300px;height:300px;top:10%;left:-80px;background:radial-gradient(circle,rgba(2,175,255,.06),transparent 70%);animation-duration:12s;}
+        .orb2{width:200px;height:200px;bottom:15%;right:-50px;background:radial-gradient(circle,rgba(0,229,255,.05),transparent 70%);animation-duration:9s;animation-delay:-4s;}
+        @keyframes floatOrb{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+
+        /* dot grid */
+        .hero::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(2,175,255,.15) 1px,transparent 1px);background-size:36px 36px;z-index:0;mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,black 30%,transparent 100%);}
+
+        .hero-content{position:relative;z-index:2;max-width:800px;}
+        .hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(2,175,255,.1);border:1px solid rgba(2,175,255,.28);border-radius:50px;padding:6px 20px;font-size:.78rem;font-weight:700;color:var(--primary);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.8rem;}
+        .hero h1{font-size:4rem;font-weight:900;line-height:1.1;margin-bottom:1.2rem;}
+        .hero h1 .hl{background:linear-gradient(135deg,var(--primary),var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .hero p{font-size:1.05rem;color:var(--muted2);margin:0 auto 2.5rem;max-width:580px;line-height:1.75;}
+
+        /* ── Domain search bar ── */
+        .search-bar{
+            display:flex;align-items:center;
+            background:rgba(255,255,255,.04);
+            border:1px solid var(--border-p);
+            border-radius:14px;padding:.5rem .5rem .5rem 1.4rem;
+            max-width:620px;margin:0 auto 1.5rem;gap:.8rem;
+            box-shadow:0 0 30px rgba(2,175,255,.07);
+            transition:var(--tr);
+        }
+        .search-bar:focus-within{border-color:var(--primary);box-shadow:0 0 40px rgba(2,175,255,.14);}
+        .search-bar i{color:var(--muted);font-size:1rem;flex-shrink:0;}
+        .search-bar input{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-size:1rem;font-family:'Poppins',sans-serif;}
+        .search-bar input::placeholder{color:var(--muted);}
+        .search-bar button{padding:12px 24px;border-radius:10px;background:linear-gradient(135deg,var(--primary),#0090d4);border:none;color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;transition:var(--tr);font-family:'Poppins',sans-serif;white-space:nowrap;}
+        .search-bar button:hover{transform:scale(1.04);box-shadow:0 4px 20px rgba(2,175,255,.35);}
+
+        .tld-chips{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;}
+        .tld-chip{padding:5px 14px;border-radius:50px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:.78rem;font-weight:600;color:var(--muted2);cursor:pointer;transition:var(--tr);}
+        .tld-chip:hover{border-color:var(--primary);color:var(--primary);}
+
+        /* ══════════════
+           EXTENSION GRID
+        ══════════════ */
+        .ext-section{padding:5rem 5%;max-width:1300px;margin:0 auto;}
+        .section-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--primary);margin-bottom:.8rem;}
+        .section-title{font-size:2.4rem;font-weight:800;background:linear-gradient(to right,#fff,var(--muted2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:3rem;}
+        .section-header{text-align:center;margin-bottom:3rem;}
+
+        .ext-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;}
+
+        .ext-card{
+            background:rgba(255,255,255,.025);border:1px solid var(--border);
+            border-radius:18px;padding:1.8rem 1.5rem;
+            display:flex;flex-direction:column;gap:.8rem;
+            transition:var(--tr);position:relative;overflow:hidden;
+            cursor:pointer;
+        }
+        .ext-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--primary),transparent);opacity:0;transition:var(--tr);}
+        .ext-card:hover{transform:translateY(-5px);border-color:var(--border-p);box-shadow:0 20px 40px rgba(0,0,0,.3),0 0 25px rgba(2,175,255,.07);}
+        .ext-card:hover::before{opacity:1;}
+
+        .ext-name{font-size:1.8rem;font-weight:900;color:#fff;font-family:'Space Grotesk',sans-serif;}
+        .ext-desc{font-size:.78rem;color:var(--muted2);flex:1;line-height:1.5;}
+        .ext-bottom{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;}
+        .ext-price{font-size:1.1rem;font-weight:800;color:var(--primary);}
+        .ext-price span{font-size:.72rem;color:var(--muted);font-weight:500;}
+        .ext-btn{
+            padding:7px 16px;border-radius:8px;
+            background:rgba(2,175,255,.1);border:1px solid var(--border-p);
+            color:var(--primary);font-size:.78rem;font-weight:700;
+            cursor:pointer;transition:var(--tr);font-family:'Poppins',sans-serif;
+            white-space:nowrap;
+        }
+        .ext-btn:hover{background:var(--primary);color:#fff;box-shadow:0 4px 14px rgba(2,175,255,.35);}
+
+        .ext-popular{position:absolute;top:.8rem;right:.8rem;background:var(--primary);border-radius:50px;padding:3px 10px;font-size:.62rem;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;}
+
+        /* ══════════════
+           FEATURES
+        ══════════════ */
+        .features-section{padding:5rem 5%;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(2,175,255,.04) 0%,transparent 60%);}
+        .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+        .feat-card{padding:1.8rem;border-radius:18px;background:rgba(255,255,255,.02);border:1px solid var(--border);transition:var(--tr);position:relative;overflow:hidden;}
+        .feat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--primary),transparent);opacity:0;transition:var(--tr);}
+        .feat-card:hover{transform:translateY(-5px);border-color:var(--border-p);box-shadow:0 18px 40px rgba(0,0,0,.25),0 0 25px rgba(2,175,255,.06);}
+        .feat-card:hover::after{opacity:1;}
+        .feat-card:hover .feat-icon{background:rgba(2,175,255,.2);transform:scale(1.1) rotate(-3deg);}
+        .feat-icon{width:50px;height:50px;background:rgba(2,175,255,.09);border:1px solid var(--border-p);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-size:1.3rem;color:var(--primary);transition:var(--tr);}
+        .feat-card h4{font-size:1rem;margin-bottom:.5rem;}
+        .feat-card p{font-size:.84rem;color:var(--muted2);line-height:1.65;}
+
+        /* ══════════════
+           HOW IT WORKS
+        ══════════════ */
+        .how-section{padding:5rem 5%;}
+        .steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:900px;margin:0 auto;position:relative;}
+        .steps-row::before{content:'';position:absolute;top:26px;left:16%;right:16%;height:1px;background:linear-gradient(90deg,transparent,var(--border-p),var(--border-p),transparent);z-index:0;}
+        .step{text-align:center;position:relative;z-index:1;}
+        .step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#0090d4);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;margin:0 auto 1rem;box-shadow:0 0 22px rgba(2,175,255,.4);}
+        .step h4{font-size:.95rem;font-weight:700;margin-bottom:.4rem;}
+        .step p{font-size:.8rem;color:var(--muted2);line-height:1.6;}
+
+        /* ══════════════════════════════════
+           MODAL
+        ══════════════════════════════════ */
+        .modal-overlay{
+            display:none;position:fixed;inset:0;z-index:2000;
+            background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+            align-items:center;justify-content:center;padding:1rem;
+        }
+        .modal-overlay.open{display:flex;}
+
+        .modal{
+            background:var(--bg3);
+            border:1px solid var(--border-p);
+            border-radius:24px;
+            max-width:500px;width:100%;
+            padding:2.5rem;
+            position:relative;
+            box-shadow:0 0 80px rgba(2,175,255,.12),0 30px 60px rgba(0,0,0,.5);
+            animation:modalIn .3s cubic-bezier(.25,.46,.45,.94);
+        }
+        @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+
+        .modal::before{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--primary),transparent);border-radius:24px 24px 0 0;}
+
+        .modal-close{
+            position:absolute;top:1.2rem;right:1.2rem;
+            width:32px;height:32px;border-radius:8px;
+            background:rgba(255,255,255,.06);border:1px solid var(--border);
+            color:var(--muted2);font-size:.9rem;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            transition:var(--tr);
+        }
+        .modal-close:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+        .modal-icon{
+            width:64px;height:64px;border-radius:18px;
+            background:rgba(2,175,255,.1);border:1px solid var(--border-p);
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.8rem;margin-bottom:1.5rem;
+        }
+        .modal h2{font-size:1.5rem;font-weight:800;margin-bottom:.6rem;}
+        .modal p.modal-sub{font-size:.9rem;color:var(--muted2);line-height:1.65;margin-bottom:2rem;}
+
+        .modal-domain-name{
+            background:rgba(2,175,255,.07);border:1px solid var(--border-p);
+            border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1.8rem;
+            font-size:1.1rem;font-weight:700;color:var(--primary);text-align:center;
+            font-family:'Space Grotesk',sans-serif;
+        }
+
+        .modal-options{display:flex;flex-direction:column;gap:1rem;}
+        .modal-option{
+            display:flex;align-items:center;gap:1rem;
+            padding:1.2rem;border-radius:14px;
+            border:1px solid var(--border);background:rgba(255,255,255,.025);
+            transition:var(--tr);cursor:pointer;text-decoration:none;color:inherit;
+        }
+        .modal-option:hover{border-color:var(--border-p);background:rgba(2,175,255,.06);transform:translateX(4px);}
+        .modal-option-icon{
+            width:44px;height:44px;border-radius:12px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.2rem;flex-shrink:0;
+        }
+        .mo-discord .modal-option-icon{background:rgba(88,101,242,.12);color:#7289da;}
+        .mo-billing .modal-option-icon{background:rgba(2,175,255,.1);color:var(--primary);}
+        .modal-option-text{}
+        .modal-option-title{font-size:.92rem;font-weight:700;margin-bottom:2px;}
+        .modal-option-desc{font-size:.76rem;color:var(--muted2);}
+        .modal-option-arrow{margin-left:auto;color:var(--muted);font-size:.85rem;transition:var(--tr);}
+        .modal-option:hover .modal-option-arrow{color:var(--primary);transform:translateX(3px);}
+
+        .modal-note{margin-top:1.5rem;font-size:.75rem;color:var(--muted);text-align:center;line-height:1.6;}
+        .modal-note i{color:var(--primary);margin-right:4px;}
+
+        /* ══════════════
+           FOOTER
+        ══════════════ */
+        footer{background:#02040a;border-top:1px solid var(--border);padding:5rem 5% 2rem;margin-top:4rem;}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:3rem;max-width:1300px;margin:0 auto;}
+        .footer-brand .logo{font-size:2rem;margin-bottom:1rem;display:inline-block;}
+        .footer-brand p{margin:1.5rem 0 2rem;color:var(--muted);font-size:1rem;line-height:1.6;max-width:300px;}
+        .socials{display:flex;gap:1.2rem;margin-top:1rem;}
+        .socials a{color:var(--muted);font-size:1.4rem;transition:var(--tr);}
+        .socials a:hover{color:var(--primary);transform:translateY(-3px);}
+        .fc h4{font-size:1.2rem;margin-bottom:2rem;color:#fff;}
+        .fc ul li{margin-bottom:1.2rem;}
+        .fc ul li a{color:var(--muted);font-size:.95rem;transition:.3s;}
+        .fc ul li a:hover{color:var(--primary);padding-left:5px;}
+        .footer-bot{display:flex;justify-content:space-between;align-items:center;max-width:1300px;margin:3rem auto 0;padding:2rem 0 1rem;border-top:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:.9rem;flex-wrap:wrap;gap:1rem;}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1100px){
+            .ext-grid{grid-template-columns:repeat(3,1fr);}
+        }
+        @media(max-width:992px){
+            .hamburger{display:flex;}
+            .nav-r{display:none;}
+            nav{height:70px;padding:0 1.5rem;top:12px;width:92%;}
+            .hero{padding:120px 5% 60px;min-height:auto;}
+            .hero h1{font-size:2.8rem;}
+            .ext-grid{grid-template-columns:repeat(2,1fr);}
+            .feat-grid{grid-template-columns:repeat(2,1fr);}
+            .steps-row{grid-template-columns:1fr;max-width:400px;}
+            .steps-row::before{display:none;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2.5rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:768px){
+            .hero h1{font-size:2.2rem;}
+            .hero p{font-size:.95rem;}
+            .search-bar{flex-direction:column;padding:.8rem;}
+            .search-bar button{width:100%;}
+            .ext-grid{grid-template-columns:1fr 1fr;}
+            .feat-grid{grid-template-columns:1fr;}
+            .section-title{font-size:2rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+            .footer-brand{grid-column:span 2;}
+        }
+        @media(max-width:480px){
+            nav{height:64px;border-radius:32px;padding:0 1.2rem;top:10px;width:94%;}
+            .logo{font-size:1.1rem;}
+            .logo img{height:32px;}
+            .hero{padding:95px 4% 50px;}
+            .hero h1{font-size:1.9rem;}
+            .ext-grid{grid-template-columns:1fr 1fr;gap:.8rem;}
+            .ext-card{padding:1.2rem 1rem;}
+            .ext-name{font-size:1.5rem;}
+            .footer-grid{grid-template-columns:1fr 1fr;gap:1.5rem;}
+            .footer-brand{grid-column:span 2;}
+            .footer-bot{flex-direction:column;text-align:center;}
+            .socials{justify-content:center;}
+            .modal{padding:1.8rem 1.4rem;}
+        }
+        @media(max-width:360px){
+            .ext-grid{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+    <a href="index.html" class="logo">
+        <img src="images/solocloudlogo.png" alt="SoloCloud" onerror="this.style.display='none'">
+        <span>SoloCloud</span>&nbsp;Hosting
+    </a>
+    <div class="nav-r">
+        <ul class="nav-links">
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="minecraft.html">Minecraft</a></li>
+            <li class="nav-item">Games <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-games">
+                    <a href="minecraft.html" class="ic bg-mc"><i class="fa-solid fa-cube"></i><span>Minecraft</span></a>
+                    <a href="hytale.html" class="ic bg-hyt"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hytale</span></a>
+                    <a href="palworld.html" class="ic bg-pal"><i class="fa-solid fa-paw"></i><span>Palworld</span></a>
+                    <a href="games.html" class="ic bg-all"><i class="fa-solid fa-gamepad"></i><span>See All Games</span></a>
+                </div>
+            </li>
+            <li class="nav-item active">Services <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="bothosting.html" class="ic"><i class="fa-brands fa-discord"></i><span>Bot Hosting</span></a>
+                    <a href="domain.html" class="ic"><i class="fa-solid fa-globe"></i><span>Domain Name</span></a>
+                    <a href="vpshosting.html" class="ic"><i class="fa-solid fa-server"></i><span>VPS Hosting</span></a>
+                </div>
+            </li>
+            <li class="nav-item">Company <i class="fa-solid fa-chevron-down" style="font-size:.65rem;margin-left:4px;"></i>
+                <div class="dropdown dd-single">
+                    <a href="aboutus.html" class="ic"><i class="fa-solid fa-info-circle"></i><span>About Us</span></a>
+                    <a href="legal.html" class="ic"><i class="fa-solid fa-shield-halved"></i><span>Legal</span></a>
+                    <a href="payment.html" class="ic"><i class="fa-solid fa-credit-card"></i><span>Payment</span></a>
+                    <a href="branding.html" class="ic"><i class="fa-solid fa-palette"></i><span>Branding</span></a>
+                    <a href="tutorial.html" class="ic"><i class="fa-solid fa-book"></i><span>Tutorial</span></a>
+                    <a href="infrastructure.html" class="ic"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                    <a href="contact.html" class="ic"><i class="fa-solid fa-envelope"></i><span>Contact us</span></a>
+                </div>
+            </li>
+            <li class="nav-item"><a href="tools.html">Tools</a></li>
+        </ul>
+        <div class="nav-auth">
+            <a href="https://billing.solocloud.host/login" class="nav-item">Login</a>
+            <a href="https://billing.solocloud.host/register" class="btn-pri">Sign Up</a>
+        </div>
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── MOBILE MENU ── -->
+<div class="mob-menu" id="mobMenu">
+    <ul>
+        <li class="mob-ni"><a href="index.html" class="mob-nl">Home</a></li>
+        <li class="mob-ni"><a href="minecraft.html" class="mob-nl">Minecraft</a></li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Games <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="minecraft.html"><i class="fa-solid fa-cube"></i> Minecraft</a>
+                <a href="hytale.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Hytale</a>
+                <a href="palworld.html"><i class="fa-solid fa-paw"></i> Palworld</a>
+                <a href="games.html"><i class="fa-solid fa-gamepad"></i> All Games</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Services <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="bothosting.html"><i class="fa-brands fa-discord"></i> Bot Hosting</a>
+                <a href="domain.html" style="color:var(--primary)"><i class="fa-solid fa-globe"></i> Domain Name</a>
+                <a href="vpshosting.html"><i class="fa-solid fa-server"></i> VPS Hosting</a>
+            </div>
+        </li>
+        <li class="mob-ni">
+            <div class="mob-nl" onclick="mSub(this)">Company <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="mob-sub">
+                <a href="aboutus.html"><i class="fa-solid fa-info-circle"></i> About Us</a>
+                <a href="legal.html"><i class="fa-solid fa-shield-halved"></i> Legal</a>
+                <a href="payment.html"><i class="fa-solid fa-credit-card"></i> Payment</a>
+                <a href="branding.html"><i class="fa-solid fa-palette"></i> Branding</a>
+                <a href="tutorial.html"><i class="fa-solid fa-book"></i> Tutorial</a>
+                <a href="infrastructure.html"><i class="fa-solid fa-server"></i> Infrastructure</a>
+                <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            </div>
+        </li>
+        <li class="mob-ni"><a href="tools.html" class="mob-nl">Tools</a></li>
+    </ul>
+    <div class="mob-auth">
+        <a href="https://billing.solocloud.host/login" class="mob-login">Login</a>
+        <a href="https://billing.solocloud.host/register" class="mob-signup">Sign Up Free</a>
+    </div>
+</div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="hero-content">
+        <div class="hero-pill"><i class="fa-solid fa-globe"></i>&nbsp; Domain Registration</div>
+        <h1>Claim Your <span class="hl">Perfect Domain.</span><br>Own It Forever.</h1>
+        <p>Find and register the domain name that defines your brand. .com, .in, .gg, .net and dozens more — affordable, instant, and yours.</p>
+
+        <!-- Search bar (decorative — clicking Search triggers modal) -->
+        <div class="search-bar" id="heroSearch">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search for yourname.com..." autocomplete="off">
+            <button onclick="openModal(document.getElementById('searchInput').value || 'yourdomain.com')">Search</button>
+        </div>
+
+        <div class="tld-chips">
+            <span class="tld-chip" onclick="fillSearch('.com')">.com</span>
+            <span class="tld-chip" onclick="fillSearch('.in')">.in</span>
+            <span class="tld-chip" onclick="fillSearch('.net')">.net</span>
+            <span class="tld-chip" onclick="fillSearch('.gg')">.gg</span>
+            <span class="tld-chip" onclick="fillSearch('.org')">.org</span>
+            <span class="tld-chip" onclick="fillSearch('.io')">.io</span>
+            <span class="tld-chip" onclick="fillSearch('.co')">.co</span>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ DOMAIN EXTENSIONS GRID ══════════ -->
+<section class="ext-section">
+    <div class="section-header">
+        <div class="section-eyebrow">Extensions</div>
+        <h2 class="section-title">Popular Domain Extensions</h2>
+    </div>
+    <div class="ext-grid" id="extGrid">
+
+        <div class="ext-card">
+            <div class="ext-popular">Most Popular</div>
+            <div class="ext-name">.com</div>
+            <div class="ext-desc">The gold standard for any business, brand, or personal website. Instantly trusted worldwide.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹799 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.com')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.in</div>
+            <div class="ext-desc">India's official country-code TLD. Perfect for Indian businesses targeting local audiences.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹599 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.in')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.net</div>
+            <div class="ext-desc">Originally for networks and tech companies — now a trusted alternative to .com for any project.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹899 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.net')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.gg</div>
+            <div class="ext-desc">The go-to domain for gaming communities, Discord servers, and esports brands. "Good Game" — instantly recognisable.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹1,999 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.gg')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.org</div>
+            <div class="ext-desc">Trusted by nonprofits, communities, and open-source projects. Signals credibility and purpose.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹849 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.org')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.io</div>
+            <div class="ext-desc">Loved by startups and tech products. Short, punchy, and carries a modern dev-culture reputation.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹2,499 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.io')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.co</div>
+            <div class="ext-desc">A clean, concise alternative to .com favoured by modern brands and startups globally.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹1,299 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.co')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.xyz</div>
+            <div class="ext-desc">Ultra-affordable and creative. Popular with personal projects, portfolios, and experimental sites.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹199 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.xyz')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.store</div>
+            <div class="ext-desc">Purpose-built for e-commerce and online stores. Instantly tells visitors what your site is about.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹999 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.store')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.tech</div>
+            <div class="ext-desc">For technology companies, SaaS products, and developer portfolios. Clear and professional.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹1,499 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.tech')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.club</div>
+            <div class="ext-desc">Great for communities, groups, membership sites, and social clubs of any kind.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹699 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.club')">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="ext-card">
+            <div class="ext-name">.host</div>
+            <div class="ext-desc">The perfect extension for hosting companies, server owners, and infrastructure businesses.</div>
+            <div class="ext-bottom">
+                <div class="ext-price">₹2,999 <span>/yr</span></div>
+                <button class="ext-btn" onclick="openModal('.host')">Buy Now</button>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="features-section">
+    <div class="section-header">
+        <div class="section-eyebrow">Why SoloCloud Domains</div>
+        <h2 class="section-title">Everything Included, No Surprises</h2>
+    </div>
+    <div class="feat-grid">
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-lock"></i></div>
+            <h4>Free WHOIS Privacy</h4>
+            <p>Your personal details are protected from public WHOIS lookups at no extra cost. Your identity stays private by default.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h4>Free SSL Certificate</h4>
+            <p>Every domain paired with our hosting comes with a free SSL certificate for secure HTTPS — included, not added on.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-rotate"></i></div>
+            <h4>Easy Renewals</h4>
+            <p>Get renewal reminders well in advance. Renew from your billing panel in one click — never accidentally lose your domain.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-sliders"></i></div>
+            <h4>Full DNS Control</h4>
+            <p>Manage A, CNAME, MX, TXT, and NS records from a clean dashboard. Point your domain anywhere with propagation in minutes.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <h4>Instant Activation</h4>
+            <p>Once registered, your domain is active and manageable within minutes. No waiting, no manual review for common TLDs.</p>
+        </div>
+        <div class="feat-card">
+            <div class="feat-icon"><i class="fa-solid fa-headset"></i></div>
+            <h4>24/7 Support</h4>
+            <p>Whether it's DNS configuration, transfer help, or a billing question — our team is on Discord and tickets around the clock.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="how-section">
+    <div class="section-header">
+        <div class="section-eyebrow">Process</div>
+        <h2 class="section-title">How to Get Your Domain</h2>
+    </div>
+    <div class="steps-row">
+        <div class="step">
+            <div class="step-num">1</div>
+            <h4>Pick Your Extension</h4>
+            <p>Browse the available TLDs above and click "Buy Now" on the one you want.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <h4>Open a Ticket</h4>
+            <p>Use our Discord server or billing panel to open a ticket and tell us the domain name you want.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <h4>It's Yours</h4>
+            <p>We register it for you and hand you full control via the billing dashboard. Done.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <a href="index.html" class="logo">SoloCloud<span> Hosting</span></a>
+            <p>Premium Domain, Game & Bot Hosting with Global Low Latency.</p>
+            <div class="socials">
+                <a href="https://discord.gg/VRMUnDkf95" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.youtube.com/@solocloudhosting" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.instagram.com/solocloud.host/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="fc"><h4>Games</h4><ul>
+            <li><a href="minecraft.html">Minecraft</a></li>
+            <li><a href="hytale.html">Hytale</a></li>
+            <li><a href="palworld.html">Palworld</a></li>
+            <li><a href="games.html">All Games</a></li>
+        </ul></div>
+        <div class="fc"><h4>Services</h4><ul>
+            <li><a href="bothosting.html">Bot Hosting</a></li>
+            <li><a href="domain.html">Domains</a></li>
+            <li><a href="vpshosting.html">VPS</a></li>
+        </ul></div>
+        <div class="fc"><h4>Company</h4><ul>
+            <li><a href="aboutus.html">About</a></li>
+            <li><a href="legal.html">Legal</a></li>
+            <li><a href="payment.html">Payments</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="fc"><h4>Tools</h4><ul>
+            <li><a href="tools.html">Panel Demo</a></li>
+        </ul></div>
+    </div>
+    <div class="footer-bot"><div>© 2026 SoloCloud. All Rights Reserved.</div></div>
+</footer>
+
+<!-- ══════════════════════════════════
+     BUY DOMAIN MODAL
+══════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="modal-icon"><i class="fa-solid fa-globe" style="color:var(--primary);"></i></div>
+        <h2>Buy Your Domain</h2>
+        <p class="modal-sub">Domain purchases are handled manually to ensure you get the best price and instant support. Choose how you'd like to proceed:</p>
+
+        <div class="modal-domain-name" id="modalDomainName">yourdomain.com</div>
+
+        <div class="modal-options">
+            <!-- DISCORD TICKET -->
+            <!-- UPDATE HREF BELOW with your real Discord ticket link -->
+            <a href="https://discord.gg/REPLACE_WITH_TICKET_LINK" target="_blank" rel="noopener noreferrer" class="modal-option mo-discord">
+                <div class="modal-option-icon"><i class="fa-brands fa-discord"></i></div>
+                <div class="modal-option-text">
+                    <div class="modal-option-title">Open a Discord Ticket</div>
+                    <div class="modal-option-desc">Join our Discord server and create a domain ticket — fastest response</div>
+                </div>
+                <i class="fa-solid fa-arrow-right modal-option-arrow"></i>
+            </a>
+
+            <!-- BILLING TICKET -->
+            <!-- UPDATE HREF BELOW with your real billing ticket link -->
+            <a href="https://billing.solocloud.host/REPLACE_WITH_TICKET_PATH" target="_blank" rel="noopener noreferrer" class="modal-option mo-billing">
+                <div class="modal-option-icon"><i class="fa-solid fa-ticket"></i></div>
+                <div class="modal-option-text">
+                    <div class="modal-option-title">Open a Billing Ticket</div>
+                    <div class="modal-option-desc">Submit a ticket via our billing panel — tracked and documented</div>
+                </div>
+                <i class="fa-solid fa-arrow-right modal-option-arrow"></i>
+            </a>
+        </div>
+
+        <p class="modal-note"><i class="fa-solid fa-circle-info"></i> Mention the domain name shown above in your ticket. Our team will confirm availability, pricing, and complete the registration for you.</p>
+    </div>
+</div>
+
+<script>
+    // ── Hamburger ──
+    const hb = document.getElementById('hamburger'), mm = document.getElementById('mobMenu');
+    hb.addEventListener('click', () => {
+        const o = mm.classList.toggle('open');
+        hb.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+    });
+    mm.addEventListener('click', e => {
+        if(e.target === mm){ mm.classList.remove('open'); hb.classList.remove('open'); document.body.style.overflow=''; }
+    });
+    function mSub(el){
+        const s = el.nextElementSibling;
+        s.classList.toggle('open');
+        el.classList.toggle('expanded', s.classList.contains('open'));
+    }
+
+    // ── TLD chip fill ──
+    function fillSearch(tld){
+        const inp = document.getElementById('searchInput');
+        inp.focus();
+        if(inp.value && !inp.value.includes('.')){
+            inp.value = inp.value + tld;
+        } else {
+            inp.value = tld.replace('.','') + tld;
+        }
+    }
+
+    // ── Modal ──
+    function openModal(domainHint){
+        const name = (domainHint || 'yourdomain.com').trim();
+        document.getElementById('modalDomainName').textContent = name.startsWith('.') ? 'yourdomain' + name : name;
+        document.getElementById('modalOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+        document.getElementById('modalOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    function closeModalOutside(e){
+        if(e.target === document.getElementById('modalOverlay')) closeModal();
+    }
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+    // Allow pressing Enter on search bar
+    document.getElementById('searchInput').addEventListener('keydown', e => {
+        if(e.key === 'Enter') openModal(e.target.value || 'yourdomain.com');
+    });
+</script>
+</body>
+</html>
